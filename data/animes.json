@@ -1,0 +1,618 @@
+{
+    "AI\u306e\u907a\u96fb\u5b50":{
+        "ank_id":"14109",
+        "anl_id":158530,
+        "bgm_id":410203,
+        "fm_id":"3.3",
+        "mal_id":"53787",
+        "name_cn":"AI\u7535\u5b50\u57fa\u56e0"
+    },
+    "AYAKA \u2010\u3042\u3084\u304b\u2010":{
+        "ank_id":"14104",
+        "anl_id":"Error",
+        "bgm_id":406171,
+        "fm_id":"2.3",
+        "mal_id":"53428",
+        "name_cn":"AYAKA \u2010\u7eeb\u5c9b\u5947\u8c2d\u2010"
+    },
+    "BASTARD!! -\u6697\u9ed2\u306e\u7834\u58ca\u795e- \u7b2c2\u671f \u5730\u7344\u306e\u93ae\u9b42\u6b4c\u7de8":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":414753,
+        "fm_id":"-",
+        "mal_id":"404",
+        "name_cn":"BASTARD\uff01\uff01\u6697\u9ed1\u7834\u574f\u795e \u7b2c\u4e8c\u5b63 \u5730\u72f1\u7684\u9547\u9b42\u6b4c\u7bc7"
+    },
+    "BLEACH \u5343\u5e74\u8840\u6226\u7bc7-\u8a23\u5225\u8b5a-":{
+        "ank_id":"Error",
+        "anl_id":159322,
+        "bgm_id":412916,
+        "fm_id":"4.0",
+        "mal_id":"53998",
+        "name_cn":"\u6b7b\u795e \u5343\u5e74\u8840\u6218\u7bc7-\u8bc0\u522b\u8c2d-"
+    },
+    "Captain Fall":{
+        "ank_id":"Error",
+        "anl_id":107857,
+        "bgm_id":443850,
+        "fm_id":"-",
+        "mal_id":"36934",
+        "name_cn":"\u80cc\u9505\u8239\u957f"
+    },
+    "Fate/strange Fake -Whispers of Dawn-":{
+        "ank_id":"2852",
+        "anl_id":154966,
+        "bgm_id":402128,
+        "fm_id":"4.3",
+        "mal_id":"53127",
+        "name_cn":"\u547d\u8fd0-\u5947\u5f02\u8d5d\u54c1 \u9ece\u660e\u4f4e\u8bed"
+    },
+    "Futurama (Season 8)":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":368802,
+        "fm_id":"4.2",
+        "mal_id":"28977",
+        "name_cn":"\u98de\u51fa\u4e2a\u672a\u6765 \u7b2c8\u5b63"
+    },
+    "Harley Quinn Season 4":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":441141,
+        "fm_id":"3.5",
+        "mal_id":"40028",
+        "name_cn":"\u54c8\u8389\u00b7\u594e\u8335 \u7b2c\u56db\u5b63"
+    },
+    "Helck":{
+        "ank_id":"14142",
+        "anl_id":145140,
+        "bgm_id":369784,
+        "fm_id":"3.4",
+        "mal_id":"51020",
+        "name_cn":"\u52c7\u8005\u8d6b\u9c81\u5e93"
+    },
+    "Invincible: Atom Eve":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":446500,
+        "fm_id":"4.2",
+        "mal_id":"40586",
+        "name_cn":"\u65e0\u654c\u5c11\u4fa0\uff1a\u539f\u5b50\u4f0a\u8299"
+    },
+    "Kizazi Moto: Generation Fire":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":443174,
+        "fm_id":"-",
+        "mal_id":"31783",
+        "name_cn":"\u98ce\u706b\u4e16\u4ee3"
+    },
+    "Looney Tunes Cartoons Season 6":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":445284,
+        "fm_id":"4.5",
+        "mal_id":"40028",
+        "name_cn":"\u4e50\u4e00\u901a \u7b2c\u516d\u5b63"
+    },
+    "Lv1\u9b54\u738b\u3068\u30ef\u30f3\u30eb\u30fc\u30e0\u52c7\u8005":{
+        "ank_id":"14168",
+        "anl_id":146836,
+        "bgm_id":376106,
+        "fm_id":"3.4",
+        "mal_id":"51458",
+        "name_cn":"LV1\u9b54\u738b\u4e0e\u72ec\u5c45\u5e9f\u52c7\u8005"
+    },
+    "My Adventures With Superman":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":432779,
+        "fm_id":"2.0",
+        "mal_id":"14719",
+        "name_cn":"\u6211\u4e0e\u8d85\u4eba\u7684\u5192\u9669"
+    },
+    "ONE PIECE":{
+        "ank_id":"282",
+        "anl_id":21,
+        "bgm_id":975,
+        "fm_id":"4.0",
+        "mal_id":"459",
+        "name_cn":"\u6d77\u8d3c\u738b"
+    },
+    "SYNDUALITY Noir":{
+        "ank_id":"14120",
+        "anl_id":154643,
+        "bgm_id":401301,
+        "fm_id":"3.4",
+        "mal_id":"53026",
+        "name_cn":"\u5947\u5f02\u8d24\u4f34 \u9ed1\u8272\u5929\u4f7f"
+    },
+    "Sonic Prime Season 2":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":445288,
+        "fm_id":"2.7",
+        "mal_id":"40028",
+        "name_cn":"\u7d22\u5c3c\u514b\uff1a\u56de\u5bb6\u5927\u5192\u9669 \u7b2c\u4e8c\u5b63"
+    },
+    "Summer Camp Island Season 6":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":439337,
+        "fm_id":"5.0",
+        "mal_id":"22265",
+        "name_cn":"\u590f\u4ee4\u8425\u5c9b \u7b2c\u516d\u5b63"
+    },
+    "Teenage Euthanasia Season 2":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":438655,
+        "fm_id":"3.2",
+        "mal_id":"40028",
+        "name_cn":"\u5c11\u5e74\u5b89\u4e50\u6b7b \u7b2c\u4e8c\u5b63"
+    },
+    "The Dragon Prince Season 5":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":445283,
+        "fm_id":"4.0",
+        "mal_id":"891",
+        "name_cn":"\u9f99\u738b\u5b50 \u7b2c\u4e94\u5b63"
+    },
+    "\u3044\u304d\u3082\u306e\u3055\u3093":{
+        "ank_id":"14106",
+        "anl_id":"Error",
+        "bgm_id":424509,
+        "fm_id":"4.0",
+        "mal_id":"54847",
+        "name_cn":"\u751f\u7269\u53cb\u4f34"
+    },
+    "\u3046\u3061\u306e\u4f1a\u793e\u306e\u5c0f\u3055\u3044\u5148\u8f29\u306e\u8a71":{
+        "ank_id":"14107",
+        "anl_id":155730,
+        "bgm_id":405198,
+        "fm_id":"2.6",
+        "mal_id":"53379",
+        "name_cn":"\u516c\u53f8\u7684\u5c0f\u5c0f\u524d\u8f88"
+    },
+    "\u304a\u304b\u3057\u306a\u8ee2\u751f":{
+        "ank_id":"14111",
+        "anl_id":153339,
+        "bgm_id":347942,
+        "fm_id":"2.9",
+        "mal_id":"52611",
+        "name_cn":"\u751c\u70b9\u8f6c\u751f"
+    },
+    "\u3066\u3093\u3077\u308b":{
+        "ank_id":"14135",
+        "anl_id":160447,
+        "bgm_id":416019,
+        "fm_id":"2.5",
+        "mal_id":"54275",
+        "name_cn":"\u5e99\u4e0d\u53ef\u8a00"
+    },
+    "\u306f\u305f\u3089\u304f\u9b54\u738b\u3055\u307e\uff01\uff01 2nd Season":{
+        "ank_id":"14148",
+        "anl_id":155168,
+        "bgm_id":403225,
+        "fm_id":"3.2",
+        "mal_id":"15809",
+        "name_cn":"\u6253\u5de5\u5427\uff01\uff01\u9b54\u738b\u5927\u4eba \u7b2c\u4e8c\u5b63"
+    },
+    "\u3082\u306e\u306e\u304c\u305f\u308a \u7b2c\u4e8c\u7ae0":{
+        "ank_id":"14137",
+        "anl_id":163205,
+        "bgm_id":426531,
+        "fm_id":"3.7",
+        "mal_id":"54883",
+        "name_cn":"\u7269\u7269\u8bed \u7b2c\u4e8c\u7ae0"
+    },
+    "\u308b\u308d\u3046\u306b\u5263\u5fc3 \uff0d\u660e\u6cbb\u5263\u5ba2\u6d6a\u6f2b\u8b5a\uff0d":{
+        "ank_id":"14129",
+        "anl_id":45,
+        "bgm_id":363102,
+        "fm_id":"4.1",
+        "mal_id":"45",
+        "name_cn":"\u6d6a\u5ba2\u5251\u5fc3 \uff0d\u660e\u6cbb\u5251\u5ba2\u6d6a\u6f2b\u8c2d\uff0d"
+    },
+    "\u308f\u305f\u3057\u306e\u5e78\u305b\u306a\u7d50\u5a5a":{
+        "ank_id":"14127",
+        "anl_id":147103,
+        "bgm_id":377125,
+        "fm_id":"3.9",
+        "mal_id":"51552",
+        "name_cn":"\u6211\u7684\u5e78\u798f\u5a5a\u7ea6"
+    },
+    "\u30a2\u30f3\u30c7\u30c3\u30c9\u30ac\u30fc\u30eb\u30fb\u30de\u30fc\u30c0\u30fc\u30d5\u30a1\u30eb\u30b9":{
+        "ank_id":"14105",
+        "anl_id":162983,
+        "bgm_id":425591,
+        "fm_id":"3.7",
+        "mal_id":"54790",
+        "name_cn":"\u4e0d\u6b7b\u5c11\u5973 \u6740\u4eba\u7b11\u5267"
+    },
+    "\u30ab\u30fc\u30c9\u30d5\u30a1\u30a4\u30c8!! \u30f4\u30a1\u30f3\u30ac\u30fc\u30c9 will+Dress Season3":{
+        "ank_id":"Error",
+        "anl_id":150970,
+        "bgm_id":402835,
+        "fm_id":"1.0",
+        "mal_id":"52079",
+        "name_cn":"\u5361\u7247\u6218\u6597\u5148\u5bfc\u8005 will+Dress \u7b2c\u4e09\u5b63"
+    },
+    "\u30b7\u30e3\u30c9\u30a6\u30d0\u30fc\u30b9\uff26 \u30bb\u30d6\u30f3\u30b7\u30e3\u30c9\u30a6\u30ba\u7de8":{
+        "ank_id":"Error",
+        "anl_id":163136,
+        "bgm_id":425969,
+        "fm_id":"1.0",
+        "mal_id":"54854",
+        "name_cn":"\u5f71\u4e4b\u8bd7F \u4e03\u5f71\u7bc7"
+    },
+    "\u30b7\u30e5\u30ac\u30fc\u30a2\u30c3\u30d7\u30eb\u30fb\u30d5\u30a7\u30a2\u30ea\u30fc\u30c6\u30a4\u30eb \u7b2c2\u30af\u30fc\u30eb":{
+        "ank_id":"14117",
+        "anl_id":163079,
+        "bgm_id":425916,
+        "fm_id":"3.5",
+        "mal_id":"54842",
+        "name_cn":"\u94f6\u7802\u7cd6\u5e08\u4e0e\u9ed1\u5996\u7cbe \u7b2c2\u90e8\u5206"
+    },
+    "\u30b9\u30d1\u30a4\u6559\u5ba4 2nd season":{
+        "ank_id":"14122",
+        "anl_id":163542,
+        "bgm_id":428418,
+        "fm_id":"3.5",
+        "mal_id":"40028",
+        "name_cn":"\u95f4\u8c0d\u6559\u5ba4 \u7b2c\u4e8c\u5b63"
+    },
+    "\u30be\u30f3100\uff5e\u30be\u30f3\u30d3\u306b\u306a\u308b\u307e\u3067\u306b\u3057\u305f\u3044100\u306e\u3053\u3068\uff5e":{
+        "ank_id":"Error",
+        "anl_id":159831,
+        "bgm_id":414461,
+        "fm_id":"3.7",
+        "mal_id":"54112",
+        "name_cn":"\u50f5\u5c38\u767e\u5206\u767e\uff5e\u5728\u6210\u4e3a\u50f5\u5c38\u524d\u8981\u505a\u7684100\u4ef6\u4e8b\uff5e"
+    },
+    "\u30c0\u30fc\u30af\u30ae\u30e3\u30b6\u30ea\u30f3\u30b0":{
+        "ank_id":"14126",
+        "anl_id":152802,
+        "bgm_id":390794,
+        "fm_id":"3.2",
+        "mal_id":"52505",
+        "name_cn":"\u9ed1\u6697\u96c6\u4f1a"
+    },
+    "\u30c7\u30ad\u308b\u732b\u306f\u4eca\u65e5\u3082\u6182\u9b31":{
+        "ank_id":"14133",
+        "anl_id":149883,
+        "bgm_id":384672,
+        "fm_id":"3.7",
+        "mal_id":"51916",
+        "name_cn":"\u80fd\u5e72\u7684\u732b\u4eca\u5929\u4e5f\u5fe7\u90c1"
+    },
+    "\u30c8\u30cb\u30ab\u30af\u30ab\u30ef\u30a4\u30a4 \u5973\u5b50\u9ad8\u7de8":{
+        "ank_id":"14162",
+        "anl_id":166104,
+        "bgm_id":441233,
+        "fm_id":"3.3",
+        "mal_id":"55651",
+        "name_cn":"\u603b\u4e4b\u5c31\u662f\u975e\u5e38\u53ef\u7231 \u5973\u5b50\u9ad8\u4e2d\u7bc7"
+    },
+    "\u30db\u30ea\u30df\u30e4 -piece-":{
+        "ank_id":"14141",
+        "anl_id":163132,
+        "bgm_id":425992,
+        "fm_id":"4.0",
+        "mal_id":"54856",
+        "name_cn":"\u5800\u4e0e\u5bab\u6751 -piece-"
+    },
+    "\u30e9\u30a4\u30a2\u30fc\u30fb\u30e9\u30a4\u30a2\u30fc":{
+        "ank_id":"14131",
+        "anl_id":131863,
+        "bgm_id":333979,
+        "fm_id":"2.7",
+        "mal_id":"48633",
+        "name_cn":"\u8c0e\u8a00\u6e38\u620f"
+    },
+    "\u30e9\u30a4\u30b6\u306e\u30a2\u30c8\u30ea\u30a8 \uff5e\u5e38\u95c7\u306e\u5973\u738b\u3068\u79d8\u5bc6\u306e\u96a0\u308c\u5bb6\uff5e":{
+        "ank_id":"Error",
+        "anl_id":162893,
+        "bgm_id":425236,
+        "fm_id":"3.1",
+        "mal_id":"54760",
+        "name_cn":"\u83b1\u838e\u7684\u70bc\u91d1\u5de5\u623f \uff5e\u5e38\u6697\u5973\u738b\u4e0e\u79d8\u5bc6\u85cf\u8eab\u5904\uff5e"
+    },
+    "\u30ec\u30d9\u30eb1\u3060\u3051\u3069\u30e6\u30cb\u30fc\u30af\u30b9\u30ad\u30eb\u3067\u6700\u5f37\u3067\u3059":{
+        "ank_id":"14128",
+        "anl_id":148465,
+        "bgm_id":380582,
+        "fm_id":"2.8",
+        "mal_id":"51764",
+        "name_cn":"\u867d\u71361\u7ea7\u4f46\u4ee5\u56fa\u6709\u6280\u80fd\u5374\u662f\u6700\u5f3a\u7684"
+    },
+    "\u4e03\u3064\u306e\u9b54\u5263\u304c\u652f\u914d\u3059\u308b":{
+        "ank_id":"14149",
+        "anl_id":142598,
+        "bgm_id":362006,
+        "fm_id":"3.1",
+        "mal_id":"50582",
+        "name_cn":"\u4e03\u9b54\u5251\u652f\u914d\u5929\u4e0b"
+    },
+    "\u4e2d\u56fd\u7545\u60f3\u66f2":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":444771,
+        "fm_id":"-",
+        "mal_id":"8496",
+        "name_cn":"\u4e2d\u56fd\u7545\u60f3\u66f2"
+    },
+    "\u4eca\u5929\u5f00\u59cb\u505a\u660e\u661f\u4e4b\u5929\u4f7f\u60c5\u6b4c":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":364866,
+        "fm_id":"1.7",
+        "mal_id":"40969",
+        "name_cn":"\u4eca\u5929\u5f00\u59cb\u505a\u660e\u661f\u4e4b\u5929\u4f7f\u60c5\u6b4c"
+    },
+    "\u533a\u533a\u4e0d\u624d\uff0c\u5728\u4e0b\u91ce\u602a \u7b2c\u4e8c\u5b63":{
+        "ank_id":"Error",
+        "anl_id":166510,
+        "bgm_id":442910,
+        "fm_id":"4.0",
+        "mal_id":"55762",
+        "name_cn":"\u533a\u533a\u4e0d\u624d\uff0c\u5728\u4e0b\u91ce\u602a \u7b2c\u4e8c\u5b63"
+    },
+    "\u540d\u63a2\u5075\u30b3\u30ca\u30f3":{
+        "ank_id":"231",
+        "anl_id":235,
+        "bgm_id":899,
+        "fm_id":"4.1",
+        "mal_id":"235",
+        "name_cn":"\u540d\u4fa6\u63a2\u67ef\u5357"
+    },
+    "\u546a\u8853\u5efb\u6226 \u7b2c2\u671f":{
+        "ank_id":"Error",
+        "anl_id":145064,
+        "bgm_id":369304,
+        "fm_id":"4.3",
+        "mal_id":"40748",
+        "name_cn":"\u5492\u672f\u56de\u6218 \u7b2c\u4e8c\u5b63"
+    },
+    "\u5815\u7384\u5e08":{
+        "ank_id":"Error",
+        "anl_id":137676,
+        "bgm_id":345829,
+        "fm_id":"4.5",
+        "mal_id":"51291",
+        "name_cn":"\u5815\u7384\u5e08"
+    },
+    "\u5922\u898b\u308b\u7537\u5b50\u306f\u73fe\u5b9f\u4e3b\u7fa9\u8005":{
+        "ank_id":"14136",
+        "anl_id":157397,
+        "bgm_id":408351,
+        "fm_id":"3.2",
+        "mal_id":"53632",
+        "name_cn":"\u6ee1\u6000\u7f8e\u68a6\u7684\u5c11\u5e74\u662f\u73b0\u5b9e\u4e3b\u4e49\u8005"
+    },
+    "\u592b\u5a66\u4ea4\u6b53\uff5e\u623b\u308c\u306a\u3044\u591c\uff5e":{
+        "ank_id":"14166",
+        "anl_id":"Error",
+        "bgm_id":404643,
+        "fm_id":"1.1",
+        "mal_id":"55616",
+        "name_cn":"\u592b\u59bb\u4ea4\u6b22\uff5e\u56de\u4e0d\u53bb\u7684\u591c\u665a\uff5e"
+    },
+    "\u597d\u304d\u306a\u5b50\u304c\u3081\u304c\u306d\u3092\u5fd8\u308c\u305f":{
+        "ank_id":"14121",
+        "anl_id":160188,
+        "bgm_id":415182,
+        "fm_id":"3.1",
+        "mal_id":"54234",
+        "name_cn":"\u559c\u6b22\u7684\u4eba\u5fd8\u8bb0\u6234\u773c\u955c\u4e86"
+    },
+    "\u5b9f\u306f\u4ffa\u3001\u6700\u5f37\u3067\u3057\u305f\uff1f":{
+        "ank_id":"14161",
+        "anl_id":154391,
+        "bgm_id":400215,
+        "fm_id":"2.9",
+        "mal_id":"52969",
+        "name_cn":"\u5176\u5b9e\uff0c\u6211\u662f\u6700\u5f3a\u7684\uff1f"
+    },
+    "\u5c0f\u7eff\u548c\u5c0f\u84dd\u2161 \u9b54\u738b\u7bc7":{
+        "ank_id":"Error",
+        "anl_id":156105,
+        "bgm_id":405227,
+        "fm_id":"4.1",
+        "mal_id":"38250",
+        "name_cn":"\u5c0f\u7eff\u548c\u5c0f\u84dd \u7b2c\u4e8c\u5b63 \u9b54\u738b\u7bc7"
+    },
+    "\u5e7b\u65e5\u306e\u30e8\u30cf\u30cd -SUNSHINE in the MIRROR-":{
+        "ank_id":"14113",
+        "anl_id":151513,
+        "bgm_id":389772,
+        "fm_id":"3.0",
+        "mal_id":"52214",
+        "name_cn":"\u5e7b\u65e5\u591c\u7fbd -\u955c\u4e2d\u6656\u5149-"
+    },
+    "\u5e7c\u5973\u793e\u9577R":{
+        "ank_id":"14134",
+        "anl_id":154789,
+        "bgm_id":401970,
+        "fm_id":"3.2",
+        "mal_id":"53079",
+        "name_cn":"\u5e7c\u5973\u793e\u957fR"
+    },
+    "\u5f7c\u5973\u3001\u304a\u501f\u308a\u3057\u307e\u3059 \u7b2c3\u671f":{
+        "ank_id":"14112",
+        "anl_id":154745,
+        "bgm_id":401783,
+        "fm_id":"3.7",
+        "mal_id":"40839",
+        "name_cn":"\u79df\u501f\u5973\u53cb \u7b2c\u4e09\u5b63"
+    },
+    "\u60b2\u5287\u306e\u5143\u51f6\u3068\u306a\u308b\u6700\u5f37\u5916\u9053\u30e9\u30b9\u30dc\u30b9\u5973\u738b\u306f\u6c11\u306e\u70ba\u306b\u5c3d\u304f\u3057\u307e\u3059 \u3002":{
+        "ank_id":"Error",
+        "anl_id":156040,
+        "bgm_id":406307,
+        "fm_id":"3.0",
+        "mal_id":"53438",
+        "name_cn":"\u8eab\u4e3a\u60b2\u5267\u59cb\u4f5c\u4fd1\u8005\u7684\u6700\u5f3a\u90aa\u6076BOSS\u5973\u738b\u4e3a\u6c11\u7aed\u5fc3\u5c3d\u529b\u3002"
+    },
+    "\u653f\u5b97\u304f\u3093\u306e\u30ea\u30d9\u30f3\u30b8R":{
+        "ank_id":"14139",
+        "anl_id":146953,
+        "bgm_id":376433,
+        "fm_id":"3.3",
+        "mal_id":"51498",
+        "name_cn":"\u653f\u5b97\u541b\u7684\u590d\u4ec7R"
+    },
+    "\u6587\u8c6a\u30b9\u30c8\u30ec\u30a4\u30c9\u30c3\u30b0\u30b9 \u7b2c5\u30b7\u30fc\u30ba\u30f3":{
+        "ank_id":"14143",
+        "anl_id":163263,
+        "bgm_id":426815,
+        "fm_id":"4.0",
+        "mal_id":"31478",
+        "name_cn":"\u6587\u8c6a\u91ce\u72ac \u7b2c\u4e94\u5b63"
+    },
+    "\u65e0\u8111\u9b54\u5973":{
+        "ank_id":"Error",
+        "anl_id":141914,
+        "bgm_id":358769,
+        "fm_id":"-",
+        "mal_id":"55731",
+        "name_cn":"\u65e0\u8111\u9b54\u5973"
+    },
+    "\u65f6\u5149\u4ee3\u7406\u4eba \u7b2c\u4e8c\u5b63":{
+        "ank_id":"Error",
+        "anl_id":136484,
+        "bgm_id":341311,
+        "fm_id":"3.7",
+        "mal_id":"49413",
+        "name_cn":"\u65f6\u5149\u4ee3\u7406\u4eba \u7b2c\u4e8c\u5b63"
+    },
+    "\u662f\u738b\u8005\u554a\uff1f\u7b2c2\u5b63 \u4e91\u4e2d\u4e0d\u5b8c\u5168\u527f\u532a\u65e5\u8bb0":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":407308,
+        "fm_id":"4.2",
+        "mal_id":"51405",
+        "name_cn":"\u662f\u738b\u8005\u554a\uff1f \u7b2c\u4e8c\u5b63"
+    },
+    "\u6b7b\u795e\u574a\u3061\u3083\u3093\u3068\u9ed2\u30e1\u30a4\u30c9 \u7b2c2\u671f":{
+        "ank_id":"14115",
+        "anl_id":139435,
+        "bgm_id":349319,
+        "fm_id":"3.0",
+        "mal_id":"47257",
+        "name_cn":"\u6b7b\u795e\u5c11\u7237\u4e0e\u9ed1\u5973\u4ec6 \u7b2c\u4e8c\u5b63"
+    },
+    "\u6c38\u751f\u4e4b\u5341\u5e74\u4e4b\u7ea6":{
+        "ank_id":"Error",
+        "anl_id":156099,
+        "bgm_id":405213,
+        "fm_id":"1.9",
+        "mal_id":"55684",
+        "name_cn":"\u6c38\u751f \u7b2c\u4e8c\u5b63"
+    },
+    "\u7121\u8077\u8ee2\u751f\u2161 \uff5e\u7570\u4e16\u754c\u884c\u3063\u305f\u3089\u672c\u6c17\u3060\u3059\uff5e":{
+        "ank_id":"Error",
+        "anl_id":146065,
+        "bgm_id":373247,
+        "fm_id":"4.2",
+        "mal_id":"55818",
+        "name_cn":"\u65e0\u804c\u8f6c\u751f\u2161 \uff5e\u5230\u4e86\u5f02\u4e16\u754c\u5c31\u62ff\u51fa\u771f\u672c\u4e8b\uff5e"
+    },
+    "\u767d\u8056\u5973\u3068\u9ed2\u7267\u5e2b":{
+        "ank_id":"14119",
+        "anl_id":150972,
+        "bgm_id":387822,
+        "fm_id":"3.3",
+        "mal_id":"52082",
+        "name_cn":"\u767d\u5723\u5973\u4e0e\u9ed1\u7267\u5e08"
+    },
+    "\u767e\u59d3\u8cb4\u65cf":{
+        "ank_id":"14165",
+        "anl_id":155971,
+        "bgm_id":406160,
+        "fm_id":"3.4",
+        "mal_id":"53426",
+        "name_cn":"\u767e\u59d3\u8d35\u65cf"
+    },
+    "\u771f\u9633\u6b66\u795e":{
+        "ank_id":"Error",
+        "anl_id":155302,
+        "bgm_id":379517,
+        "fm_id":"3.3",
+        "mal_id":"55693",
+        "name_cn":"\u771f\u9633\u6b66\u795e"
+    },
+    "\u7b2c\u4e00\u5e8f\u5217":{
+        "ank_id":"Error",
+        "anl_id":141857,
+        "bgm_id":358557,
+        "fm_id":"4.0",
+        "mal_id":"55733",
+        "name_cn":"\u7b2c\u4e00\u5e8f\u5217"
+    },
+    "\u7bc4\u99ac\u5203\u7259 2\u671f":{
+        "ank_id":"14164",
+        "anl_id":"Error",
+        "bgm_id":375541,
+        "fm_id":"4.1",
+        "mal_id":"42940",
+        "name_cn":"\u8303\u9a6c\u5203\u7259 \u7b2c\u4e8c\u5b63"
+    },
+    "\u7d42\u672b\u306e\u30ef\u30eb\u30ad\u30e5\u30fc\u30ec\u2161 \u5f8c\u7de8":{
+        "ank_id":"Error",
+        "anl_id":165356,
+        "bgm_id":425937,
+        "fm_id":"3.8",
+        "mal_id":"44942",
+        "name_cn":"\u7ec8\u672b\u7684\u5973\u6b66\u795e\u2161 \u540e\u7bc7"
+    },
+    "\u8056\u8005\u7121\u53cc\uff5e\u30b5\u30e9\u30ea\u30fc\u30de\u30f3\u3001\u7570\u4e16\u754c\u3067\u751f\u304d\u6b8b\u308b\u305f\u3081\u306b\u6b69\u3080\u9053\uff5e":{
+        "ank_id":"14124",
+        "anl_id":155418,
+        "bgm_id":403741,
+        "fm_id":"2.2",
+        "mal_id":"39590",
+        "name_cn":"\u5723\u8005\u65e0\u53cc\uff5e\u4e0a\u73ed\u65cf\u7684\u5f02\u4e16\u754c\u751f\u5b58\u4e4b\u9053\uff5e"
+    },
+    "\u81ea\u52d5\u8ca9\u58f2\u6a5f\u306b\u751f\u307e\u308c\u5909\u308f\u3063\u305f\u4ffa\u306f\u8ff7\u5bae\u3092\u5f77\u5fa8\u3046":{
+        "ank_id":"14114",
+        "anl_id":153360,
+        "bgm_id":392973,
+        "fm_id":"2.9",
+        "mal_id":"52619",
+        "name_cn":"\u8f6c\u751f\u6210\u81ea\u52a8\u8d29\u5356\u673a\u7684\u6211\u4eca\u5929\u4e5f\u5728\u8ff7\u5bab\u5f98\u5f8a"
+    },
+    "\u82f1\u96c4\u6559\u5ba4":{
+        "ank_id":"14108",
+        "anl_id":139606,
+        "bgm_id":350523,
+        "fm_id":"2.5",
+        "mal_id":"49894",
+        "name_cn":"\u82f1\u96c4\u6559\u5ba4"
+    },
+    "\u9547\u9b42\u8857 \u7b2c\u4e09\u5b63":{
+        "ank_id":"Error",
+        "anl_id":156080,
+        "bgm_id":405210,
+        "fm_id":"4.0",
+        "mal_id":"55790",
+        "name_cn":"\u9547\u9b42\u8857 \u98ce\u82b1\u96ea\u6708\u7bc7"
+    },
+    "\u95c7\u829d\u5c45 \u7b2c11\u671f":{
+        "ank_id":"Error",
+        "anl_id":"Error",
+        "bgm_id":432751,
+        "fm_id":"3.3",
+        "mal_id":"22537",
+        "name_cn":"\u6697\u829d\u5c45 \u7b2c\u5341\u4e00\u5b63"
+    },
+    "\u96fe\u5c71\u4e94\u884c \u7280\u5ddd\u5e7b\u7d2b\u6797":{
+        "ank_id":"Error",
+        "anl_id":122585,
+        "bgm_id":312658,
+        "fm_id":"3.8",
+        "mal_id":"50407",
+        "name_cn":"\u96fe\u5c71\u4e94\u884c \u7280\u5ddd\u5e7b\u7d2b\u6797"
+    }
+}
