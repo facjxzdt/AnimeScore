@@ -6,10 +6,6 @@ scores_sorted_path = '../data/score_sorted.json'
 animes_path = '../data/animes.json'
 
 
-class TypeError(Exception):
-    pass
-
-
 def store_score(dicts: dict):
     f1 = open(scores_sorted_path, 'w')
     f1.write(json.dumps(dicts, indent=4, separators=(',', ':')))
