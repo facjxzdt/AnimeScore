@@ -5,11 +5,11 @@ real_headers = {'User-Agent':
 # 权重设置 默认中日英5:3:2
 weights_default = \
     {'bgm_score': 0.5, 'fm_score': 0.3, 'mal_score': 0.2}  # 默认权重(使用bgm fm mal三家数据源)
-weight_all = \
+weights_all = \
     {'bgm_score': 0.5, 'fm_score': 0.2, 'ank_score': 0.1, 'mal_score': 0.075, 'anl_score': 0.125}  # 五个站点都可用时的权重设置
-weight_ank = \
+weights_ank = \
     {'bgm_score': 0.5, 'fm_score': 0.2, 'ank_score': 0.1, 'mal_score': 0.2}  # 当anl不可用时
-weight_anl = \
+weights_anl = \
     {'bgm_score': 0.5, 'fm_score': 0.3, 'mal_score': 0.1, 'anl_score': 0.1}  # 当ank不可用时
 
 weights = 'weights_default'

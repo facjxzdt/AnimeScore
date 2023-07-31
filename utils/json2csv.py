@@ -16,5 +16,3 @@ def json2csv():
                 line.append(v[first_line[i]])
             writer.writerow(line)
             line = []
-
-json2csv()

@@ -38,4 +38,3 @@ def get_ids():
                 count_retry+=1
                 time.sleep(config.time_sleep)
                 print('已重试：'+str(count_retry))
-get_ids()

@@ -54,6 +54,3 @@ def get_score():
                     time.sleep(config.time_sleep)
                     print('重试: ' + str(count_retry))
         score = {}
-
-
-get_score()

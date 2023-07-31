@@ -19,7 +19,7 @@
         "ank_id":"Error",
         "anl_id":"Error",
         "bgm_id":414753,
-        "fm_id":"-",
+        "fm_id":"2.9",
         "mal_id":"404",
         "name_cn":"BASTARD\uff01\uff01\u6697\u9ed1\u7834\u574f\u795e \u7b2c\u4e8c\u5b63 \u5730\u72f1\u7684\u9547\u9b42\u6b4c\u7bc7"
     },
@@ -55,11 +55,19 @@
         "mal_id":"28977",
         "name_cn":"\u98de\u51fa\u4e2a\u672a\u6765 \u7b2c8\u5b63"
     },
+    "GENESIS":{
+        "ank_id":"8147",
+        "anl_id":146923,
+        "bgm_id":443892,
+        "fm_id":"3.0",
+        "mal_id":"21843",
+        "name_cn":"\u59cb\u6e90"
+    },
     "Harley Quinn Season 4":{
         "ank_id":"Error",
         "anl_id":"Error",
         "bgm_id":441141,
-        "fm_id":"3.5",
+        "fm_id":"-",
         "mal_id":"40028",
         "name_cn":"\u54c8\u8389\u00b7\u594e\u8335 \u7b2c\u56db\u5b63"
     },
@@ -83,7 +91,7 @@
         "ank_id":"Error",
         "anl_id":"Error",
         "bgm_id":443174,
-        "fm_id":"-",
+        "fm_id":"4.3",
         "mal_id":"31783",
         "name_cn":"\u98ce\u706b\u4e16\u4ee3"
     },
@@ -147,7 +155,7 @@
         "ank_id":"Error",
         "anl_id":"Error",
         "bgm_id":438655,
-        "fm_id":"3.2",
+        "fm_id":"3.9",
         "mal_id":"40028",
         "name_cn":"\u5c11\u5e74\u5b89\u4e50\u6b7b \u7b2c\u4e8c\u5b63"
     },
@@ -203,7 +211,7 @@
         "ank_id":"14137",
         "anl_id":163205,
         "bgm_id":426531,
-        "fm_id":"3.7",
+        "fm_id":"3.6",
         "mal_id":"54883",
         "name_cn":"\u7269\u7269\u8bed \u7b2c\u4e8c\u7ae0"
     },
@@ -252,7 +260,7 @@
         "anl_id":163079,
         "bgm_id":425916,
         "fm_id":"3.5",
-        "mal_id":"54842",
+        "mal_id":"49980",
         "name_cn":"\u94f6\u7802\u7cd6\u5e08\u4e0e\u9ed1\u5996\u7cbe \u7b2c2\u90e8\u5206"
     },
     "\u30b9\u30d1\u30a4\u6559\u5ba4 2nd season":{
@@ -267,7 +275,7 @@
         "ank_id":"Error",
         "anl_id":159831,
         "bgm_id":414461,
-        "fm_id":"3.7",
+        "fm_id":"3.8",
         "mal_id":"54112",
         "name_cn":"\u50f5\u5c38\u767e\u5206\u767e\uff5e\u5728\u6210\u4e3a\u50f5\u5c38\u524d\u8981\u505a\u7684100\u4ef6\u4e8b\uff5e"
     },
@@ -283,7 +291,7 @@
         "ank_id":"14133",
         "anl_id":149883,
         "bgm_id":384672,
-        "fm_id":"3.7",
+        "fm_id":"3.8",
         "mal_id":"51916",
         "name_cn":"\u80fd\u5e72\u7684\u732b\u4eca\u5929\u4e5f\u5fe7\u90c1"
     },
@@ -419,7 +427,7 @@
         "ank_id":"Error",
         "anl_id":156105,
         "bgm_id":405227,
-        "fm_id":"4.1",
+        "fm_id":"4.0",
         "mal_id":"38250",
         "name_cn":"\u5c0f\u7eff\u548c\u5c0f\u84dd \u7b2c\u4e8c\u5b63 \u9b54\u738b\u7bc7"
     },
@@ -468,7 +476,7 @@
         "anl_id":163263,
         "bgm_id":426815,
         "fm_id":"4.0",
-        "mal_id":"31478",
+        "mal_id":"32867",
         "name_cn":"\u6587\u8c6a\u91ce\u72ac \u7b2c\u4e94\u5b63"
     },
     "\u65e0\u8111\u9b54\u5973":{
@@ -555,7 +563,7 @@
         "ank_id":"14164",
         "anl_id":"Error",
         "bgm_id":375541,
-        "fm_id":"4.1",
+        "fm_id":"4.0",
         "mal_id":"42940",
         "name_cn":"\u8303\u9a6c\u5203\u7259 \u7b2c\u4e8c\u5b63"
     },
@@ -595,7 +603,7 @@
         "ank_id":"Error",
         "anl_id":156080,
         "bgm_id":405210,
-        "fm_id":"4.0",
+        "fm_id":"3.6",
         "mal_id":"55790",
         "name_cn":"\u9547\u9b42\u8857 \u98ce\u82b1\u96ea\u6708\u7bc7"
     },
@@ -603,7 +611,7 @@
         "ank_id":"Error",
         "anl_id":"Error",
         "bgm_id":432751,
-        "fm_id":"3.3",
+        "fm_id":"3.6",
         "mal_id":"22537",
         "name_cn":"\u6697\u829d\u5c45 \u7b2c\u5341\u4e00\u5b63"
     },

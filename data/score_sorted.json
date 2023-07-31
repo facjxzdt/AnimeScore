@@ -1,30 +1,30 @@
 {
     "AI\u7535\u5b50\u57fa\u56e0":{
+        "score":6.0,
         "name_cn":"AI\u7535\u5b50\u57fa\u56e0",
         "name":"AI\u306e\u907a\u96fb\u5b50",
-        "score":6.43,
         "bgm_id":410203,
         "bgm_score":6.2,
         "fm_score":6.6,
-        "mal_score":6.75,
+        "mal_score":6.74,
         "ank_score":6.0,
         "anl_score":6.45
     },
     "AYAKA \u2010\u7eeb\u5c9b\u5947\u8c2d\u2010":{
+        "score":"None",
         "name_cn":"AYAKA \u2010\u7eeb\u5c9b\u5947\u8c2d\u2010",
         "name":"AYAKA \u2010\u3042\u3084\u304b\u2010",
-        "score":5.216,
         "bgm_id":406171,
         "bgm_score":5.2,
         "fm_score":4.6,
-        "mal_score":6.18,
+        "mal_score":6.17,
         "ank_score":5.6,
         "anl_score":"None"
     },
     "\u6b7b\u795e \u5343\u5e74\u8840\u6218\u7bc7-\u8bc0\u522b\u8c2d-":{
+        "score":7.5,
         "name_cn":"\u6b7b\u795e \u5343\u5e74\u8840\u6218\u7bc7-\u8bc0\u522b\u8c2d-",
         "name":"BLEACH \u5343\u5e74\u8840\u6226\u7bc7-\u8a23\u5225\u8b5a-",
-        "score":8.142,
         "bgm_id":412916,
         "bgm_score":7.9,
         "fm_score":8.0,
@@ -33,9 +33,9 @@
         "anl_score":8.75
     },
     "\u547d\u8fd0-\u5947\u5f02\u8d5d\u54c1 \u9ece\u660e\u4f4e\u8bed":{
+        "score":7.5,
         "name_cn":"\u547d\u8fd0-\u5947\u5f02\u8d5d\u54c1 \u9ece\u660e\u4f4e\u8bed",
         "name":"Fate/strange Fake -Whispers of Dawn-",
-        "score":7.884,
         "bgm_id":402128,
         "bgm_score":7.3,
         "fm_score":8.6,
@@ -43,10 +43,21 @@
         "ank_score":8.4,
         "anl_score":8.2
     },
+    "\u59cb\u6e90":{
+        "score":5.1,
+        "name_cn":"\u59cb\u6e90",
+        "name":"GENESIS",
+        "bgm_id":443892,
+        "bgm_score":4.3,
+        "fm_score":6.0,
+        "mal_score":7.62,
+        "ank_score":7.6,
+        "anl_score":6.1
+    },
     "\u52c7\u8005\u8d6b\u9c81\u5e93":{
+        "score":6.6,
         "name_cn":"\u52c7\u8005\u8d6b\u9c81\u5e93",
         "name":"Helck",
-        "score":7.064,
         "bgm_id":369784,
         "bgm_score":7.1,
         "fm_score":6.8,
@@ -55,9 +66,9 @@
         "anl_score":6.95
     },
     "LV1\u9b54\u738b\u4e0e\u72ec\u5c45\u5e9f\u52c7\u8005":{
+        "score":6.0,
         "name_cn":"LV1\u9b54\u738b\u4e0e\u72ec\u5c45\u5e9f\u52c7\u8005",
         "name":"Lv1\u9b54\u738b\u3068\u30ef\u30f3\u30eb\u30fc\u30e0\u52c7\u8005",
-        "score":6.822,
         "bgm_id":376106,
         "bgm_score":6.8,
         "fm_score":6.8,
@@ -66,9 +77,9 @@
         "anl_score":6.55
     },
     "\u6d77\u8d3c\u738b":{
+        "score":7.9,
         "name_cn":"\u6d77\u8d3c\u738b",
         "name":"ONE PIECE",
-        "score":7.968,
         "bgm_id":975,
         "bgm_score":8.3,
         "fm_score":8.0,
@@ -77,20 +88,20 @@
         "anl_score":8.7
     },
     "\u5947\u5f02\u8d24\u4f34 \u9ed1\u8272\u5929\u4f7f":{
+        "score":6.0,
         "name_cn":"\u5947\u5f02\u8d24\u4f34 \u9ed1\u8272\u5929\u4f7f",
         "name":"SYNDUALITY Noir",
-        "score":6.768,
         "bgm_id":401301,
         "bgm_score":6.7,
         "fm_score":6.8,
-        "mal_score":6.89,
+        "mal_score":6.88,
         "ank_score":6.4,
         "anl_score":6.55
     },
     "\u516c\u53f8\u7684\u5c0f\u5c0f\u524d\u8f88":{
+        "score":5.2,
         "name_cn":"\u516c\u53f8\u7684\u5c0f\u5c0f\u524d\u8f88",
         "name":"\u3046\u3061\u306e\u4f1a\u793e\u306e\u5c0f\u3055\u3044\u5148\u8f29\u306e\u8a71",
-        "score":5.794,
         "bgm_id":405198,
         "bgm_score":5.8,
         "fm_score":5.2,
@@ -99,9 +110,9 @@
         "anl_score":6.4
     },
     "\u751c\u70b9\u8f6c\u751f":{
+        "score":5.2,
         "name_cn":"\u751c\u70b9\u8f6c\u751f",
         "name":"\u304a\u304b\u3057\u306a\u8ee2\u751f",
-        "score":5.562,
         "bgm_id":347942,
         "bgm_score":5,
         "fm_score":5.8,
@@ -110,42 +121,42 @@
         "anl_score":6.35
     },
     "\u5e99\u4e0d\u53ef\u8a00":{
+        "score":5.2,
         "name_cn":"\u5e99\u4e0d\u53ef\u8a00",
         "name":"\u3066\u3093\u3077\u308b",
-        "score":5.808,
         "bgm_id":416019,
         "bgm_score":5.9,
         "fm_score":5.0,
-        "mal_score":6.79,
+        "mal_score":6.78,
         "ank_score":5.6,
         "anl_score":6.65
     },
     "\u6253\u5de5\u5427\uff01\uff01\u9b54\u738b\u5927\u4eba \u7b2c\u4e8c\u5b63":{
+        "score":5.6,
         "name_cn":"\u6253\u5de5\u5427\uff01\uff01\u9b54\u738b\u5927\u4eba \u7b2c\u4e8c\u5b63",
         "name":"\u306f\u305f\u3089\u304f\u9b54\u738b\u3055\u307e\uff01\uff01 2nd Season",
-        "score":6.02,
         "bgm_id":403225,
-        "bgm_score":5.1,
+        "bgm_score":5,
         "fm_score":6.4,
         "mal_score":7.75,
         "ank_score":6.2,
         "anl_score":6.65
     },
     "\u7269\u7269\u8bed \u7b2c\u4e8c\u7ae0":{
+        "score":6.0,
         "name_cn":"\u7269\u7269\u8bed \u7b2c\u4e8c\u7ae0",
         "name":"\u3082\u306e\u306e\u304c\u305f\u308a \u7b2c\u4e8c\u7ae0",
-        "score":6.64,
         "bgm_id":426531,
         "bgm_score":5.9,
-        "fm_score":7.4,
-        "mal_score":7.35,
+        "fm_score":7.2,
+        "mal_score":7.36,
         "ank_score":5.8,
         "anl_score":7.1
     },
     "\u6d6a\u5ba2\u5251\u5fc3 \uff0d\u660e\u6cbb\u5251\u5ba2\u6d6a\u6f2b\u8c2d\uff0d":{
+        "score":6.9,
         "name_cn":"\u6d6a\u5ba2\u5251\u5fc3 \uff0d\u660e\u6cbb\u5251\u5ba2\u6d6a\u6f2b\u8c2d\uff0d",
         "name":"\u308b\u308d\u3046\u306b\u5263\u5fc3 \uff0d\u660e\u6cbb\u5263\u5ba2\u6d6a\u6f2b\u8b5a\uff0d",
-        "score":7.568,
         "bgm_id":363102,
         "bgm_score":6.9,
         "fm_score":8.2,
@@ -154,9 +165,9 @@
         "anl_score":7.9
     },
     "\u6211\u7684\u5e78\u798f\u5a5a\u7ea6":{
+        "score":7.1,
         "name_cn":"\u6211\u7684\u5e78\u798f\u5a5a\u7ea6",
         "name":"\u308f\u305f\u3057\u306e\u5e78\u305b\u306a\u7d50\u5a5a",
-        "score":7.556,
         "bgm_id":377125,
         "bgm_score":7.1,
         "fm_score":7.8,
@@ -165,53 +176,53 @@
         "anl_score":7.95
     },
     "\u4e0d\u6b7b\u5c11\u5973 \u6740\u4eba\u7b11\u5267":{
+        "score":7.0,
         "name_cn":"\u4e0d\u6b7b\u5c11\u5973 \u6740\u4eba\u7b11\u5267",
         "name":"\u30a2\u30f3\u30c7\u30c3\u30c9\u30ac\u30fc\u30eb\u30fb\u30de\u30fc\u30c0\u30fc\u30d5\u30a1\u30eb\u30b9",
-        "score":7.58,
         "bgm_id":425591,
         "bgm_score":7.6,
         "fm_score":7.4,
         "mal_score":7.8,
-        "ank_score":6.6,
+        "ank_score":6.4,
         "anl_score":7.55
     },
     "\u5361\u7247\u6218\u6597\u5148\u5bfc\u8005 will+Dress \u7b2c\u4e09\u5b63":{
+        "score":4.3,
         "name_cn":"\u5361\u7247\u6218\u6597\u5148\u5bfc\u8005 will+Dress \u7b2c\u4e09\u5b63",
         "name":"\u30ab\u30fc\u30c9\u30d5\u30a1\u30a4\u30c8!! \u30f4\u30a1\u30f3\u30ac\u30fc\u30c9 will+Dress Season3",
-        "score":4.622,
         "bgm_id":402835,
         "bgm_score":5.5,
         "fm_score":2.0,
-        "mal_score":6.36,
+        "mal_score":6.35,
         "ank_score":"None",
         "anl_score":6.3
     },
     "\u5f71\u4e4b\u8bd7F \u4e03\u5f71\u7bc7":{
+        "score":5.3,
         "name_cn":"\u5f71\u4e4b\u8bd7F \u4e03\u5f71\u7bc7",
         "name":"\u30b7\u30e3\u30c9\u30a6\u30d0\u30fc\u30b9\uff26 \u30bb\u30d6\u30f3\u30b7\u30e3\u30c9\u30a6\u30ba\u7de8",
-        "score":5.502,
         "bgm_id":425969,
         "bgm_score":7.2,
         "fm_score":2.0,
-        "mal_score":6.51,
+        "mal_score":6.52,
         "ank_score":"None",
         "anl_score":6.8
     },
     "\u94f6\u7802\u7cd6\u5e08\u4e0e\u9ed1\u5996\u7cbe \u7b2c2\u90e8\u5206":{
+        "score":6.0,
         "name_cn":"\u94f6\u7802\u7cd6\u5e08\u4e0e\u9ed1\u5996\u7cbe \u7b2c2\u90e8\u5206",
         "name":"\u30b7\u30e5\u30ac\u30fc\u30a2\u30c3\u30d7\u30eb\u30fb\u30d5\u30a7\u30a2\u30ea\u30fc\u30c6\u30a4\u30eb \u7b2c2\u30af\u30fc\u30eb",
-        "score":6.586,
         "bgm_id":425916,
         "bgm_score":5.9,
         "fm_score":7.0,
-        "mal_score":7.68,
+        "mal_score":7.37,
         "ank_score":6.2,
         "anl_score":7.45
     },
     "\u95f4\u8c0d\u6559\u5ba4 \u7b2c\u4e8c\u5b63":{
+        "score":6.5,
         "name_cn":"\u95f4\u8c0d\u6559\u5ba4 \u7b2c\u4e8c\u5b63",
         "name":"\u30b9\u30d1\u30a4\u6559\u5ba4 2nd season",
-        "score":7.01,
         "bgm_id":428418,
         "bgm_score":6.3,
         "fm_score":7.0,
@@ -220,53 +231,53 @@
         "anl_score":6.75
     },
     "\u50f5\u5c38\u767e\u5206\u767e\uff5e\u5728\u6210\u4e3a\u50f5\u5c38\u524d\u8981\u505a\u7684100\u4ef6\u4e8b\uff5e":{
+        "score":7.2,
         "name_cn":"\u50f5\u5c38\u767e\u5206\u767e\uff5e\u5728\u6210\u4e3a\u50f5\u5c38\u524d\u8981\u505a\u7684100\u4ef6\u4e8b\uff5e",
         "name":"\u30be\u30f3100\uff5e\u30be\u30f3\u30d3\u306b\u306a\u308b\u307e\u3067\u306b\u3057\u305f\u3044100\u306e\u3053\u3068\uff5e",
-        "score":7.634,
         "bgm_id":414461,
         "bgm_score":7.5,
-        "fm_score":7.4,
+        "fm_score":7.6,
         "mal_score":8.32,
         "ank_score":"None",
         "anl_score":8.05
     },
     "\u9ed1\u6697\u96c6\u4f1a":{
+        "score":6.2,
         "name_cn":"\u9ed1\u6697\u96c6\u4f1a",
         "name":"\u30c0\u30fc\u30af\u30ae\u30e3\u30b6\u30ea\u30f3\u30b0",
-        "score":6.702,
         "bgm_id":390794,
-        "bgm_score":6.6,
+        "bgm_score":6.7,
         "fm_score":6.4,
-        "mal_score":7.41,
-        "ank_score":6.2,
+        "mal_score":7.4,
+        "ank_score":6.0,
         "anl_score":7.05
     },
     "\u80fd\u5e72\u7684\u732b\u4eca\u5929\u4e5f\u5fe7\u90c1":{
+        "score":6.5,
         "name_cn":"\u80fd\u5e72\u7684\u732b\u4eca\u5929\u4e5f\u5fe7\u90c1",
         "name":"\u30c7\u30ad\u308b\u732b\u306f\u4eca\u65e5\u3082\u6182\u9b31",
-        "score":7.184,
         "bgm_id":384672,
         "bgm_score":6.9,
-        "fm_score":7.4,
+        "fm_score":7.6,
         "mal_score":7.57,
         "ank_score":6.8,
         "anl_score":7.25
     },
     "\u603b\u4e4b\u5c31\u662f\u975e\u5e38\u53ef\u7231 \u5973\u5b50\u9ad8\u4e2d\u7bc7":{
+        "score":6.2,
         "name_cn":"\u603b\u4e4b\u5c31\u662f\u975e\u5e38\u53ef\u7231 \u5973\u5b50\u9ad8\u4e2d\u7bc7",
         "name":"\u30c8\u30cb\u30ab\u30af\u30ab\u30ef\u30a4\u30a4 \u5973\u5b50\u9ad8\u7de8",
-        "score":6.872,
         "bgm_id":441233,
         "bgm_score":6.6,
         "fm_score":6.6,
-        "mal_score":7.96,
+        "mal_score":7.97,
         "ank_score":6.2,
         "anl_score":7.75
     },
     "\u5800\u4e0e\u5bab\u6751 -piece-":{
+        "score":7.0,
         "name_cn":"\u5800\u4e0e\u5bab\u6751 -piece-",
         "name":"\u30db\u30ea\u30df\u30e4 -piece-",
-        "score":7.394,
         "bgm_id":425992,
         "bgm_score":6.7,
         "fm_score":8.0,
@@ -275,53 +286,53 @@
         "anl_score":8.05
     },
     "\u8c0e\u8a00\u6e38\u620f":{
+        "score":5.2,
         "name_cn":"\u8c0e\u8a00\u6e38\u620f",
         "name":"\u30e9\u30a4\u30a2\u30fc\u30fb\u30e9\u30a4\u30a2\u30fc",
-        "score":5.87,
         "bgm_id":333979,
         "bgm_score":5.8,
         "fm_score":5.4,
-        "mal_score":6.75,
+        "mal_score":6.73,
         "ank_score":5.6,
         "anl_score":6.55
     },
     "\u83b1\u838e\u7684\u70bc\u91d1\u5de5\u623f \uff5e\u5e38\u6697\u5973\u738b\u4e0e\u79d8\u5bc6\u85cf\u8eab\u5904\uff5e":{
+        "score":6.0,
         "name_cn":"\u83b1\u838e\u7684\u70bc\u91d1\u5de5\u623f \uff5e\u5e38\u6697\u5973\u738b\u4e0e\u79d8\u5bc6\u85cf\u8eab\u5904\uff5e",
         "name":"\u30e9\u30a4\u30b6\u306e\u30a2\u30c8\u30ea\u30a8 \uff5e\u5e38\u95c7\u306e\u5973\u738b\u3068\u79d8\u5bc6\u306e\u96a0\u308c\u5bb6\uff5e",
-        "score":6.198,
         "bgm_id":425236,
         "bgm_score":6,
         "fm_score":6.2,
-        "mal_score":6.69,
+        "mal_score":6.68,
         "ank_score":"None",
         "anl_score":6.35
     },
     "\u867d\u71361\u7ea7\u4f46\u4ee5\u56fa\u6709\u6280\u80fd\u5374\u662f\u6700\u5f3a\u7684":{
+        "score":5.2,
         "name_cn":"\u867d\u71361\u7ea7\u4f46\u4ee5\u56fa\u6709\u6280\u80fd\u5374\u662f\u6700\u5f3a\u7684",
         "name":"\u30ec\u30d9\u30eb1\u3060\u3051\u3069\u30e6\u30cb\u30fc\u30af\u30b9\u30ad\u30eb\u3067\u6700\u5f37\u3067\u3059",
-        "score":5.57,
         "bgm_id":380582,
         "bgm_score":5.2,
         "fm_score":5.6,
-        "mal_score":6.45,
+        "mal_score":6.43,
         "ank_score":5.0,
         "anl_score":6.15
     },
     "\u4e03\u9b54\u5251\u652f\u914d\u5929\u4e0b":{
+        "score":5.5,
         "name_cn":"\u4e03\u9b54\u5251\u652f\u914d\u5929\u4e0b",
         "name":"\u4e03\u3064\u306e\u9b54\u5263\u304c\u652f\u914d\u3059\u308b",
-        "score":6.16,
         "bgm_id":362006,
         "bgm_score":5.9,
         "fm_score":6.2,
-        "mal_score":6.75,
+        "mal_score":6.74,
         "ank_score":5.8,
         "anl_score":6.55
     },
     "\u540d\u4fa6\u63a2\u67ef\u5357":{
+        "score":7.5,
         "name_cn":"\u540d\u4fa6\u63a2\u67ef\u5357",
         "name":"\u540d\u63a2\u5075\u30b3\u30ca\u30f3",
-        "score":7.894,
         "bgm_id":899,
         "bgm_score":7.6,
         "fm_score":8.2,
@@ -330,9 +341,9 @@
         "anl_score":8.1
     },
     "\u5492\u672f\u56de\u6218 \u7b2c\u4e8c\u5b63":{
+        "score":7.5,
         "name_cn":"\u5492\u672f\u56de\u6218 \u7b2c\u4e8c\u5b63",
         "name":"\u546a\u8853\u5efb\u6226 \u7b2c2\u671f",
-        "score":8.106,
         "bgm_id":369304,
         "bgm_score":7.6,
         "fm_score":8.6,
@@ -341,9 +352,9 @@
         "anl_score":8.6
     },
     "\u6ee1\u6000\u7f8e\u68a6\u7684\u5c11\u5e74\u662f\u73b0\u5b9e\u4e3b\u4e49\u8005":{
+        "score":5.5,
         "name_cn":"\u6ee1\u6000\u7f8e\u68a6\u7684\u5c11\u5e74\u662f\u73b0\u5b9e\u4e3b\u4e49\u8005",
         "name":"\u5922\u898b\u308b\u7537\u5b50\u306f\u73fe\u5b9f\u4e3b\u7fa9\u8005",
-        "score":5.848,
         "bgm_id":408351,
         "bgm_score":5.2,
         "fm_score":6.4,
@@ -352,53 +363,53 @@
         "anl_score":6.35
     },
     "\u559c\u6b22\u7684\u4eba\u5fd8\u8bb0\u6234\u773c\u955c\u4e86":{
+        "score":5.6,
         "name_cn":"\u559c\u6b22\u7684\u4eba\u5fd8\u8bb0\u6234\u773c\u955c\u4e86",
         "name":"\u597d\u304d\u306a\u5b50\u304c\u3081\u304c\u306d\u3092\u5fd8\u308c\u305f",
-        "score":6.02,
         "bgm_id":415182,
         "bgm_score":5.5,
         "fm_score":6.2,
-        "mal_score":7.05,
+        "mal_score":7.04,
         "ank_score":6.2,
         "anl_score":6.6
     },
     "\u5176\u5b9e\uff0c\u6211\u662f\u6700\u5f3a\u7684\uff1f":{
+        "score":5.2,
         "name_cn":"\u5176\u5b9e\uff0c\u6211\u662f\u6700\u5f3a\u7684\uff1f",
         "name":"\u5b9f\u306f\u4ffa\u3001\u6700\u5f37\u3067\u3057\u305f\uff1f",
-        "score":6.04,
         "bgm_id":400215,
         "bgm_score":5.9,
         "fm_score":5.8,
-        "mal_score":6.75,
+        "mal_score":6.73,
         "ank_score":5.6,
         "anl_score":6.5
     },
     "\u5c0f\u7eff\u548c\u5c0f\u84dd \u7b2c\u4e8c\u5b63 \u9b54\u738b\u7bc7":{
+        "score":6.3,
         "name_cn":"\u5c0f\u7eff\u548c\u5c0f\u84dd \u7b2c\u4e8c\u5b63 \u9b54\u738b\u7bc7",
         "name":"\u5c0f\u7eff\u548c\u5c0f\u84dd\u2161 \u9b54\u738b\u7bc7",
-        "score":6.73,
         "bgm_id":405227,
         "bgm_score":5.6,
-        "fm_score":8.2,
-        "mal_score":7.35,
+        "fm_score":8.0,
+        "mal_score":7.36,
         "ank_score":"None",
         "anl_score":7.2
     },
     "\u5e7b\u65e5\u591c\u7fbd -\u955c\u4e2d\u6656\u5149-":{
+        "score":6.2,
         "name_cn":"\u5e7b\u65e5\u591c\u7fbd -\u955c\u4e2d\u6656\u5149-",
         "name":"\u5e7b\u65e5\u306e\u30e8\u30cf\u30cd -SUNSHINE in the MIRROR-",
-        "score":6.542,
         "bgm_id":389772,
         "bgm_score":6.6,
         "fm_score":6.0,
-        "mal_score":7.21,
+        "mal_score":7.2,
         "ank_score":6.0,
         "anl_score":7.2
     },
     "\u79df\u501f\u5973\u53cb \u7b2c\u4e09\u5b63":{
+        "score":5.9,
         "name_cn":"\u79df\u501f\u5973\u53cb \u7b2c\u4e09\u5b63",
         "name":"\u5f7c\u5973\u3001\u304a\u501f\u308a\u3057\u307e\u3059 \u7b2c3\u671f",
-        "score":6.48,
         "bgm_id":401783,
         "bgm_score":5.7,
         "fm_score":7.4,
@@ -407,9 +418,9 @@
         "anl_score":6.85
     },
     "\u8eab\u4e3a\u60b2\u5267\u59cb\u4f5c\u4fd1\u8005\u7684\u6700\u5f3a\u90aa\u6076BOSS\u5973\u738b\u4e3a\u6c11\u7aed\u5fc3\u5c3d\u529b\u3002":{
+        "score":5.6,
         "name_cn":"\u8eab\u4e3a\u60b2\u5267\u59cb\u4f5c\u4fd1\u8005\u7684\u6700\u5f3a\u90aa\u6076BOSS\u5973\u738b\u4e3a\u6c11\u7aed\u5fc3\u5c3d\u529b\u3002",
         "name":"\u60b2\u5287\u306e\u5143\u51f6\u3068\u306a\u308b\u6700\u5f37\u5916\u9053\u30e9\u30b9\u30dc\u30b9\u5973\u738b\u306f\u6c11\u306e\u70ba\u306b\u5c3d\u304f\u3057\u307e\u3059 \u3002",
-        "score":6.15,
         "bgm_id":406307,
         "bgm_score":5.8,
         "fm_score":6.0,
@@ -418,42 +429,42 @@
         "anl_score":6.95
     },
     "\u653f\u5b97\u541b\u7684\u590d\u4ec7R":{
+        "score":5.7,
         "name_cn":"\u653f\u5b97\u541b\u7684\u590d\u4ec7R",
         "name":"\u653f\u5b97\u304f\u3093\u306e\u30ea\u30d9\u30f3\u30b8R",
-        "score":6.18,
         "bgm_id":376433,
         "bgm_score":5.5,
         "fm_score":6.6,
-        "mal_score":7.25,
+        "mal_score":7.26,
         "ank_score":6.2,
         "anl_score":7.05
     },
     "\u6587\u8c6a\u91ce\u72ac \u7b2c\u4e94\u5b63":{
+        "score":7.0,
         "name_cn":"\u6587\u8c6a\u91ce\u72ac \u7b2c\u4e94\u5b63",
         "name":"\u6587\u8c6a\u30b9\u30c8\u30ec\u30a4\u30c9\u30c3\u30b0\u30b9 \u7b2c5\u30b7\u30fc\u30ba\u30f3",
-        "score":7.314,
         "bgm_id":426815,
         "bgm_score":6.7,
         "fm_score":8.0,
-        "mal_score":7.82,
+        "mal_score":8.19,
         "ank_score":6.4,
         "anl_score":8.45
     },
     "\u65f6\u5149\u4ee3\u7406\u4eba \u7b2c\u4e8c\u5b63":{
+        "score":7.2,
         "name_cn":"\u65f6\u5149\u4ee3\u7406\u4eba \u7b2c\u4e8c\u5b63",
         "name":"\u65f6\u5149\u4ee3\u7406\u4eba \u7b2c\u4e8c\u5b63",
-        "score":7.468,
         "bgm_id":341311,
-        "bgm_score":7.1,
+        "bgm_score":7.2,
         "fm_score":7.4,
         "mal_score":8.49,
         "ank_score":"None",
         "anl_score":8.6
     },
     "\u6b7b\u795e\u5c11\u7237\u4e0e\u9ed1\u5973\u4ec6 \u7b2c\u4e8c\u5b63":{
+        "score":6.2,
         "name_cn":"\u6b7b\u795e\u5c11\u7237\u4e0e\u9ed1\u5973\u4ec6 \u7b2c\u4e8c\u5b63",
         "name":"\u6b7b\u795e\u574a\u3061\u3083\u3093\u3068\u9ed2\u30e1\u30a4\u30c9 \u7b2c2\u671f",
-        "score":6.772,
         "bgm_id":349319,
         "bgm_score":6.9,
         "fm_score":6.0,
@@ -462,9 +473,9 @@
         "anl_score":7.5
     },
     "\u65e0\u804c\u8f6c\u751f\u2161 \uff5e\u5230\u4e86\u5f02\u4e16\u754c\u5c31\u62ff\u51fa\u771f\u672c\u4e8b\uff5e":{
+        "score":7.4,
         "name_cn":"\u65e0\u804c\u8f6c\u751f\u2161 \uff5e\u5230\u4e86\u5f02\u4e16\u754c\u5c31\u62ff\u51fa\u771f\u672c\u4e8b\uff5e",
         "name":"\u7121\u8077\u8ee2\u751f\u2161 \uff5e\u7570\u4e16\u754c\u884c\u3063\u305f\u3089\u672c\u6c17\u3060\u3059\uff5e",
-        "score":7.768,
         "bgm_id":373247,
         "bgm_score":7.5,
         "fm_score":8.4,
@@ -473,9 +484,9 @@
         "anl_score":8.3
     },
     "\u767d\u5723\u5973\u4e0e\u9ed1\u7267\u5e08":{
+        "score":6.7,
         "name_cn":"\u767d\u5723\u5973\u4e0e\u9ed1\u7267\u5e08",
         "name":"\u767d\u8056\u5973\u3068\u9ed2\u7267\u5e2b",
-        "score":6.95,
         "bgm_id":387822,
         "bgm_score":7,
         "fm_score":6.6,
@@ -484,31 +495,31 @@
         "anl_score":7.1
     },
     "\u767e\u59d3\u8d35\u65cf":{
+        "score":6.0,
         "name_cn":"\u767e\u59d3\u8d35\u65cf",
         "name":"\u767e\u59d3\u8cb4\u65cf",
-        "score":6.494,
         "bgm_id":406160,
         "bgm_score":6.4,
         "fm_score":6.8,
-        "mal_score":6.27,
-        "ank_score":6.0,
+        "mal_score":6.29,
+        "ank_score":6.4,
         "anl_score":6.1
     },
     "\u8303\u9a6c\u5203\u7259 \u7b2c\u4e8c\u5b63":{
+        "score":"None",
         "name_cn":"\u8303\u9a6c\u5203\u7259 \u7b2c\u4e8c\u5b63",
         "name":"\u7bc4\u99ac\u5203\u7259 2\u671f",
-        "score":7.042,
         "bgm_id":375541,
         "bgm_score":6.1,
-        "fm_score":8.2,
+        "fm_score":8.0,
         "mal_score":7.66,
         "ank_score":7.2,
         "anl_score":"None"
     },
     "\u7ec8\u672b\u7684\u5973\u6b66\u795e\u2161 \u540e\u7bc7":{
+        "score":5.9,
         "name_cn":"\u7ec8\u672b\u7684\u5973\u6b66\u795e\u2161 \u540e\u7bc7",
         "name":"\u7d42\u672b\u306e\u30ef\u30eb\u30ad\u30e5\u30fc\u30ec\u2161 \u5f8c\u7de8",
-        "score":6.58,
         "bgm_id":425937,
         "bgm_score":5.9,
         "fm_score":7.6,
@@ -517,35 +528,35 @@
         "anl_score":7.6
     },
     "\u5723\u8005\u65e0\u53cc\uff5e\u4e0a\u73ed\u65cf\u7684\u5f02\u4e16\u754c\u751f\u5b58\u4e4b\u9053\uff5e":{
+        "score":4.4,
         "name_cn":"\u5723\u8005\u65e0\u53cc\uff5e\u4e0a\u73ed\u65cf\u7684\u5f02\u4e16\u754c\u751f\u5b58\u4e4b\u9053\uff5e",
         "name":"\u8056\u8005\u7121\u53cc\uff5e\u30b5\u30e9\u30ea\u30fc\u30de\u30f3\u3001\u7570\u4e16\u754c\u3067\u751f\u304d\u6b8b\u308b\u305f\u3081\u306b\u6b69\u3080\u9053\uff5e",
-        "score":4.778,
         "bgm_id":403741,
         "bgm_score":4.3,
         "fm_score":4.4,
-        "mal_score":6.54,
+        "mal_score":6.55,
         "ank_score":5.4,
         "anl_score":6.15
     },
     "\u8f6c\u751f\u6210\u81ea\u52a8\u8d29\u5356\u673a\u7684\u6211\u4eca\u5929\u4e5f\u5728\u8ff7\u5bab\u5f98\u5f8a":{
+        "score":5.2,
         "name_cn":"\u8f6c\u751f\u6210\u81ea\u52a8\u8d29\u5356\u673a\u7684\u6211\u4eca\u5929\u4e5f\u5728\u8ff7\u5bab\u5f98\u5f8a",
         "name":"\u81ea\u52d5\u8ca9\u58f2\u6a5f\u306b\u751f\u307e\u308c\u5909\u308f\u3063\u305f\u4ffa\u306f\u8ff7\u5bae\u3092\u5f77\u5fa8\u3046",
-        "score":5.988,
         "bgm_id":392973,
         "bgm_score":5.9,
         "fm_score":5.8,
-        "mal_score":6.49,
+        "mal_score":6.48,
         "ank_score":6.4,
         "anl_score":6.3
     },
     "\u82f1\u96c4\u6559\u5ba4":{
+        "score":5.2,
         "name_cn":"\u82f1\u96c4\u6559\u5ba4",
         "name":"\u82f1\u96c4\u6559\u5ba4",
-        "score":5.514,
         "bgm_id":350523,
         "bgm_score":5.4,
         "fm_score":5.0,
-        "mal_score":6.57,
+        "mal_score":6.52,
         "ank_score":5.2,
         "anl_score":6.35
     }
