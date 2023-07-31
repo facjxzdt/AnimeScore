@@ -10,19 +10,6 @@ class TypeError(Exception):
     pass
 
 
-def get_weights(weights: str):
-    if weights == 'weights_default':
-        return config.weights_default
-    elif weights == 'weights_all':
-        return config.weights_all
-    elif weights == 'weights_ank':
-        return config.weights_ank
-    elif weights == 'weights_anl':
-        return config.weights_anl
-    else:
-        raise TypeError('不存在的权重')
-
-
 def store_score(dicts: dict):
     f1 = open(scores_sorted_path, 'w')
     f1.write(json.dumps(dicts, indent=4, separators=(',', ':')))
@@ -31,7 +18,9 @@ def store_score(dicts: dict):
 
 def total_score():
     animes = json.load(open(animes_path, 'r'))
-    weights = get_weights(config.weights)
+    global weights
+    weights = {}
+    exec('weights = config.'+config.weights,globals())
     scores = json.load(open(scores_path, 'r'))
     score = 0
     ani_score = {}
