@@ -14,7 +14,7 @@ weights_anl = \
 
 weights = 'weights_default'
 
-#重试次数 时间
+# 重试次数 时间
 retry_max = 5
 timeout = 10
 time_sleep = 5

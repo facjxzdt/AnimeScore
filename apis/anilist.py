@@ -24,7 +24,7 @@ class AniList:
             'search': anime
         }
         try:
-            anl_id = requests.post(self.api_url, json={'query': query, 'variables': variables},timeout=config.timeout)
+            anl_id = requests.post(self.api_url, json={'query': query, 'variables': variables}, timeout=config.timeout)
             return json.loads(anl_id.content)['data']['Media']['id']
         except:
             return "Error"
@@ -47,10 +47,10 @@ class AniList:
         variables = {
             'id': anl_id
         }
-        anl_score = requests.post(self.api_url, json={'query': query, 'variables': variables},timeout=config.timeout)
+        anl_score = requests.post(self.api_url, json={'query': query, 'variables': variables}, timeout=config.timeout)
         try:
             return (json.loads(anl_score.content)['data']['Media']['meanScore'] +
-                json.loads(anl_score.content)['data']['Media']['averageScore']) / 20
+                    json.loads(anl_score.content)['data']['Media']['averageScore']) / 20
         except:
             try:
                 return json.loads(anl_score.content)['data']['Media']['meanScore'] / 10

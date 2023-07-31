@@ -11,7 +11,7 @@ class Anikore:
     def get_ani_id(self, anime: str):
         # 使用bgm获取到的日文原名进行精确匹配
         search_url = self.url + '/anime_title/' + anime
-        page = requests.get(search_url, headers=config.real_headers,timeout=config.timeout).content
+        page = requests.get(search_url, headers=config.real_headers, timeout=config.timeout).content
         soup = BeautifulSoup(page, 'lxml')
         try:
             id_url = soup.find('div', attrs={'class': 'l-searchPageRanking_unit'}).a['href']
@@ -24,7 +24,7 @@ class Anikore:
 
     def get_ani_score(self, ani_id: str):
         score_url = self.url + '/anime/' + ani_id
-        page = requests.get(score_url, headers=config.real_headers,timeout=10).content
+        page = requests.get(score_url, headers=config.real_headers, timeout=10).content
         soup = BeautifulSoup(page, 'lxml')
         score = soup.find('div', attrs={'class': 'l-animeDetailHeader_pointAndButtonBlock_starBlock'}).strong.string
 

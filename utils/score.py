@@ -5,11 +5,13 @@ scores_path = '../data/score.json'
 scores_sorted_path = '../data/score_sorted.json'
 animes_path = '../data/animes.json'
 
+
 class TypeError(Exception):
     pass
 
+
 def get_weights(weights: str):
-    if weights=='weights_default':
+    if weights == 'weights_default':
         return config.weights_default
     elif weights == 'weights_all':
         return config.weights_all
@@ -17,8 +19,9 @@ def get_weights(weights: str):
         return config.weights_ank
     elif weights == 'weights_anl':
         return config.weights_anl
-    else :
+    else:
         raise TypeError('不存在的权重')
+
 
 def store_score(dicts: dict):
     f1 = open(scores_sorted_path, 'w')
@@ -29,11 +32,11 @@ def store_score(dicts: dict):
 def total_score():
     animes = json.load(open(animes_path, 'r'))
     weights = get_weights(config.weights)
-    scores = json.load(open(scores_path,'r'))
+    scores = json.load(open(scores_path, 'r'))
     score = 0
     ani_score = {}
     anime = {}
-    for k,v in scores.items():
+    for k, v in scores.items():
         score = 0
         for k1, v1 in weights.items():
             if k1 in v.keys():
@@ -41,8 +44,8 @@ def total_score():
             else:
                 score = 'None'
                 break
-        if(score != 'None'):
-            score=format(score,'.3f')
+        if (score != 'None'):
+            score = format(score, '.3f')
             anime['score'] = float(score)
         else:
             anime['score'] = score
@@ -61,5 +64,5 @@ def total_score():
         else:
             anime['anl_score'] = 'None'
         ani_score[animes[k]['name_cn']] = anime
-        anime={}
+        anime = {}
     store_score(ani_score)

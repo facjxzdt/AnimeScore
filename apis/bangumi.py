@@ -4,6 +4,7 @@ import json
 from bs4 import BeautifulSoup
 from data import config
 
+
 class Bangumi:
     def __init__(self):
         self.json_path = '../data/season.json'
