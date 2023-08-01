@@ -1,11 +1,15 @@
 import csv
 import json
 
+from utils.logger import Log
+
 scores_path = '../data/score_sorted.json'
 csv_path = '../data/score.csv'
 
+log_json = Log(__name__).getlog()
 
 def json2csv():
+    log_json.info('写入csv')
     scores = json.load(open(scores_path, 'r'))
     line = []
     first_line = ['name', 'name_cn', 'bgm_id', 'bgm_score', 'fm_score', 'mal_score', 'ank_score', 'anl_score', 'score']

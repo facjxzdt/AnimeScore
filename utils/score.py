@@ -1,18 +1,22 @@
 import json
 from data import config
+from utils.logger import Log
 
 scores_path = '../data/score.json'
 scores_sorted_path = '../data/score_sorted.json'
 animes_path = '../data/animes.json'
 
+log_ts = Log(__name__).getlog()
 
 def store_score(dicts: dict):
+    log_ts.info('正在存储分数')
     f1 = open(scores_sorted_path, 'w')
     f1.write(json.dumps(dicts, indent=4, separators=(',', ':')))
     f1.close()
 
 
 def total_score():
+    log_ts.info('正在计算总分')
     animes = json.load(open(animes_path, 'r'))
     global weights
     weights = {}

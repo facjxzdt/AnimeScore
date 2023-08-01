@@ -1,6 +1,7 @@
 import json
 import time
 
+from utils.logger import Log
 from apis.mal import MyAnimeList
 from apis.anikore import Anikore
 from apis.anilist import AniList
@@ -17,9 +18,10 @@ anl = AniList()
 fm = Filmarks()
 bgm = Bangumi()
 
+log_score = Log(__name__).getlog()
 
 def get_score():
-    print('正在获取动画评分')
+    log_score.info('正在获取动画评分')
     animes = json.load(open(animes_path, 'r'))
     scores = {}
     count = 0
@@ -47,10 +49,10 @@ def get_score():
                     f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
                     f1.close()
                     count += 1
-                    print('已完成: ' + str(count))
+                    log_score.info('动画评分获取已完成: ' + str(count))
                     keep = False
                 except:
                     count_retry += 1
                     time.sleep(config.time_sleep)
-                    print('重试: ' + str(count_retry))
+                    log_score.info('重试: ' + str(count_retry))
         score = {}

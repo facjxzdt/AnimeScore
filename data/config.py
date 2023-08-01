@@ -18,3 +18,6 @@ weights = 'weights_default'
 retry_max = 5
 timeout = 10
 time_sleep = 5
+
+# 日志设置
+log_level = "INFO"
