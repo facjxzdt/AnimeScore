@@ -59,7 +59,7 @@ weights = 'weights_xxx'
 `weights = weights_xxx`:设置脚本所使用的权重
 
 ### 3.运行脚本
-#### 在`app`目录下执行`python app.py`
+#### 在`app`目录下执行`python onekey.py`
 ### 注意：请确保电脑可以顺利访问数据源的五个网站
 #### 待爬取完成后，在`data`文件夹里的`score.csv`就是输出结果
 
