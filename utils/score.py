@@ -14,7 +14,6 @@ def store_score(dicts: dict):
     f1.write(json.dumps(dicts, indent=4, separators=(',', ':')))
     f1.close()
 
-
 def total_score():
     log_ts.info('正在计算总分')
     animes = json.load(open(animes_path, 'r'))
