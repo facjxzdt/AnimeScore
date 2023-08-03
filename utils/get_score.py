@@ -2,6 +2,7 @@ import json
 import time
 
 from utils.logger import Log
+from utils.get_ids import get_single_id
 from apis.mal import MyAnimeList
 from apis.anikore import Anikore
 from apis.anilist import AniList
@@ -56,3 +57,32 @@ def get_score():
                     time.sleep(config.time_sleep)
                     log_score.info('重试: ' + str(count_retry))
         score = {}
+
+def get_single_score(bgm_id: str):
+    scores = {}
+    ids = get_single_id(bgm_id)
+    if ids['ank_id'] == 'Error' and ids['anl_id'] == 'Error':
+        pass
+    elif ids['fm_score'] == '-':
+        pass
+    else:
+        keep = True
+        count_retry = 0
+        while keep and count_retry < config.retry_max:
+            try:
+                scores['bgm_score'] = bgm.get_score(str(ids['bgm_id']))
+                if ids['ank_id'] != 'Error':
+                    scores['ank_score'] = 2 * float(ank.get_ani_score(ids['ank_id']))
+                if ids['anl_id'] != 'Error':
+                    scores['anl_score'] = anl.get_al_score(ids['anl_id'])
+                if ids['mal_id'] != '404':
+                    scores['mal_score'] = float(mal.get_anime_score(ids['mal_id']))
+                scores['fm_score'] = 2 * float(ids['fm_score'])
+                keep = False
+            except:
+                count_retry += 1
+                time.sleep(config.time_sleep)
+                log_score.info('重试: ' + str(count_retry))
+    scores['name'] = bgm.get_anime_name(bgm_id)
+    scores['ids'] = ids
+    return scores

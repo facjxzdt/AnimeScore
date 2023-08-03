@@ -67,3 +67,14 @@ class Bangumi:
         bs4_bgm_score = soup.find('span', attrs={'class': 'number', 'property': 'v:average'}).string
 
         return bs4_bgm_score
+
+    def get_anime_info(self, bgm_id: str):
+        log_bgm.info('正在获取{}的信息'.format(bgm_id))
+        search_url = 'https://api.bgm.tv/v0/subjects/' + bgm_id
+        page = requests.get(search_url,headers=self.headers,timeout=config.timeout).content
+        page = json.loads(page)
+        return page
+
+    def get_anime_name(self, bgm_id: str):
+        info = self.get_anime_info(bgm_id)
+        return info['name']

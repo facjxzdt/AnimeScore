@@ -23,8 +23,7 @@ class Log:
         try:
             f = open(self.log_path,'x')
         except:
-            os.remove(self.log_path)
-            f = open(self.log_path, 'x')
+            f = open(self.log_path, 'w')
 
         self.logger = logging.getLogger(logger)
         self.logger.setLevel(return_level())

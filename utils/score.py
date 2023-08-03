@@ -1,12 +1,19 @@
 import json
+
+import utils.get_score
 from data import config
 from utils.logger import Log
+from utils.get_score import get_single_score
 
 scores_path = '../data/score.json'
 scores_sorted_path = '../data/score_sorted.json'
 animes_path = '../data/animes.json'
 
 log_ts = Log(__name__).getlog()
+
+global weights
+weights = {}
+exec('weights = config.'+config.weights,globals())
 
 def store_score(dicts: dict):
     log_ts.info('正在存储分数')
@@ -17,9 +24,6 @@ def store_score(dicts: dict):
 def total_score():
     log_ts.info('正在计算总分')
     animes = json.load(open(animes_path, 'r'))
-    global weights
-    weights = {}
-    exec('weights = config.'+config.weights,globals())
     scores = json.load(open(scores_path, 'r'))
     score = 0
     ani_score = {}
@@ -54,3 +58,18 @@ def total_score():
         ani_score[animes[k]['name_cn']] = anime
         anime = {}
     store_score(ani_score)
+
+def count_single_score(scores: dict):
+    score = 0
+    for k1, v1 in weights.items():
+        if k1 in scores.keys():
+            score += v1 * int(scores[k1])
+        else:
+            score = 'None'
+            break
+    if (score != 'None'):
+        score = format(score, '.3f')
+        scores['score'] = float(score)
+    else:
+        scores['score'] = score
+    return scores
