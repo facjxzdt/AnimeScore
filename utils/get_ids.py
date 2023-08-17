@@ -22,26 +22,34 @@ log_id = Log(__name__).getlog()
 def get_ids():
     log_id.info('正在获取动画id，请稍后')
     animes = json.load(open(animes_path, 'r'))
+    animes_count = animes['total']
     count = 0
     for k, v in animes.items():
         keep = True
         count_retry = 0
         while keep and count_retry < config.retry_max:
-            try:
-                v['mal_id'] = mal.search_anime(k)
-                v['ank_id'] = ank.get_ani_id(k)
-                v['anl_id'] = anl.get_al_id(k)
-                v['fm_id'] = fm.get_fm_score(k)
-                f1 = open(animes_path, 'w')
-                f1.write(json.dumps(animes, sort_keys=True, indent=4, separators=(',', ':')))
-                f1.close()
-                count += 1
-                log_id.info('动画id获取已完成: ' + str(count))
-                keep = False
-            except:
-                count_retry += 1
-                time.sleep(config.time_sleep)
-                log_id.info('已重试：' + str(count_retry))
+            if k != 'time':
+                try:
+                    v['mal_id'] = mal.search_anime(k)
+                    v['ank_id'] = ank.get_ani_id(k)
+                    v['anl_id'] = anl.get_al_id(k)
+                    v['fm_id'] = fm.get_fm_score(k)
+                    f1 = open(animes_path, 'w')
+                    f1.write(json.dumps(animes, sort_keys=True, indent=4, separators=(',', ':')))
+                    f1.close()
+                    count += 1
+                    log_id.info('动画id获取已完成: ' + str(count))
+                    keep = False
+                except:
+                    count_retry += 1
+                    time.sleep(config.time_sleep)
+                    log_id.info('已重试：' + str(count_retry))
+                    if count_retry == config.retry_max - 1:
+                        try:
+                            log_id.error('获取bgm_id: {}失败'.format(v['bgm_id']))
+                        except:
+                            pass
+    log_id.info('获取动画分数成功数 {}'.format(str(count) + '/' + str(animes_count)))
 
 
 def get_single_id(bgm_id: str):
@@ -49,7 +57,7 @@ def get_single_id(bgm_id: str):
     name = bgm.get_anime_name(bgm_id)
     keep = True
     count_retry = 0
-    while keep and count_retry <config.retry_max:
+    while keep and count_retry < config.retry_max:
         try:
             ids['bgm_id'] = bgm_id
             ids['mal_id'] = mal.search_anime(name)

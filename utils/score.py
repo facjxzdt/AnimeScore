@@ -32,7 +32,7 @@ def total_score():
         score = 0
         for k1, v1 in weights.items():
             if k1 in v.keys():
-                score += v1 * int(v[k1])
+                score += v1 * float(v[k1])
             else:
                 score = 'None'
                 break
@@ -55,6 +55,7 @@ def total_score():
             anime['anl_score'] = scores[k]['anl_score']
         else:
             anime['anl_score'] = 'None'
+        anime['time'] = scores[k]['time']
         ani_score[animes[k]['name_cn']] = anime
         anime = {}
     store_score(ani_score)

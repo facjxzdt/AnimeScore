@@ -38,16 +38,19 @@ class Bangumi:
 
     def get_season_name(self):
         log_bgm.debug('获取整季新番')
+        anime_count = 0
         animes = {}
-        aniems_info = {}
+        animes_info = {}
         for i in range(0, 7):
             info = self.load_oneday_json(i)
             for name in info['items']:
                 if name['name_cn'] != '':
-                    aniems_info['name_cn'] = name['name_cn']
-                    aniems_info['bgm_id'] = name['id']
-                    animes[name['name']] = aniems_info
-                    aniems_info = {}
+                    animes_info['name_cn'] = name['name_cn']
+                    animes_info['bgm_id'] = name['id']
+                    animes[name['name']] = animes_info
+                    animes_info = {}
+                    anime_count += 1
+        animes['total'] = anime_count
         self.f1 = open(self.animes_path, 'w')
         self.f1.write(json.dumps(animes, sort_keys=True, indent=4, separators=(',', ':')))
         self.f1.close()
@@ -78,3 +81,12 @@ class Bangumi:
     def get_anime_name(self, bgm_id: str):
         info = self.get_anime_info(bgm_id)
         return info['name']
+
+    def check_animes_name(self, animes_name: str): #检测是否为中文(国漫识别率过低 中文字符串占75%以上即为国漫)
+        chinese_char = 0
+        for _char in animes_name:
+            if '\u4e00' <= _char <= '\u9fa5':
+                chinese_char += 1
+        if  round(chinese_char / len(animes_name),2) >= 0.75:
+            return False
+        return True
