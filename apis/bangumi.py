@@ -10,8 +10,8 @@ log_bgm = Log(__name__).getlog()
 
 class Bangumi:
     def __init__(self):
-        self.json_path = '../data/season.json'
-        self.animes_path = '../data/animes.json'
+        self.json_path = '../data/jsons/season.json'
+        self.animes_path = '../data/jsons/animes.json'
         self.bangumi_api = "https://api.bgm.tv"
         self.bs4_url = 'https://bgm.tv'
         self.headers = {'user-agent': 'facjxzdt/autobangumi'}

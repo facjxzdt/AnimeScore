@@ -5,9 +5,9 @@ from data import config
 from utils.logger import Log
 from utils.get_score import get_single_score
 
-scores_path = '../data/score.json'
-scores_sorted_path = '../data/score_sorted.json'
-animes_path = '../data/animes.json'
+scores_path = '../data/jsons/score.json'
+scores_sorted_path = '../data/jsons/score_sorted.json'
+animes_path = '../data/jsons/animes.json'
 
 log_ts = Log(__name__).getlog()
 

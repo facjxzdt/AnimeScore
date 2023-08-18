@@ -9,7 +9,7 @@ from apis.filmarks import Filmarks
 from apis.bangumi import Bangumi
 from data import config
 
-animes_path = '../data/animes.json'
+animes_path = '../data/jsons/animes.json'
 
 mal = MyAnimeList()
 ank = Anikore()

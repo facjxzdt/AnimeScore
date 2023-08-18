@@ -3,7 +3,7 @@ import json
 
 from utils.logger import Log
 
-scores_path = '../data/score_sorted.json'
+scores_path = '../data/jsons/score_sorted.json'
 csv_path = '../data/score.csv'
 
 log_json = Log(__name__).getlog()
