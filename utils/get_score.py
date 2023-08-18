@@ -40,9 +40,7 @@ def get_score():
         try:
             if v['ank_id'] == 'Error' and v['anl_id'] == 'Error':
                 pass
-            elif v['fm_id'] == '-':
-                pass
-            elif k == 'time':
+            elif v['fm_id'] == '-' or k == 'time':
                 pass
             else:
                 keep = True

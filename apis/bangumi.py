@@ -1,5 +1,6 @@
 import requests
 import json
+import prettytable as pt
 
 from bs4 import BeautifulSoup
 from data import config
@@ -73,7 +74,7 @@ class Bangumi:
 
     def get_anime_info(self, bgm_id: str):
         log_bgm.info('正在获取{}的信息'.format(bgm_id))
-        search_url = 'https://api.bgm.tv/v0/subjects/' + bgm_id
+        search_url = 'https://api.bgm.tv/v0/subjects/' + str(bgm_id)
         page = requests.get(search_url,headers=self.headers,timeout=config.timeout).content
         page = json.loads(page)
         return page
@@ -82,11 +83,40 @@ class Bangumi:
         info = self.get_anime_info(bgm_id)
         return info['name']
 
-    def check_animes_name(self, animes_name: str): #检测是否为中文(国漫识别率过低 中文字符串占75%以上即为国漫)
-        chinese_char = 0
-        for _char in animes_name:
-            if '\u4e00' <= _char <= '\u9fa5':
-                chinese_char += 1
-        if  round(chinese_char / len(animes_name),2) >= 0.75:
-            return False
-        return True
+    def search_anime(self, anime_name: str):
+        search_url = self.bangumi_api + '/v0/search/subjects'
+        # 构造请求体
+        post_body = {}
+        filters = {}
+        post_body['keyword'] = anime_name
+        post_body['sort'] = 'rank'
+        filters['type'] = [2]
+        post_body['filter'] = filters
+        post_body = json.dumps(post_body)
+        # 发送post请求
+        res = requests.post(search_url,headers=self.headers,data=post_body,timeout=config.timeout).content
+        return json.loads(res)
+
+    def search_cli(self, animes_name: str):
+        search_dict = self.search_anime(animes_name)
+        anime_table = pt.PrettyTable(["序号","中文名","日文原名","上映时间","评分","bgm_id"])
+        anime_table.align = 'l'
+        anime_table.align['bgm_id'] = 'r'
+        anime_table.align['评分'] = 'm'
+        anime_table.left_padding_width = 0
+        num = 1
+        index = 0
+        for anime in search_dict['data']:
+            anime = dict(anime)
+            if anime['score'] != 0:
+                anime['num'] = num
+                search_dict['data'][index] = anime
+                anime_table.add_row([anime['num'],anime['name_cn'],anime['name'],anime['date'],anime['score'],anime['id']])
+                num += 1
+            index += 1
+        print(anime_table)
+        choose = int(input('请输入序号: '))
+        if 0 < choose < num:
+            for anime in search_dict['data']:
+                if 'num' in anime and anime['num'] == choose:
+                    return anime
