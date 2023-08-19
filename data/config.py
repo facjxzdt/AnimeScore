@@ -25,3 +25,7 @@ log_level = "INFO"
 enable_chinese_check = False
 # 国漫识别阈值
 chinese_check_threshold = 0.75
+
+#meilisearcch设置
+meili_url = 'https://ms-5d76c6d3887c-4928.sgp.meilisearch.io'
+meili_key = 'd1979b54ec31bf4b8c2150afa08c67207ed88fbe'

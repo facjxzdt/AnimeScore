@@ -48,6 +48,7 @@ class Bangumi:
                 if name['name_cn'] != '':
                     animes_info['name_cn'] = name['name_cn']
                     animes_info['bgm_id'] = name['id']
+                    animes_info['poster'] = name['images']['large']
                     animes[name['name']] = animes_info
                     animes_info = {}
                     anime_count += 1

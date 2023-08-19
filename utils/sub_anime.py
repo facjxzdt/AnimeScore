@@ -16,6 +16,7 @@ def sub_animes(anime_name: str):
         anime_already_sub = json.load(open(sub_json_path,'r'))
     info = get_single_id(anime_info['id'])
     info['name_cn'] = anime_info['name_cn']
+    info['poster'] = anime_info['image']
     info['fm_id'] = info['fm_score']
     info.pop('fm_score')
     anime_already_sub[anime_info['name']] = info

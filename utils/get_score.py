@@ -105,6 +105,9 @@ def get_single_score(bgm_id: str):
                     log_score.error('获取bgm_id: {}失败'.format(bgm_id))
     scores['name'] = bgm.get_anime_name(bgm_id)
     scores['ids'] = ids
+    info = bgm.get_anime_info(bgm_id)
+    scores['poster'] = info['images']['large']
+    scores['name_cn'] = info['name_cn']
+    scores['time'] = get_time()
+    scores['bgm_id'] = ids['bgm_id']
     return scores
-
-get_score(method='sub')
