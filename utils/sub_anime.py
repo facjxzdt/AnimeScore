@@ -5,8 +5,7 @@ from utils.get_ids import get_single_id
 bgm = Bangumi()
 sub_json_path = '../data/jsons/sub.json'
 
-def sub_animes(anime_name: str):
-    anime_info = bgm.search_cli(anime_name)
+def sub_animes(method: str,anime_name=None,bgm_id=None):
     try:
         anime_already_sub = json.load(open(sub_json_path,'r'))
     except:
@@ -14,9 +13,16 @@ def sub_animes(anime_name: str):
         file.write('{}')
         file.close()
         anime_already_sub = json.load(open(sub_json_path,'r'))
-    info = get_single_id(anime_info['id'])
+    if method == 'name':
+        anime_info = bgm.search_cli(anime_name)
+        info = get_single_id(anime_info['id'])
+        info['poster'] = anime_info['image']
+    else:
+        bgm_id = str(bgm_id)
+        anime_info = bgm.get_anime_info(bgm_id)
+        info = get_single_id(bgm_id)
+        info['poster'] = anime_info['images']['large']
     info['name_cn'] = anime_info['name_cn']
-    info['poster'] = anime_info['image']
     info['fm_id'] = info['fm_score']
     info.pop('fm_score')
     anime_already_sub[anime_info['name']] = info

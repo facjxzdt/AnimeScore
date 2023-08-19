@@ -9,13 +9,8 @@ def get_list():
     scores = file
     return json.load(scores)
 
-
 @web.route('/list')
 def return_list():
     return get_list()
-
-@web.route('/search/air/<id>', methods=['GET'])
-def search_air_json(name):
-    api = request.args.get('api')# ank anl bgm fm mal string类型
 
 web.run()

@@ -25,6 +25,3 @@ class Meilisearch:
         dicts['id'] = dicts['bgm_id']
         dicts.pop('bgm_id')
         self.index.add_documents(dicts)
-
-meili = Meilisearch()
-meili.add_anime2search('air')

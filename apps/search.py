@@ -22,5 +22,3 @@ def search_anime():
     for id in animes_id:
         info = count_single_score(get_single_score(id))
         meili.add_single_anime(info)
-
-search_anime()
