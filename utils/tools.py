@@ -1,4 +1,5 @@
 import data.config
+import requests
 
 class Tools:
     def __init__(self):
@@ -13,4 +14,14 @@ class Tools:
                     chinese_char += 1
             if  round(chinese_char / len(animes_name),2) >= self.chinese_threshold:
                 return False
+        return True
+
+    def check_net(self):
+        url_list = \
+            ['https://www.anikore.jp','https://graphql.anilist.co','https://api.bgm.tv','https://filmarks.com','https://myanimelist.net']
+        try:
+            for i in range(0,5):
+                requests.get(url_list[i])
+        except:
+            return False
         return True

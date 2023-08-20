@@ -3,9 +3,13 @@ import utils.get_score
 import utils.json2csv
 import utils.score
 import utils.sub_anime
-import utils.tools
+import utils.logger
+import utils.errors as errors
 import apps.search
+import json
+import os
 
+from utils.tools import Tools
 from apis.bangumi import Bangumi
 from apis.anilist import AniList
 from apis.mal import MyAnimeList
@@ -13,6 +17,7 @@ from apis.filmarks import Filmarks
 from apis.anikore import Anikore
 from meili_search import Meilisearch
 
+logger = utils.logger.Log()
 class AnimeScore:
     def __init__(self):
         self.version = 'v0.2'
@@ -21,7 +26,28 @@ class AnimeScore:
         self.anl = AniList()
         self.fm = Filmarks()
         self.bgm = Bangumi()
+        self.tools = Tools()
         self.meili = Meilisearch()
+    def init(self):
+        first = False
+        logger.logger.info('正在初始化')
+        if os.path.exists('../data/init.lock'):
+            pass
+        else:
+            file = open('../data/init.lock','w')
+            first = True
+        logger.logger.info('测试网络')
+        if self.tools.check_net():
+            logger.logger.info('可以访问api')
+        else:
+            raise errors.NetworkError()
+
+        if first:
+            self.bgm.get_season_name()
+            utils.get_ids.get_ids()
+            utils.get_score.get_score(method='air')
+            utils.score.total_score(method='air')
+            utils.json2csv.json2csv(method='air')
 
     #类封装
     #Bangumi类下各方法
@@ -59,23 +85,23 @@ class AnimeScore:
     def get_ids(self):# 获取anime.json中动画的id
         return utils.get_ids.get_ids()
 
-    def get_single_id(self):# bgm_id: str
-        return utils.get_ids.get_single_id()
+    def get_single_id(self,bgm_id):# bgm_id: str
+        return utils.get_ids.get_single_id(bgm_id)
 
-    def get_score(self):# method='sub'or'air'
-        return utils.get_score.get_score()
+    def get_score(self,method):# method='sub'or'air'
+        return utils.get_score.get_score(method)
 
-    def get_single_score(self):
-        return utils.get_score.get_single_score()
+    def get_single_score(self,bgm_id):
+        return utils.get_score.get_single_score(bgm_id)
 
-    def total_score(self):# method='sub'or'air'
-        return utils.score.total_score()
+    def total_score(self,method):# method='sub'or'air'
+        return utils.score.total_score(method)
 
-    def json2csv(self):# method='sub'or'air'
-        return utils.json2csv.json2csv()
+    def json2csv(self,method):# method='sub'or'air'
+        return utils.json2csv.json2csv(method)
 
-    def sub_anime(self):
-        return utils.sub_anime()
+    def sub_anime(self,method,anime_name,bgm_id):
+        return utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
 
     def search_bgm_id(self,bgm_id=None,method='bgm_id'):
         if method == 'bgm_id':
@@ -85,19 +111,22 @@ class AnimeScore:
         else:
             return apps.search.search_anime()
 
-    def search_anime_name(self):
-        return self.meili.search_anime()
+    def search_anime_name(self,string):
+        return self.meili.search_anime(string)
 
     # sub_anime函数参数说明
     # 必须参数: method='bgm_id' or 'name'
     # name: 为动画名 将会调用控制台进行cli交互
     # bgm_id: 为bgm网站id 无需交互
     # 故name适合本地添加 bgm_id本地or api添加都可以
-    def sub_anime(self,method='name'or'bgm_id',anime_name=None,bgm_id=None):# sub_animes(method='name'or'bgm_id',anime_name=None,bgm_id=None)
-        utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
-        utils.get_score.get_score('sub')
-        utils.score.total_score('sub')
-        self.meili.add_anime2search('sub')
-
-ans = AnimeScore()
-ans.sub_anime(method='bgm_id',bgm_id=428735)
+    def sub_anime(self,method,anime_name=None,bgm_id=None):# sub_animes(method='name'or'bgm_id',anime_name=None,bgm_id=None)
+        bgm_id = utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
+        info = utils.score.count_single_score(utils.score.get_single_score(bgm_id))
+        self.meili.add_single_anime(info)
+        score_path = '../data/jsons/sub_score_sorted.json'
+        scores_exist = json.load(open(score_path,'r'))
+        scores_exist[info['name']] = info
+        f = open(score_path, 'w')
+        f.write(json.dumps(scores_exist, sort_keys=True, indent=4, separators=(',', ':')))
+        f.close()
+        return True

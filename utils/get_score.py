@@ -16,6 +16,7 @@ ank = Anikore()
 anl = AniList()
 fm = Filmarks()
 bgm = Bangumi()
+meili = Meilisearch()
 
 log_score = Log(__name__).getlog()
 
@@ -137,6 +138,7 @@ def update_score(bgm_id: str):
     info['ank_score'] = score['ank_score']
     info['anl_score'] = score['anl_score']
     info['time'] = get_time()
+    meili.add_single_anime(dict(info))
     #更新json
     scores = json.load(open(score_path,'r'))
     scores[info['name']] = info

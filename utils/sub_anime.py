@@ -34,3 +34,4 @@ def sub_animes(method: str,anime_name=None,bgm_id=None):
     f = open(sub_json_path,'w')
     f.write(json.dumps(anime_already_sub,sort_keys=True, indent=4, separators=(',', ':')))
     f.close()
+    return info['bgm_id']
