@@ -1,6 +1,7 @@
 import json
 import time
 
+from web_api.meili_search import Meilisearch
 from utils.logger import Log
 from utils.get_ids import get_single_id
 from apis.mal import MyAnimeList
@@ -111,3 +112,34 @@ def get_single_score(bgm_id: str):
     scores['time'] = get_time()
     scores['bgm_id'] = ids['bgm_id']
     return scores
+
+def update_score(bgm_id: str):
+    # 该函数用于更新sub下的分数
+    # air由于会每日自动更新 故不添加update_score
+    meili = Meilisearch()
+    bgm_id = str(bgm_id)
+    score_path = '../data/jsons/sub_score_sorted.json'
+    info = meili.index.search(
+        bgm_id,
+        {
+            'filter':['id={}'.format(bgm_id)]
+        }
+    )['hits'][0]
+    score = {}
+    score['bgm_score'] = bgm.get_score(info['ids']['bgm_id'])
+    score['mal_score'] = mal.get_anime_score(info['ids']['mal_id'])
+    score['ank_score'] = ank.get_ani_score(info['ids']['ank_id'])
+    score['anl_score'] = anl.get_al_score(info['ids']['ank_id'])
+    score['fm_score'] = fm.get_fm_score(info['name'])
+    info['bgm_score'] = score['bgm_score']
+    info['fm_score'] = score['fm_score']
+    info['mal_score'] = score['mal_score']
+    info['ank_score'] = score['ank_score']
+    info['anl_score'] = score['anl_score']
+    info['time'] = get_time()
+    #更新json
+    scores = json.load(open(score_path,'r'))
+    scores[info['name']] = info
+    f1 = open(score_path, 'w')
+    f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
+    f1.close()

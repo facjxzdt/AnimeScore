@@ -70,7 +70,7 @@ def total_score(method):
         else:
             anime['anl_score'] = 'None'
         anime['time'] = scores[k]['time']
-        ani_score[animes[k]['name_cn']] = anime
+        ani_score[k] = anime
         anime = {}
     store_score(ani_score,method=method)
 

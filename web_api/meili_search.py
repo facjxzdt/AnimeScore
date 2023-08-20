@@ -25,3 +25,7 @@ class Meilisearch:
         dicts['id'] = dicts['bgm_id']
         dicts.pop('bgm_id')
         self.index.add_documents(dicts)
+
+    def update_filterable_attributes(self):
+        body = ['id']
+        self.index.update_filterable_attributes(body)

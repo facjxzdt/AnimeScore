@@ -33,31 +33,33 @@ class AniList:
             log_anl.debug('获取{}的anl_id失败'.format(anime))
             return "Error"
 
-    def get_al_score(self, anl_id: int):
-        query = '''
-        query ($id: Int) {
-          Media (id: $id, type: ANIME) {
-            id
-            title {
-              romaji
-              english
-              native
+    def get_al_score(self, anl_id: str):
+        if anl_id != 'Error':
+            query = '''
+            query ($id: Int) {
+              Media (id: $id, type: ANIME) {
+                id
+                title {
+                  romaji
+                  english
+                  native
+                }
+                meanScore
+                averageScore
+              }
             }
-            meanScore
-            averageScore
-          }
-        }
-        '''
-        variables = {
-            'id': anl_id
-        }
-        anl_score = requests.post(self.api_url, json={'query': query, 'variables': variables}, timeout=config.timeout)
-        log_anl.debug('正在获取{}的anl评分'.format(anl_id))
-        try:
-            return (json.loads(anl_score.content)['data']['Media']['meanScore'] +
-                    json.loads(anl_score.content)['data']['Media']['averageScore']) / 20
-        except:
+            '''
+            variables = {
+                'id': int(anl_id)
+            }
+            anl_score = requests.post(self.api_url, json={'query': query, 'variables': variables}, timeout=config.timeout)
+            log_anl.debug('正在获取{}的anl评分'.format(anl_id))
             try:
-                return json.loads(anl_score.content)['data']['Media']['meanScore'] / 10
+                return (json.loads(anl_score.content)['data']['Media']['meanScore'] +
+                        json.loads(anl_score.content)['data']['Media']['averageScore']) / 20
             except:
-                return json.loads(anl_score.content)['data']['Media']['averageScore'] / 10
+                try:
+                    return json.loads(anl_score.content)['data']['Media']['meanScore'] / 10
+                except:
+                    return json.loads(anl_score.content)['data']['Media']['averageScore'] / 10
+        return 'None'

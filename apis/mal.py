@@ -30,11 +30,13 @@ class MyAnimeList:
             return "Error"
 
     def get_anime_score(self, mal_id: str):
-        log_mal.debug('正在获取{}的mal评分'.format(mal_id))
-        score_url = self.url + "/anime/" + str(mal_id)
-        page = requests.get(score_url, timeout=config.timeout).content
+        if mal_id != 'Error':
+            log_mal.debug('正在获取{}的mal评分'.format(mal_id))
+            score_url = self.url + "/anime/" + str(mal_id)
+            page = requests.get(score_url, timeout=config.timeout).content
 
-        soup = BeautifulSoup(page, 'lxml')
-        mal_score = soup.find('div', attrs={'class': 'score-label'}).string
+            soup = BeautifulSoup(page, 'lxml')
+            mal_score = soup.find('div', attrs={'class': 'score-label'}).string
 
-        return mal_score
+            return mal_score
+        return 'None'

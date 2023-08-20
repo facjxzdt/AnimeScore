@@ -28,11 +28,13 @@ class Anikore:
             return "Error"
 
     def get_ani_score(self, ani_id: str):
-        score_url = self.url + '/anime/' + ani_id
-        log_ank.debug('正在向{}发送请求'.format(score_url))
-        page = requests.get(score_url, headers=config.real_headers, timeout=10).content
-        log_ank.debug('正在解析网页')
-        soup = BeautifulSoup(page, 'lxml')
-        score = soup.find('div', attrs={'class': 'l-animeDetailHeader_pointAndButtonBlock_starBlock'}).strong.string
-        log_ank.debug('{},anikore动画评分获取成功'.format(ani_id))
-        return score
+        if ani_id != 'Error':
+            score_url = self.url + '/anime/' + ani_id
+            log_ank.debug('正在向{}发送请求'.format(score_url))
+            page = requests.get(score_url, headers=config.real_headers, timeout=10).content
+            log_ank.debug('正在解析网页')
+            soup = BeautifulSoup(page, 'lxml')
+            score = soup.find('div', attrs={'class': 'l-animeDetailHeader_pointAndButtonBlock_starBlock'}).strong.string
+            log_ank.debug('{},anikore动画评分获取成功'.format(ani_id))
+            return score
+        return 'None'

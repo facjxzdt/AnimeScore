@@ -21,7 +21,7 @@ class AnimeScore:
         self.anl = AniList()
         self.fm = Filmarks()
         self.bgm = Bangumi()
-        self.meili = Meilisearch
+        self.meili = Meilisearch()
 
     #类封装
     #Bangumi类下各方法
@@ -93,5 +93,11 @@ class AnimeScore:
     # name: 为动画名 将会调用控制台进行cli交互
     # bgm_id: 为bgm网站id 无需交互
     # 故name适合本地添加 bgm_id本地or api添加都可以
-    def sub_anime(self):# sub_animes(method='name'or'bgm_id',anime_name=None,bgm_id=None)
-        return utils.sub_anime.sub_animes()
+    def sub_anime(self,method='name'or'bgm_id',anime_name=None,bgm_id=None):# sub_animes(method='name'or'bgm_id',anime_name=None,bgm_id=None)
+        utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
+        utils.get_score.get_score('sub')
+        utils.score.total_score('sub')
+        self.meili.add_anime2search('sub')
+
+ans = AnimeScore()
+ans.sub_anime(method='bgm_id',bgm_id=428735)
