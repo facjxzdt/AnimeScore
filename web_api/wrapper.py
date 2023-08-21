@@ -48,7 +48,6 @@ class AnimeScore:
             utils.get_score.get_score(method='air')
             utils.score.total_score(method='air')
             utils.json2csv.json2csv(method='air')
-
     #类封装
     #Bangumi类下各方法
     # get_info(): 获取bgm每日放送
@@ -105,7 +104,7 @@ class AnimeScore:
 
     def search_bgm_id(self,bgm_id=None,method='bgm_id'):
         if method == 'bgm_id':
-            info = utils.score.count_single_score(utils.get_score.get_single_score(bgm_id))
+            info =utils.score.count_single_score(utils.get_score.get_single_score(bgm_id))
             self.meili.add_single_anime(info)
             return info
         else:
@@ -120,7 +119,7 @@ class AnimeScore:
     # bgm_id: 为bgm网站id 无需交互
     # 故name适合本地添加 bgm_id本地or api添加都可以
     def sub_anime(self,method,anime_name=None,bgm_id=None):# sub_animes(method='name'or'bgm_id',anime_name=None,bgm_id=None)
-        bgm_id = utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
+        bgm_id =utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
         info = utils.score.count_single_score(utils.score.get_single_score(bgm_id))
         self.meili.add_single_anime(info)
         score_path = '../data/jsons/sub_score_sorted.json'
@@ -130,3 +129,15 @@ class AnimeScore:
         f.write(json.dumps(scores_exist, sort_keys=True, indent=4, separators=(',', ':')))
         f.close()
         return True
+
+    def update_all_anime(self,method):
+        utils.get_score.get_score(method)
+        utils.score.total_score(method)
+        utils.json2csv.json2csv(method)
+
+    def update_air_anime(self):
+        utils.get_score.get_score(method='air')
+        self.update_all_anime(method='air')
+
+    def update_single_score(self,bgm_id):
+        utils.get_score.update_score(bgm_id)
