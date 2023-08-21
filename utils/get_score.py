@@ -1,5 +1,6 @@
 import json
 import time
+import threading
 
 from web_api.meili_search import Meilisearch
 from utils.logger import Log
@@ -18,7 +19,53 @@ fm = Filmarks()
 bgm = Bangumi()
 meili = Meilisearch()
 
+score = {}
+score_1 = {}
+score_2 = {}
+
 log_score = Log(__name__).getlog()
+
+def get_bgm_id(bgm_id,score: dict):
+    score['bgm_score'] = bgm.get_score(bgm_id)
+    time.sleep(1)
+
+def get_ank_id(ank_id,score: dict):
+    if ank_id != 'Error':
+        score['ank_score'] = 2 * float(ank.get_ani_score(ank_id))
+    time.sleep(1)
+
+def get_anl_id(anl_id,score: dict):
+    if anl_id != 'Error':
+        score['anl_score'] = anl.get_al_score(anl_id)
+    time.sleep(1)
+
+def get_mal_id(mal_id,score: dict):
+    if mal_id != '404':
+        mal_score = mal.get_anime_score(mal_id)
+        if mal_score != 'N/A':
+            score['mal_score'] = float(mal_score)
+    time.sleep(1)
+
+def create_threads(dicts:dict,score: dict):
+    tlist = []
+    t1 = threading.Thread(target=get_bgm_id, args=(str(dicts['bgm_id']),score,))
+    t2 = threading.Thread(target=get_mal_id, args=(str(dicts['mal_id']),score,))
+    t3 = threading.Thread(target=get_ank_id, args=(str(dicts['ank_id']),score,))
+    t4 = threading.Thread(target=get_anl_id, args=(str(dicts['anl_id']),score,))
+    t1.start()
+    log_score.debug('{}线程创建成功'.format(t1.name))
+    t2.start()
+    log_score.debug('{}线程创建成功'.format(t2.name))
+    t3.start()
+    log_score.debug('{}线程创建成功'.format(t3.name))
+    t4.start()
+    log_score.debug('{}线程创建成功'.format(t4.name))
+    tlist.append(t1)
+    tlist.append(t2)
+    tlist.append(t3)
+    tlist.append(t4)
+    for t in tlist:
+        t.join()
 
 def get_time():
     time_dict = {}
@@ -41,7 +88,7 @@ def get_score(method):
     scores = {}
     count = 0
     for k, v in animes.items():
-        score = {}
+        global score
         if k == 'total':
             pass
         elif v['ank_id'] == 'Error' and v['anl_id'] == 'Error':
@@ -53,13 +100,8 @@ def get_score(method):
             count_retry = 0
             while keep and count_retry < config.retry_max:
                 try:
-                    score['bgm_score'] = bgm.get_score(str(v['bgm_id']))
-                    if v['ank_id'] != 'Error':
-                        score['ank_score'] = 2 * float(ank.get_ani_score(v['ank_id']))
-                    if v['anl_id'] != 'Error':
-                        score['anl_score'] = anl.get_al_score(v['anl_id'])
-                    if v['mal_id'] != '404':
-                        score['mal_score'] = float(mal.get_anime_score(v['mal_id']))
+                    global score
+                    create_threads(v,score)
                     score['fm_score'] = 2 * float(v['fm_id'])
                     score['time'] = get_time()
                     scores[k] = score
@@ -79,25 +121,20 @@ def get_score(method):
     log_score.info('获取动画分数成功数 {}'.format(str(count)+'/'+str(animes_count)))
 
 def get_single_score(bgm_id: str):
-    scores = {}
+    global score_1
+    score_1 = {}
     ids = get_single_id(bgm_id)
     if ids['ank_id'] == 'Error' and ids['anl_id'] == 'Error':
         pass
-    elif ids['fm_score'] == '-':
+    elif ids['fm_id'] == '-':
         pass
     else:
         keep = True
         count_retry = 0
         while keep and count_retry < config.retry_max:
             try:
-                scores['bgm_score'] = bgm.get_score(str(ids['bgm_id']))
-                if ids['ank_id'] != 'Error':
-                    scores['ank_score'] = 2 * float(ank.get_ani_score(ids['ank_id']))
-                if ids['anl_id'] != 'Error':
-                    scores['anl_score'] = anl.get_al_score(ids['anl_id'])
-                if ids['mal_id'] != '404':
-                    scores['mal_score'] = float(mal.get_anime_score(ids['mal_id']))
-                scores['fm_score'] = 2 * float(ids['fm_score'])
+                create_threads(ids,score_1)
+                score_1['fm_score'] = 2 * float(ids['fm_id'])
                 keep = False
             except:
                 count_retry += 1
@@ -105,14 +142,14 @@ def get_single_score(bgm_id: str):
                 log_score.info('重试: ' + str(count_retry))
                 if count_retry == config.retry_max -1:
                     log_score.error('获取bgm_id: {}失败'.format(bgm_id))
-    scores['name'] = bgm.get_anime_name(bgm_id)
-    scores['ids'] = ids
+    score_1['name'] = bgm.get_anime_name(bgm_id)
+    score_1['ids'] = ids
     info = bgm.get_anime_info(bgm_id)
-    scores['poster'] = info['images']['large']
-    scores['name_cn'] = info['name_cn']
-    scores['time'] = get_time()
-    scores['bgm_id'] = ids['bgm_id']
-    return scores
+    score_1['poster'] = info['images']['large']
+    score_1['name_cn'] = info['name_cn']
+    score_1['time'] = get_time()
+    score_1['bgm_id'] = ids['bgm_id']
+    return score_1
 
 def update_score(bgm_id: str):
     # 该函数用于更新sub下的分数
@@ -126,17 +163,15 @@ def update_score(bgm_id: str):
             'filter':['id={}'.format(bgm_id)]
         }
     )['hits'][0]
-    score = {}
-    score['bgm_score'] = bgm.get_score(info['ids']['bgm_id'])
-    score['mal_score'] = mal.get_anime_score(info['ids']['mal_id'])
-    score['ank_score'] = ank.get_ani_score(info['ids']['ank_id'])
-    score['anl_score'] = anl.get_al_score(info['ids']['ank_id'])
-    score['fm_score'] = fm.get_fm_score(info['name'])
-    info['bgm_score'] = score['bgm_score']
-    info['fm_score'] = score['fm_score']
-    info['mal_score'] = score['mal_score']
-    info['ank_score'] = score['ank_score']
-    info['anl_score'] = score['anl_score']
+    global score_2
+    score_2 = {}
+    create_threads(info['ids'],score_2)
+    score_2['fm_score'] = fm.get_fm_score(info['name'])
+    info['bgm_score'] = score_2['bgm_score']
+    info['fm_score'] = score_2['fm_score']
+    info['mal_score'] = score_2['mal_score']
+    info['ank_score'] = score_2['ank_score']
+    info['anl_score'] = score_2['anl_score']
     info['time'] = get_time()
     meili.add_single_anime(dict(info))
     #更新json

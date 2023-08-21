@@ -1,5 +1,6 @@
 import json
 import time
+import threading
 
 from utils.logger import Log
 from apis.mal import MyAnimeList
@@ -10,6 +11,8 @@ from apis.bangumi import Bangumi
 from data import config
 
 animes_path = '../data/jsons/animes.json'
+animes = {}
+ids = {}
 
 mal = MyAnimeList()
 ank = Anikore()
@@ -19,8 +22,46 @@ bgm = Bangumi()
 
 log_id = Log(__name__).getlog()
 
+def get_mal_id(string,dicts:dict):
+    dicts['mal_id'] = mal.search_anime(string)
+    time.sleep(1)
+
+def get_ank_id(string,dicts:dict):
+    dicts['ank_id'] = ank.get_ani_id(string)
+    time.sleep(1)
+
+def get_anl_id(string,dicts:dict):
+    dicts['anl_id'] = anl.get_al_id(string)
+    time.sleep(1)
+
+def get_fm_id(string,dicts:dict):
+    dicts['fm_id'] = fm.get_fm_score(string)
+    time.sleep(1)
+
+def create_threads(dicts:dict,string: str):
+    tlist = []
+    t1 = threading.Thread(target=get_fm_id, args=(string,dicts,))
+    t2 = threading.Thread(target=get_mal_id, args=(string,dicts,))
+    t3 = threading.Thread(target=get_ank_id, args=(string,dicts,))
+    t4 = threading.Thread(target=get_anl_id, args=(string,dicts,))
+    t1.start()
+    log_id.debug('{}线程创建成功'.format(t1.name))
+    t2.start()
+    log_id.debug('{}线程创建成功'.format(t2.name))
+    t3.start()
+    log_id.debug('{}线程创建成功'.format(t3.name))
+    t4.start()
+    log_id.debug('{}线程创建成功'.format(t4.name))
+    tlist.append(t1)
+    tlist.append(t2)
+    tlist.append(t3)
+    tlist.append(t4)
+    for t in tlist:
+        t.join()
+
 def get_ids():
     log_id.info('正在获取动画id，请稍后')
+    global animes
     animes = json.load(open(animes_path, 'r'))
     animes_count = animes['total']
     count = 0
@@ -30,10 +71,7 @@ def get_ids():
         while keep and count_retry < config.retry_max:
             if k != 'time':
                 try:
-                    v['mal_id'] = mal.search_anime(k)
-                    v['ank_id'] = ank.get_ani_id(k)
-                    v['anl_id'] = anl.get_al_id(k)
-                    v['fm_id'] = fm.get_fm_score(k)
+                    create_threads(v,k)
                     f1 = open(animes_path, 'w')
                     f1.write(json.dumps(animes, sort_keys=True, indent=4, separators=(',', ':')))
                     f1.close()
@@ -53,6 +91,7 @@ def get_ids():
 
 
 def get_single_id(bgm_id: str):
+    global ids
     ids = {}
     name = bgm.get_anime_name(bgm_id)
     keep = True
@@ -60,10 +99,8 @@ def get_single_id(bgm_id: str):
     while keep and count_retry < config.retry_max:
         try:
             ids['bgm_id'] = bgm_id
-            ids['mal_id'] = mal.search_anime(name)
-            ids['ank_id'] = ank.get_ani_id(name)
-            ids['anl_id'] = anl.get_al_id(name)
-            ids['fm_score'] = fm.get_fm_score(name)
+            create_threads(ids,name)
+            print(ids)
             keep = False
         except:
             count_retry += 1
