@@ -32,3 +32,5 @@ meili_key = 'd1979b54ec31bf4b8c2150afa08c67207ed88fbe'
 
 #api设置
 key = 'test'
+ttl = 600
+max_size = 100

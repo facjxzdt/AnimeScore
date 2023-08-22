@@ -1,3 +1,4 @@
+import data.config
 import utils.get_ids
 import utils.get_score
 import utils.json2csv
@@ -9,6 +10,7 @@ import apps.search
 import json
 import os
 
+from data.config import ttl,max_size
 from utils.tools import Tools
 from apis.bangumi import Bangumi
 from apis.anilist import AniList
@@ -19,7 +21,7 @@ from meili_search import Meilisearch
 from cachetools import cached,TTLCache
 
 logger = utils.logger.Log()
-cache = TTLCache(maxsize=100,ttl=600)
+cache = TTLCache(max_size,ttl)
 class AnimeScore:
     def __init__(self):
         self.version = 'v0.2'
