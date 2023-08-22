@@ -27,8 +27,8 @@ enable_chinese_check = False
 chinese_check_threshold = 0.75
 
 #meilisearcch设置
-meili_url = 'https://ms-5d76c6d3887c-4928.sgp.meilisearch.io'
-meili_key = 'd1979b54ec31bf4b8c2150afa08c67207ed88fbe'
+meili_url = 'http://192.168.1.106:7700'
+meili_key = 'KDD1eKlEnCBjWfwJ8HQaro18aynnsVDeMwcopkY7evI'
 
 #api设置
 key = 'test'

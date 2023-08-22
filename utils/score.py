@@ -52,9 +52,12 @@ def total_score(method):
         anime['name'] = k
         anime['bgm_id'] = animes[k]['bgm_id']
         anime['poster'] = animes[k]['poster']
-        anime['bgm_score'] = scores[k]['bgm_score']
-        anime['fm_score'] = scores[k]['fm_score']
-        anime['mal_score'] = scores[k]['mal_score']
+        try:
+            anime['mal_score'] = scores[k]['mal_score']
+            anime['bgm_score'] = scores[k]['bgm_score']
+            anime['fm_score'] = scores[k]['fm_score']
+        except:
+            pass
         ids['bgm_id'] = animes[k]['bgm_id']
         ids['mal_id'] = animes[k]['mal_id']
         ids['ank_id'] = animes[k]['ank_id']

@@ -5,7 +5,7 @@ client = meilisearch.Client(data.config.meili_url,data.config.meili_key)
 class Meilisearch:
     def __init__(self):
         self.client = meilisearch.Client(data.config.meili_url,data.config.meili_key)
-        self.index = client.index('tests')
+        self.index = client.index('scores')
     def add_anime2search(self,method):
         if method == 'sub':
             score_path = '../data/jsons/sub_score_sorted.json'

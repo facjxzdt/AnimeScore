@@ -1,4 +1,6 @@
-from fastapi import FastAPI, routing
+from fastapi import FastAPI
+
+import web_api.meili_search
 from web_api.wrapper import AnimeScore
 from data.config import key
 from pydantic import BaseModel
@@ -9,6 +11,7 @@ import uvicorn
 animes_path = '../data/jsons/score_sorted.json'
 ans = AnimeScore()
 app = FastAPI()
+meili = web_api.meili_search.Meilisearch()
 
 
 class PostBody(BaseModel):
@@ -67,8 +70,17 @@ def update_air_anime(body: PostBody):
     if body.key == key:
         ans.update_air_anime()
         return {'status': 200, 'body': 'OK'}
-    return {'status'}
+    return {'status':403, 'body':'Key error!'}
+
+@app.post('/meili_update/{method}')
+def meili_update(method,body: PostBody):
+    if body.key == key:
+        meili.add_anime2search(method)
+        return {'status': 200, 'body': 'OK'}
+    return {'status':403, 'body':'Key error!'}
+
 
 
 if __name__ == '__main__':
+    ans.init()
     uvicorn.run(app="app:app", host="127.0.0.1", port=8080, reload=True)

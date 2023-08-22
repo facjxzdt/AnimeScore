@@ -21,7 +21,8 @@ def json2csv(method):
         writer = csv.writer(csvfile, dialect=("excel"))
         writer.writerow(first_line)
         for v in scores.values():
-            for i in range(0, len(first_line)):
-                line.append(v[first_line[i]])
-            writer.writerow(line)
-            line = []
+            if v['score'] != 'None':
+                for i in range(0, len(first_line)):
+                    line.append(v[first_line[i]])
+                writer.writerow(line)
+                line = []

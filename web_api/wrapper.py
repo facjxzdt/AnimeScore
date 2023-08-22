@@ -51,6 +51,7 @@ class AnimeScore:
             utils.get_ids.get_ids()
             utils.get_score.get_score(method='air')
             utils.score.total_score(method='air')
+            self.meili.add_anime2search('air')
             utils.json2csv.json2csv(method='air')
     #类封装
     #Bangumi类下各方法
@@ -148,3 +149,6 @@ class AnimeScore:
 
     def update_single_score(self,bgm_id):
         utils.get_score.update_score(bgm_id)
+
+    def meili_update(self,method):
+        self.meili.add_anime2search(method)
