@@ -1,2 +1,2 @@
-class NetworkError:
+class NetworkError(Exception):
     pass

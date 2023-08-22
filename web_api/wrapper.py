@@ -16,8 +16,10 @@ from apis.mal import MyAnimeList
 from apis.filmarks import Filmarks
 from apis.anikore import Anikore
 from meili_search import Meilisearch
+from cachetools import cached,TTLCache
 
 logger = utils.logger.Log()
+cache = TTLCache(maxsize=100,ttl=600)
 class AnimeScore:
     def __init__(self):
         self.version = 'v0.2'
@@ -84,12 +86,14 @@ class AnimeScore:
     def get_ids(self):# 获取anime.json中动画的id
         return utils.get_ids.get_ids()
 
+    @cached(cache)
     def get_single_id(self,bgm_id):# bgm_id: str
         return utils.get_ids.get_single_id(bgm_id)
 
     def get_score(self,method):# method='sub'or'air'
         return utils.get_score.get_score(method)
 
+    @cached(cache)
     def get_single_score(self,bgm_id):
         return utils.get_score.get_single_score(bgm_id)
 
@@ -102,6 +106,7 @@ class AnimeScore:
     def sub_anime(self,method,anime_name,bgm_id):
         return utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
 
+    @cached(cache)
     def search_bgm_id(self,bgm_id=None,method='bgm_id'):
         if method == 'bgm_id':
             info =utils.score.count_single_score(utils.get_score.get_single_score(bgm_id))

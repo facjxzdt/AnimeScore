@@ -22,6 +22,7 @@ meili = Meilisearch()
 score = {}
 score_1 = {}
 score_2 = {}
+info_0 = {}
 
 log_score = Log(__name__).getlog()
 
@@ -45,13 +46,29 @@ def get_mal_id(mal_id,score: dict):
         if mal_score != 'N/A':
             score['mal_score'] = float(mal_score)
     time.sleep(1)
+def get_bgm_info(bgm_id):
+    global info_0
+    info_0 = bgm.get_anime_info(bgm_id)
+    time.sleep(1)
+def get_bgm_name(bgm_id):
+    global score_1
+    score_1['name'] = bgm.get_anime_name(bgm_id)
+    time.sleep(1)
 
-def create_threads(dicts:dict,score: dict):
+def create_threads(dicts:dict,score: dict,method=0):
     tlist = []
     t1 = threading.Thread(target=get_bgm_id, args=(str(dicts['bgm_id']),score,))
     t2 = threading.Thread(target=get_mal_id, args=(str(dicts['mal_id']),score,))
     t3 = threading.Thread(target=get_ank_id, args=(str(dicts['ank_id']),score,))
     t4 = threading.Thread(target=get_anl_id, args=(str(dicts['anl_id']),score,))
+    if method == 1:
+        t5 = threading.Thread(target=get_bgm_info, args=(str(dicts['bgm_id']),))
+        t5.start()
+        log_score.debug('{}线程创建成功'.format(t5.name))
+        t6 = threading.Thread(target=get_bgm_name,args=(str(dicts['bgm_id']),))
+        t6.start()
+        log_score.debug('{}线程创建成功'.format(t6.name))
+        tlist.append(t5)
     t1.start()
     log_score.debug('{}线程创建成功'.format(t1.name))
     t2.start()
@@ -122,8 +139,10 @@ def get_score(method):
 
 def get_single_score(bgm_id: str):
     global score_1
+    global info_0
     score_1 = {}
     ids = get_single_id(bgm_id)
+    print(ids)
     if ids['ank_id'] == 'Error' and ids['anl_id'] == 'Error':
         pass
     elif ids['fm_id'] == '-':
@@ -131,22 +150,12 @@ def get_single_score(bgm_id: str):
     else:
         keep = True
         count_retry = 0
-        while keep and count_retry < config.retry_max:
-            try:
-                create_threads(ids,score_1)
-                score_1['fm_score'] = 2 * float(ids['fm_id'])
-                keep = False
-            except:
-                count_retry += 1
-                time.sleep(config.time_sleep)
-                log_score.info('重试: ' + str(count_retry))
-                if count_retry == config.retry_max -1:
-                    log_score.error('获取bgm_id: {}失败'.format(bgm_id))
-    score_1['name'] = bgm.get_anime_name(bgm_id)
+        create_threads(ids, score_1,method=1)
+        score_1['fm_score'] = 2 * float(ids['fm_id'])
     score_1['ids'] = ids
-    info = bgm.get_anime_info(bgm_id)
-    score_1['poster'] = info['images']['large']
-    score_1['name_cn'] = info['name_cn']
+    print(info_0)
+    score_1['poster'] = info_0['images']['large']
+    score_1['name_cn'] = info_0['name_cn']
     score_1['time'] = get_time()
     score_1['bgm_id'] = ids['bgm_id']
     return score_1
