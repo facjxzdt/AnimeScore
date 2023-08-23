@@ -106,14 +106,3 @@ def get_single_id(bgm_id: str):
             time.sleep(config.time_sleep)
             log_id.info('已重试：' + str(count_retry))
     return ids
-
-def change_id(bgm_id: str,change_id: dict):
-    filename = '../data/jsons/sub.json'
-    sub = json.load(open(filename,'r'))
-    for k,v in sub:
-        if 'bgm_id' in v.values() and v['bgm_id'] == bgm_id:
-            for k1,v1 in change_id:
-                v[k1] = v1
-    f1 = open(filename, 'w')
-    f1.write(json.dumps(sub, sort_keys=True, indent=4, separators=(',', ':')))
-    f1.close()
