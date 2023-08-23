@@ -152,3 +152,6 @@ class AnimeScore:
 
     def meili_update(self,method):
         self.meili.add_anime2search(method)
+
+    def change_id(self,bgm_id,change_id):
+        return utils.get_ids.change_id(bgm_id,change_id)
