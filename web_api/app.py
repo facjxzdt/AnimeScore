@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 import web_api.meili_search
+from starlette.responses import FileResponse
 from web_api.wrapper import AnimeScore
 from data.config import key
 from pydantic import BaseModel
@@ -79,6 +80,16 @@ def meili_update(method,body: PostBody):
         return {'status': 200, 'body': 'OK'}
     return {'status':403, 'body':'Key error!'}
 
+@app.get('/csv/{method}',status_code=200)
+def get_csv(method):
+    if method == 'air':
+        filename = '../data/score.csv'
+    else:
+        filename = '../data/sub_score.csv'
+    return FileResponse(
+            filename,  # 这里的文件名是你要发送的文件名
+            filename="score.csv", # 这里的文件名是你要给用户展示的下载的文件名，比如我这里叫lol.exe
+        )
 
 
 if __name__ == '__main__':
