@@ -1,5 +1,6 @@
 from fastapi import FastAPI
 
+import utils.get_ids
 import web_api.meili_search
 from starlette.responses import FileResponse
 from web_api.wrapper import AnimeScore
@@ -18,6 +19,10 @@ meili = web_api.meili_search.Meilisearch()
 class PostBody(BaseModel):
     key: str
     method: str | None = None
+
+class IdBody(PostBody):
+    bgm_id: str
+    change_id: dict
 
 
 def get_list(method):
@@ -91,6 +96,10 @@ def get_csv(method):
             filename="score.csv", # 这里的文件名是你要给用户展示的下载的文件名，比如我这里叫lol.exe
         )
 
+@app.post('/change_id')
+def change_id(body: IdBody):
+    if body.key == key:
+        utils.get_ids.change_id(bgm_id=body.bgm_id,change_id=body.change_id)
 
 if __name__ == '__main__':
     ans.init()
