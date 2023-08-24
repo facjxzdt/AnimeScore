@@ -9,4 +9,5 @@ RUN apt-get update && apt-get install -y python3 python3-pip \
     && chmod +x entrypoint.sh
 EXPOSE 5001
 ENV PYTHONPATH "${PYTHONPATH}:/app"
+ENV PATH "${PATH}:/app"
 ENTRYPOINT ["./entrypoint.sh"]
