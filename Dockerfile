@@ -5,6 +5,7 @@ RUN apt-get update && apt-get install -y python3 python3-pip \
     && pip install virtualenv \
     && virtualenv venv \
     && . venv/bin/activate \
-    && pip3 install -r requirements.txt
+    && pip3 install -r requirements.txt \
+    && chmod +x entrypoint.sh
 EXPOSE 5001
 ENTRYPOINT ["./entrypoint.sh"]
