@@ -24,8 +24,6 @@ def sub_animes(method: str,anime_name=None,bgm_id=None):
         info = get_single_id(bgm_id)
         info['poster'] = anime_info['images']['large']
     info['name_cn'] = anime_info['name_cn']
-    info['fm_id'] = info['fm_score']
-    info.pop('fm_score')
     anime_already_sub[anime_info['name']] = info
     count =0
     for k in anime_already_sub.keys():
