@@ -13,9 +13,9 @@ exec('weights = config.'+config.weights,globals())
 
 def store_score(dicts: dict,method):
     if method == 'sub':
-        scores_sorted_path = '../data/jsons/sub_score_sorted.json'
+        scores_sorted_path = config.work_dir+'/data/jsons/sub_score_sorted.json'
     else:
-        scores_sorted_path = '../data/jsons/score_sorted.json'
+        scores_sorted_path = config.work_dir+'/data/jsons/score_sorted.json'
     log_ts.info('正在存储分数')
     f1 = open(scores_sorted_path, 'w')
     f1.write(json.dumps(dicts, indent=4, separators=(',', ':')))
@@ -23,11 +23,11 @@ def store_score(dicts: dict,method):
 
 def total_score(method):
     if method == 'air':
-        scores_path = '../data/jsons/score.json'
-        animes_path = '../data/jsons/animes.json'
+        scores_path = config.work_dir+'/data/jsons/score.json'
+        animes_path = config.work_dir+'/data/jsons/animes.json'
     else:
-        scores_path = '../data/jsons/sub_score.json'
-        animes_path = '../data/jsons/sub.json'
+        scores_path = config.work_dir+'/data/jsons/sub_score.json'
+        animes_path = config.work_dir+'/data/jsons/sub.json'
     log_ts.info('正在计算总分')
     animes = json.load(open(animes_path, 'r'))
     scores = json.load(open(scores_path, 'r'))

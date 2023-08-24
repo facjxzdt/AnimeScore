@@ -1,3 +1,4 @@
+import os
 # 设置headers头
 real_headers = {'User-Agent':
                     'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/115.0.0.0 Safari/537.36'}
@@ -34,3 +35,5 @@ meili_key = 'KDD1eKlEnCBjWfwJ8HQaro18aynnsVDeMwcopkY7evI'
 key = 'test'
 ttl = 600
 max_size = 100
+
+work_dir = os.path.abspath(os.path.dirname(os.getcwd()))

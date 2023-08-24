@@ -10,7 +10,7 @@ from apis.filmarks import Filmarks
 from apis.bangumi import Bangumi
 from data import config
 
-animes_path = '../data/jsons/animes.json'
+animes_path = config.work_dir+'/data/jsons/animes.json'
 animes = {}
 ids = {}
 

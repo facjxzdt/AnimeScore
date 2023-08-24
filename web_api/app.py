@@ -6,11 +6,11 @@ from starlette.responses import FileResponse
 from web_api.wrapper import AnimeScore
 from data.config import key
 from pydantic import BaseModel
-
+from data.config import work_dir
 import json
 import uvicorn
 
-animes_path = '../data/jsons/score_sorted.json'
+animes_path = work_dir+'/data/jsons/score_sorted.json'
 ans = AnimeScore()
 app = FastAPI()
 meili = web_api.meili_search.Meilisearch()
@@ -27,9 +27,9 @@ class IdBody(PostBody):
 
 def get_list(method):
     if method == 'sub':
-        file = open('../data/jsons/sub_score_sorted.json')
+        file = open(work_dir+'/data/jsons/sub_score_sorted.json')
     else:
-        file = open('../data/jsons/score_sorted.json')
+        file = open(work_dir+'/data/jsons/score_sorted.json')
     scores = file
     return json.load(scores)
 
@@ -88,9 +88,9 @@ def meili_update(method,body: PostBody):
 @app.get('/csv/{method}',status_code=200)
 def get_csv(method):
     if method == 'air':
-        filename = '../data/score.csv'
+        filename = work_dir+'/data/score.csv'
     else:
-        filename = '../data/sub_score.csv'
+        filename = work_dir+'/data/sub_score.csv'
     return FileResponse(
             filename,  # 这里的文件名是你要发送的文件名
             filename="score.csv", # 这里的文件名是你要给用户展示的下载的文件名，比如我这里叫lol.exe

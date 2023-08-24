@@ -1,16 +1,17 @@
 import csv
 import json
 
+from data import config
 from utils.logger import Log
 log_json = Log(__name__).getlog()
 
 def json2csv(method):
     if method == 'air':
-        scores_path = '../data/jsons/score_sorted.json'
-        csv_path = '../data/score.csv'
+        scores_path = config.work_dir+'/data/jsons/score_sorted.json'
+        csv_path = config.work_dir+'/data/score.csv'
     else:
-        scores_path = '../data/jsons/sub_score_sorted.json'
-        csv_path = '../data/jsons/sub_score.csv'
+        scores_path = config.work_dir+'/data/jsons/sub_score_sorted.json'
+        csv_path = config.work_dir+'/data/jsons/sub_score.csv'
 
     log_json.info('写入csv')
     scores = json.load(open(scores_path, 'r'))

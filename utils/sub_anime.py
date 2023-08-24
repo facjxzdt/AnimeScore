@@ -1,9 +1,10 @@
 import json
 from apis.bangumi import Bangumi
 from utils.get_ids import get_single_id
+from data import config
 
 bgm = Bangumi()
-sub_json_path = '../data/jsons/sub.json'
+sub_json_path = config.work_dir+'/data/jsons/sub.json'
 
 def sub_animes(method: str,anime_name=None,bgm_id=None):
     try:

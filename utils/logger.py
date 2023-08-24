@@ -3,6 +3,7 @@ import time
 import os
 
 from data.config import log_level
+from data.config import work_dir
 
 def return_level():
     if log_level == 'INFO':
@@ -14,7 +15,7 @@ def return_level():
 
 class Log:
     def __init__(self,logger=None):
-        self.log_path = '../data/log.txt'
+        self.log_path = work_dir+'/data/log.txt'
 
         self.logger = logging.getLogger(logger)
         self.logger.setLevel(return_level())

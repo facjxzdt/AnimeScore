@@ -10,7 +10,7 @@ import apps.search
 import json
 import os
 
-from data.config import ttl,max_size
+from data.config import ttl,max_size,work_dir
 from utils.tools import Tools
 from apis.bangumi import Bangumi
 from apis.anilist import AniList
@@ -35,10 +35,10 @@ class AnimeScore:
     def init(self):
         first = False
         logger.logger.info('正在初始化')
-        if os.path.exists('../data/init.lock'):
+        if os.path.exists(work_dir+'/data/init.lock'):
             pass
         else:
-            file = open('../data/init.lock','w')
+            file = open(work_dir+'/data/init.lock','w')
             first = True
         logger.logger.info('测试网络')
         if self.tools.check_net():
@@ -130,7 +130,7 @@ class AnimeScore:
         bgm_id =utils.sub_anime.sub_animes(method=method,anime_name=anime_name,bgm_id=bgm_id)
         info = utils.score.count_single_score(utils.score.get_single_score(bgm_id))
         self.meili.add_single_anime(info)
-        score_path = '../data/jsons/sub_score_sorted.json'
+        score_path = work_dir+'/data/jsons/sub_score_sorted.json'
         scores_exist = json.load(open(score_path,'r'))
         scores_exist[info['name']] = info
         f = open(score_path, 'w')
@@ -157,7 +157,7 @@ class AnimeScore:
         return utils.get_ids.change_id(bgm_id,change_id)
 
     def change_id(self,bgm_id: str, change_id: dict):
-        filename = '../data/jsons/sub.json'
+        filename = work_dir+'/data/jsons/sub.json'
         sub = json.load(open(filename, 'r'))
         for k, v in sub:
             if 'bgm_id' in v.values() and v['bgm_id'] == bgm_id:

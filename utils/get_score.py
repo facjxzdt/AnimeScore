@@ -94,11 +94,11 @@ def get_time():
 
 def get_score(method):
     if method == 'sub':
-        animes_path = '../data/jsons/sub.json'
-        score_path = '../data/jsons/sub_score.json'
+        animes_path = config.work_dir+'/data/jsons/sub.json'
+        score_path = config.work_dir+'/data/jsons/sub_score.json'
     else:
-        animes_path = '../data/jsons/animes.json'
-        score_path = '../data/jsons/score.json'
+        animes_path = config.work_dir+'/data/jsons/animes.json'
+        score_path = config.work_dir+'/data/jsons/score.json'
     log_score.info('正在获取动画评分')
     animes = json.load(open(animes_path, 'r'))
     animes_count = animes['total']
@@ -165,7 +165,7 @@ def update_score(bgm_id: str):
     # air由于会每日自动更新 故不添加update_score
     meili = Meilisearch()
     bgm_id = str(bgm_id)
-    score_path = '../data/jsons/sub_score_sorted.json'
+    score_path = config.work_dir+'/data/jsons/sub_score_sorted.json'
     info = meili.index.search(
         bgm_id,
         {
