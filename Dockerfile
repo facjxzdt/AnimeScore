@@ -7,5 +7,4 @@ RUN apt-get update && apt-get install -y python3 python3-pip \
     && . venv/bin/activate \
     && pip3 install -r requirements.txt
 EXPOSE 5001
-CMD [". venv/bin/activate"]
-CMD ["python", "/app/web_api/app.py"]
+ENTRYPOINT ["./entrypoint.sh"]
