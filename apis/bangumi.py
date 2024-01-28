@@ -48,7 +48,10 @@ class Bangumi:
                 if name['name_cn'] != '':
                     animes_info['name_cn'] = name['name_cn']
                     animes_info['bgm_id'] = name['id']
-                    animes_info['poster'] = name['images']['large']
+                    try:
+                        animes_info['poster'] = name['images']['large']
+                    except:
+                        animes_info['poster'] = 'https://bkimg.cdn.bcebos.com/pic/b8014a90f603738da97755563251a751f81986184626?x-bce-process=image/format,f_auto/watermark,image_d2F0ZXIvYmFpa2UyNzI,g_7,xp_5,yp_5,P_20/resize,m_lfit,limit_1,h_1080'
                     animes[name['name']] = animes_info
                     animes_info = {}
                     anime_count += 1

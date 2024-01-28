@@ -28,7 +28,7 @@ enable_chinese_check = False
 chinese_check_threshold = 0.75
 
 #meilisearcch设置
-meili_url = 'http://192.168.1.106:7700'
+meili_url = 'fi'
 meili_key = 'KDD1eKlEnCBjWfwJ8HQaro18aynnsVDeMwcopkY7evI'
 
 #api设置

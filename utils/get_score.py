@@ -110,7 +110,7 @@ def get_score(method):
             pass
         elif v['ank_id'] == 'Error' and v['anl_id'] == 'Error':
             pass
-        elif v['fm_id'] == '-' or k == 'time':
+        elif v['fm_id'] and v['fm_id'] == '-' or k == 'time':
             pass
         else:
             keep = True
