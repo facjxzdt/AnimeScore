@@ -1,3 +1,5 @@
+import sys
+sys.path.append('/www/wwwroot/api.boom-ink.com')
 from fastapi import FastAPI
 
 import utils.get_ids
@@ -51,19 +53,19 @@ def sub():
     return {'status': 200, 'body': lists}
 
 
-@app.get('/search/{bgm_id}')
+#@app.get('/search/{bgm_id}')
 def search(bgm_id):
     result = ans.search_bgm_id(bgm_id)
     return {'status': 200, 'body': result}
 
 
-@app.get('/search/meili/{string}')
+#@app.get('/search/meili/{string}')
 def search_meili(string):
     result = ans.search_anime_name(string)
     return {'status': 200, 'body': result}
 
 
-@app.post('/update_anime')
+#@app.post('/update_anime')
 def update_all_anime(body: PostBody):
     if body.key == key:
         ans.update_all_anime(method=body.method)
@@ -71,21 +73,21 @@ def update_all_anime(body: PostBody):
     return {'status': 403, 'body': 'Key error!'}
 
 
-@app.post('/update_air_anime')
+#@app.post('/update_air_anime')
 def update_air_anime(body: PostBody):
     if body.key == key:
         ans.update_air_anime()
         return {'status': 200, 'body': 'OK'}
     return {'status':403, 'body':'Key error!'}
 
-@app.post('/meili_update/{method}')
+#@app.post('/meili_update/{method}')
 def meili_update(method,body: PostBody):
     if body.key == key:
         meili.add_anime2search(method)
         return {'status': 200, 'body': 'OK'}
     return {'status':403, 'body':'Key error!'}
 
-@app.get('/csv/{method}',status_code=200)
+#@app.get('/csv/{method}',status_code=200)
 def get_csv(method):
     if method == 'air':
         filename = work_dir+'/data/score.csv'
@@ -96,7 +98,7 @@ def get_csv(method):
             filename="score.csv", # 这里的文件名是你要给用户展示的下载的文件名，比如我这里叫lol.exe
         )
 
-@app.post('/change_id')
+#@app.post('/change_id')
 def change_id(body: IdBody):
     if body.key == key:
         utils.get_ids.change_id(bgm_id=body.bgm_id,change_id=body.change_id)
