@@ -106,35 +106,38 @@ def get_score(method):
     count = 0
     for k, v in animes.items():
         global score
-        if k == 'total':
+        try:
+            if k == 'total':
+                pass
+            elif v['ank_id'] == 'Error' and v['anl_id'] == 'Error':
+                pass
+            elif v['fm_id'] and v['fm_id'] == '-' or k == 'time':
+                pass
+            else:
+                keep = True
+                count_retry = 0
+                while keep and count_retry < config.retry_max:
+                    try:
+                        global score
+                        create_threads(v,score)
+                        score['fm_score'] = 2 * float(v['fm_id'])
+                        score['time'] = get_time()
+                        scores[k] = score
+                        f1 = open(score_path, 'w')
+                        f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
+                        f1.close()
+                        count += 1
+                        log_score.info('动画评分获取已完成: ' + str(count))
+                        keep = False
+                    except:
+                        count_retry += 1
+                        time.sleep(config.time_sleep)
+                        log_score.info('重试: ' + str(count_retry))
+                        if count_retry == config.retry_max - 1:
+                            log_score.error('获取bgm_id: {}失败'.format(str(v['bgm_id'])))
+            score = {}
+        except:
             pass
-        elif v['ank_id'] == 'Error' and v['anl_id'] == 'Error':
-            pass
-        elif v['fm_id'] and v['fm_id'] == '-' or k == 'time':
-            pass
-        else:
-            keep = True
-            count_retry = 0
-            while keep and count_retry < config.retry_max:
-                try:
-                    global score
-                    create_threads(v,score)
-                    score['fm_score'] = 2 * float(v['fm_id'])
-                    score['time'] = get_time()
-                    scores[k] = score
-                    f1 = open(score_path, 'w')
-                    f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
-                    f1.close()
-                    count += 1
-                    log_score.info('动画评分获取已完成: ' + str(count))
-                    keep = False
-                except:
-                    count_retry += 1
-                    time.sleep(config.time_sleep)
-                    log_score.info('重试: ' + str(count_retry))
-                    if count_retry == config.retry_max - 1:
-                        log_score.error('获取bgm_id: {}失败'.format(str(v['bgm_id'])))
-        score = {}
     log_score.info('获取动画分数成功数 {}'.format(str(count)+'/'+str(animes_count)))
 
 def get_single_score(bgm_id: str):
