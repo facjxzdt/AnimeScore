@@ -13,7 +13,7 @@ import uvicorn
 animes_path = work_dir+'/data/jsons/score_sorted.json'
 ans = AnimeScore()
 app = FastAPI()
-meili = web_api.meili_search.Meilisearch()
+#meili = web_api.meili_search.Meilisearch()
 
 
 class PostBody(BaseModel):
