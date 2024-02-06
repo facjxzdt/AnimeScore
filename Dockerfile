@@ -7,7 +7,7 @@ RUN apt-get update && apt-get install -y python3 python3-pip cron \
     && . venv/bin/activate \
     && pip3 install -r requirements.txt \
     && chmod +x entrypoint.sh \
-ADD cron.txt /etc/cron.d/
+ADD ./cron.txt /etc/cron.d/
 EXPOSE 5001
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 ENV PATH "${PATH}:/app"
