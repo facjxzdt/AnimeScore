@@ -31,7 +31,7 @@ class AnimeScore:
         self.fm = Filmarks()
         self.bgm = Bangumi()
         self.tools = Tools()
-        self.meili = Meilisearch()
+        #self.meili = Meilisearch()
     def init(self):
         first = False
         logger.logger.info('正在初始化')
