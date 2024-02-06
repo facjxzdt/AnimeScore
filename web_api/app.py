@@ -1,5 +1,3 @@
-import sys
-sys.path.append('/www/wwwroot/api.boom-ink.com')
 from fastapi import FastAPI
 
 import utils.get_ids
