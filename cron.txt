@@ -1,1 +1,1 @@
-python3 /app/web_api/deamon.py
+30 5 * * * root python3 /app/web_api/deamon.py
