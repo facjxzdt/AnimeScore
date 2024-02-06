@@ -9,3 +9,5 @@ def updata_score():
     utils.get_score.get_score(method='air')
     utils.score.total_score('air')
     utils.json2csv.json2csv(method='air')
+
+updata_score()
