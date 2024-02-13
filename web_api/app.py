@@ -2,19 +2,22 @@ from fastapi import FastAPI
 
 import utils.get_ids
 import web_api.meili_search
+import threading
 from starlette.responses import FileResponse
 from web_api.wrapper import AnimeScore
 from data.config import key
 from pydantic import BaseModel
 from data.config import work_dir
+from deamon import updata_score
 import json
 import uvicorn
+import time
+import schedule
 
 animes_path = work_dir+'/data/jsons/score_sorted.json'
 ans = AnimeScore()
 app = FastAPI()
 #meili = web_api.meili_search.Meilisearch()
-
 
 class PostBody(BaseModel):
     key: str
@@ -33,6 +36,17 @@ def get_list(method):
     scores = file
     return json.load(scores)
 
+def deamon(interval=1):
+    cease_continuous_run = threading.Event()
+    class ScheduleThread(threading.Thread):
+        @classmethod
+        def run(cls):
+            while not cease_continuous_run.is_set():
+                schedule.run_pending()
+                time.sleep(interval)
+    continuous_thread = ScheduleThread()
+    continuous_thread.start()
+    return cease_continuous_run
 
 @app.get('/')
 async def root():
@@ -81,7 +95,7 @@ def update_air_anime(body: PostBody):
 #@app.post('/meili_update/{method}')
 def meili_update(method,body: PostBody):
     if body.key == key:
-        meili.add_anime2search(method)
+        #meili.add_anime2search(method)
         return {'status': 200, 'body': 'OK'}
     return {'status':403, 'body':'Key error!'}
 
@@ -103,4 +117,6 @@ def change_id(body: IdBody):
 
 if __name__ == '__main__':
     ans.init()
+    schedule.every().day.at("10:30").do(updata_score)
+    _deamon = deamon()
     uvicorn.run(app="app:app", host="0.0.0.0", port=5001, reload=True)

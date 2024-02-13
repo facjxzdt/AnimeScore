@@ -1,107 +1,83 @@
 {
     "30\u6b73\u307e\u3067\u7ae5\u8c9e\u3060\u3068\u9b54\u6cd5\u4f7f\u3044\u306b\u306a\u308c\u308b\u3089\u3057\u3044":{
-        "score":6.49,
+        "score":6.426,
         "name_cn":"\u5230\u4e8630\u5c81\u8fd8\u662f\u5904\u7537\uff0c\u4f3c\u4e4e\u4f1a\u53d8\u6210\u9b54\u6cd5\u5e08",
         "name":"30\u6b73\u307e\u3067\u7ae5\u8c9e\u3060\u3068\u9b54\u6cd5\u4f7f\u3044\u306b\u306a\u308c\u308b\u3089\u3057\u3044",
         "bgm_id":445708,
         "poster":"http://lain.bgm.tv/pic/cover/l/a6/af/445708_eM6dm.jpg",
-        "mal_score":7.65,
+        "mal_score":7.63,
         "bgm_score":5.6,
-        "fm_score":7.2,
+        "fm_score":7.0,
         "ids":{
             "bgm_id":445708,
             "mal_id":"55973",
             "ank_id":"14321",
             "anl_id":167087,
-            "fm_score":"3.6"
+            "fm_score":"3.5"
         },
-        "ank_score":7.0,
-        "anl_score":7.2,
+        "ank_score":7.2,
+        "anl_score":7.3,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "HIGH CARD season2":{
-        "score":6.34,
+        "score":6.344,
         "name_cn":"\u81f3\u9ad8\u4e4b\u724c \u7b2c\u4e8c\u5b63",
         "name":"HIGH CARD season2",
         "bgm_id":426156,
         "poster":"http://lain.bgm.tv/pic/cover/l/df/8a/426156_4s26r.jpg",
-        "mal_score":7.25,
-        "bgm_score":6.3,
-        "fm_score":5.8,
+        "mal_score":7.17,
+        "bgm_score":6.1,
+        "fm_score":6.2,
         "ids":{
             "bgm_id":426156,
             "mal_id":"54869",
             "ank_id":"Error",
             "anl_id":163151,
-            "fm_score":"2.9"
+            "fm_score":"3.1"
         },
         "ank_score":"None",
         "anl_score":6.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "MONSTERS \u4e00\u767e\u4e09\u60c5\u98db\u9f8d\u4f8d\u6975":{
-        "score":6.472,
+        "score":6.474,
         "name_cn":"\u602a\u517d \u4e00\u767e\u4e09\u60c5\u98de\u9f99\u4f8d\u6781",
         "name":"MONSTERS \u4e00\u767e\u4e09\u60c5\u98db\u9f8d\u4f8d\u6975",
         "bgm_id":446475,
         "poster":"http://lain.bgm.tv/pic/cover/l/0a/db/446475_QAvh9.jpg",
-        "mal_score":7.76,
+        "mal_score":7.77,
         "bgm_score":5.4,
         "fm_score":7.4,
         "ids":{
             "bgm_id":446475,
             "mal_id":"56055",
-            "ank_id":"Error",
+            "ank_id":"14408",
             "anl_id":167404,
             "fm_score":"3.7"
         },
-        "ank_score":"None",
+        "ank_score":7.4,
         "anl_score":7.75,
         "time":{
-            "day":28,
-            "month":1,
-            "year":2024
-        }
-    },
-    "NEEDY GIRL OVERDOSE \u30b7\u30e7\u30fc\u30c8\u30a2\u30cb\u30e1\u300c\u3042\u308b\u65e5\u306e\u5348\u5f8c\u300d":{
-        "score":6.378,
-        "name_cn":"\u300a\u4e3b\u64ad\u5973\u5b69\u91cd\u5ea6\u4f9d\u8d56\u300b\u4e8c\u5468\u5e74\u653e\u9001\u77ed\u7bc7\u52a8\u753b",
-        "name":"NEEDY GIRL OVERDOSE \u30b7\u30e7\u30fc\u30c8\u30a2\u30cb\u30e1\u300c\u3042\u308b\u65e5\u306e\u5348\u5f8c\u300d",
-        "bgm_id":476057,
-        "poster":"http://lain.bgm.tv/pic/cover/l/93/a9/476057_hSSKJ.jpg",
-        "mal_score":5.94,
-        "bgm_score":5.7,
-        "fm_score":7.8,
-        "ids":{
-            "bgm_id":476057,
-            "mal_id":"35417",
-            "ank_id":"Error",
-            "anl_id":173640,
-            "fm_score":"3.9"
-        },
-        "ank_score":"None",
-        "anl_score":5.95,
-        "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "SHAMAN KING FLOWERS":{
-        "score":6.418,
+        "score":6.404,
         "name_cn":"\u901a\u7075\u738b FLOWERS",
         "name":"SHAMAN KING FLOWERS",
         "bgm_id":378797,
         "poster":"http://lain.bgm.tv/pic/cover/l/b4/b5/378797_DPFBD.jpg",
-        "mal_score":6.94,
+        "mal_score":6.87,
         "bgm_score":6.1,
         "fm_score":6.6,
         "ids":{
@@ -114,18 +90,18 @@
         "ank_score":6.0,
         "anl_score":6.3,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "SYNDUALITY Noir \u7b2c2\u30af\u30fc\u30eb":{
-        "score":6.24,
+        "score":6.244,
         "name_cn":"\u5947\u5f02\u8d24\u4f34 \u9ed1\u8272\u5929\u4f7f \u7b2c2\u90e8\u5206",
         "name":"SYNDUALITY Noir \u7b2c2\u30af\u30fc\u30eb",
         "bgm_id":456042,
         "poster":"http://lain.bgm.tv/pic/cover/l/c8/6b/456042_3Ce2R.jpg",
-        "mal_score":7.1,
+        "mal_score":7.12,
         "bgm_score":6.4,
         "fm_score":5.4,
         "ids":{
@@ -135,21 +111,21 @@
             "anl_id":169559,
             "fm_score":"2.7"
         },
-        "ank_score":6.4,
-        "anl_score":6.6,
+        "ank_score":6.6,
+        "anl_score":6.55,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u3046\u308b\u661f\u3084\u3064\u3089 \u7b2c2\u671f":{
-        "score":7.742,
+        "score":7.732,
         "name_cn":"\u798f\u661f\u5c0f\u5b50 \u7b2c\u4e8c\u5b63",
         "name":"\u3046\u308b\u661f\u3084\u3064\u3089 \u7b2c2\u671f",
         "bgm_id":413635,
         "poster":"http://lain.bgm.tv/pic/cover/l/74/b8/413635_T5j1Z.jpg",
-        "mal_score":7.76,
+        "mal_score":7.71,
         "bgm_score":7.7,
         "fm_score":7.8,
         "ids":{
@@ -162,19 +138,19 @@
         "ank_score":7.4,
         "anl_score":7.5,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u3076\u3063\u3061\u304e\u308a?!":{
-        "score":7.104,
+        "score":6.956,
         "name_cn":"\u7efd\u88c2?!",
         "name":"\u3076\u3063\u3061\u304e\u308a?!",
         "bgm_id":436745,
         "poster":"http://lain.bgm.tv/pic/cover/l/ce/d4/436745_I7n0N.jpg",
-        "mal_score":7.52,
-        "bgm_score":7,
+        "mal_score":7.28,
+        "bgm_score":6.8,
         "fm_score":7.0,
         "ids":{
             "bgm_id":436745,
@@ -183,45 +159,45 @@
             "anl_id":165254,
             "fm_score":"3.5"
         },
-        "ank_score":"None",
-        "anl_score":7.15,
+        "ank_score":7.2,
+        "anl_score":6.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u307d\u3093\u306e\u307f\u3061":{
-        "score":5.738,
+        "score":5.612,
         "name_cn":"\u78b0\u4e4b\u9053",
         "name":"\u307d\u3093\u306e\u307f\u3061",
         "bgm_id":437206,
         "poster":"http://lain.bgm.tv/pic/cover/l/91/eb/437206_HTdmD.jpg",
-        "mal_score":6.34,
-        "bgm_score":5.7,
-        "fm_score":5.4,
+        "mal_score":6.26,
+        "bgm_score":5.6,
+        "fm_score":5.2,
         "ids":{
             "bgm_id":437206,
             "mal_id":"55397",
             "ank_id":"14343",
             "anl_id":165314,
-            "fm_score":"2.7"
+            "fm_score":"2.6"
         },
-        "ank_score":6.0,
+        "ank_score":6.2,
         "anl_score":5.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u3086\u3073\u3055\u304d\u3068\u604b\u3005":{
-        "score":7.356,
+        "score":7.358,
         "name_cn":"\u6307\u5c16\u76f8\u89e6\uff0c\u604b\u604b\u4e0d\u820d",
         "name":"\u3086\u3073\u3055\u304d\u3068\u604b\u3005",
         "bgm_id":444334,
         "poster":"http://lain.bgm.tv/pic/cover/l/0e/00/444334_b1NxS.jpg",
-        "mal_score":8.28,
+        "mal_score":8.29,
         "bgm_score":6.6,
         "fm_score":8.0,
         "ids":{
@@ -231,45 +207,45 @@
             "anl_id":166794,
             "fm_score":"4.0"
         },
-        "ank_score":6.2,
+        "ank_score":6.4,
         "anl_score":8.15,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u3088\u3046\u3053\u305d\u5b9f\u529b\u81f3\u4e0a\u4e3b\u7fa9\u306e\u6559\u5ba4\u3078 3rd Season":{
-        "score":7.02,
+        "score":6.96,
         "name_cn":"\u6b22\u8fce\u6765\u5230\u5b9e\u529b\u81f3\u4e0a\u4e3b\u4e49\u6559\u5ba4 \u7b2c\u4e09\u5b63",
         "name":"\u3088\u3046\u3053\u305d\u5b9f\u529b\u81f3\u4e0a\u4e3b\u7fa9\u306e\u6559\u5ba4\u3078 3rd Season",
         "bgm_id":373266,
         "poster":"http://lain.bgm.tv/pic/cover/l/50/4d/373266_BiqQm.jpg",
-        "mal_score":8.1,
-        "bgm_score":6,
+        "mal_score":8.05,
+        "bgm_score":5.9,
         "fm_score":8.0,
         "ids":{
             "bgm_id":373266,
             "mal_id":"51180",
             "ank_id":"14350",
-            "anl_id":145545,
+            "anl_id":146066,
             "fm_score":"4.0"
         },
-        "ank_score":6.2,
-        "anl_score":8.0,
+        "ank_score":6.0,
+        "anl_score":7.8,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30ab\u30fc\u30c9\u30d5\u30a1\u30a4\u30c8!! \u30f4\u30a1\u30f3\u30ac\u30fc\u30c9 DivineZ":{
-        "score":5.788,
+        "score":5.79,
         "name_cn":"\u5361\u7247\u6218\u6597\u5148\u5bfc\u8005 DivineZ",
         "name":"\u30ab\u30fc\u30c9\u30d5\u30a1\u30a4\u30c8!! \u30f4\u30a1\u30f3\u30ac\u30fc\u30c9 DivineZ",
         "bgm_id":440878,
-        "poster":"http://lain.bgm.tv/pic/cover/l/25/7c/440878_82wX2.jpg",
-        "mal_score":6.59,
+        "poster":"http://lain.bgm.tv/pic/cover/l/25/7c/440878_xqL51.jpg",
+        "mal_score":6.6,
         "bgm_score":5.7,
         "fm_score":5.4,
         "ids":{
@@ -280,21 +256,21 @@
             "fm_score":"2.7"
         },
         "ank_score":0.0,
-        "anl_score":6.4,
+        "anl_score":5.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30ad\u30f3\u30b0\u30c0\u30e0 \u7b2c5\u30b7\u30ea\u30fc\u30ba":{
-        "score":8.364,
+        "score":8.324,
         "name_cn":"\u738b\u8005\u5929\u4e0b \u7b2c\u4e94\u5b63",
         "name":"\u30ad\u30f3\u30b0\u30c0\u30e0 \u7b2c5\u30b7\u30ea\u30fc\u30ba",
         "bgm_id":403503,
         "poster":"http://lain.bgm.tv/pic/cover/l/ea/65/403503_qqTy2.jpg",
-        "mal_score":8.67,
-        "bgm_score":8.1,
+        "mal_score":8.72,
+        "bgm_score":8,
         "fm_score":8.6,
         "ids":{
             "bgm_id":403503,
@@ -304,21 +280,21 @@
             "fm_score":"4.3"
         },
         "ank_score":6.4,
-        "anl_score":8.15,
+        "anl_score":8.25,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30b9\u30ca\u30c3\u30af\u30d0\u30b9\u6c5f":{
-        "score":5.774,
+        "score":5.824,
         "name_cn":"\u5c0f\u9152\u9986Basue",
         "name":"\u30b9\u30ca\u30c3\u30af\u30d0\u30b9\u6c5f",
         "bgm_id":441084,
         "poster":"http://lain.bgm.tv/pic/cover/l/c6/69/441084_tco08.jpg",
         "mal_score":5.47,
-        "bgm_score":6,
+        "bgm_score":6.1,
         "fm_score":5.6,
         "ids":{
             "bgm_id":441084,
@@ -328,20 +304,20 @@
             "fm_score":"2.8"
         },
         "ank_score":6.2,
-        "anl_score":5.0,
+        "anl_score":5.1,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30c0\u30f3\u30b8\u30e7\u30f3\u98ef":{
-        "score":7.672,
+        "score":7.674,
         "name_cn":"\u8ff7\u5bab\u996d",
         "name":"\u30c0\u30f3\u30b8\u30e7\u30f3\u98ef",
         "bgm_id":395378,
         "poster":"http://lain.bgm.tv/pic/cover/l/c5/88/395378_jztpO.jpg",
-        "mal_score":7.71,
+        "mal_score":7.72,
         "bgm_score":7.7,
         "fm_score":7.6,
         "ids":{
@@ -352,90 +328,93 @@
             "fm_score":"3.8"
         },
         "ank_score":6.6,
-        "anl_score":7.6,
+        "anl_score":7.65,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30de\u30c3\u30b7\u30e5\u30eb-MASHLE- \u795e\u899a\u8005\u5019\u88dc\u9078\u629c\u8a66\u9a13\u7de8":{
-        "score":"None",
+        "score":7.184,
         "name_cn":"\u7269\u7406\u9b54\u6cd5\u4f7f\u9a6c\u4fee \u795e\u89c9\u8005\u5019\u8865\u9009\u62d4\u8bd5\u9a8c\u7bc7",
         "name":"\u30de\u30c3\u30b7\u30e5\u30eb-MASHLE- \u795e\u899a\u8005\u5019\u88dc\u9078\u629c\u8a66\u9a13\u7de8",
         "bgm_id":443493,
         "poster":"http://lain.bgm.tv/pic/cover/l/f8/39/443493_ZfhAh.jpg",
+        "mal_score":8.12,
+        "bgm_score":6.2,
+        "fm_score":8.2,
         "ids":{
             "bgm_id":443493,
             "mal_id":"55813",
             "ank_id":"Error",
             "anl_id":166610,
-            "fm_score":"4.0"
+            "fm_score":"4.1"
         },
         "ank_score":"None",
-        "anl_score":7.85,
+        "anl_score":7.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30e1\u30bf\u30ea\u30c3\u30af\u30eb\u30fc\u30b8\u30e5":{
-        "score":6.244,
+        "score":5.946,
         "name_cn":"\u91d1\u5c5e\u53e3\u7ea2",
         "name":"\u30e1\u30bf\u30ea\u30c3\u30af\u30eb\u30fc\u30b8\u30e5",
         "bgm_id":425595,
         "poster":"http://lain.bgm.tv/pic/cover/l/aa/72/425595_E7WOC.jpg",
-        "mal_score":7.12,
-        "bgm_score":5.8,
-        "fm_score":6.4,
+        "mal_score":6.93,
+        "bgm_score":5.4,
+        "fm_score":6.2,
         "ids":{
             "bgm_id":425595,
             "mal_id":"54794",
             "ank_id":"14347",
             "anl_id":162985,
-            "fm_score":"3.2"
+            "fm_score":"3.1"
         },
         "ank_score":6.4,
-        "anl_score":6.85,
+        "anl_score":6.65,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u30eb\u30fc\u30d77\u56de\u76ee\u306e\u60aa\u5f79\u4ee4\u5b22\u306f\u3001\u5143\u6575\u56fd\u3067\u81ea\u7531\u6c17\u307e\u307e\u306a\u82b1\u5ac1\u751f\u6d3b\u3092\u6e80\u55ab\u3059\u308b":{
-        "score":6.986,
+        "score":7.042,
         "name_cn":"\u8f6e\u56de\u4e03\u6b21\u7684\u53cd\u6d3e\u5927\u5c0f\u59d0\uff0c\u5728\u524d\u654c\u56fd\u4eab\u53d7\u968f\u5fc3\u6240\u6b32\u7684\u65b0\u5a5a\u751f\u6d3b",
         "name":"\u30eb\u30fc\u30d77\u56de\u76ee\u306e\u60aa\u5f79\u4ee4\u5b22\u306f\u3001\u5143\u6575\u56fd\u3067\u81ea\u7531\u6c17\u307e\u307e\u306a\u82b1\u5ac1\u751f\u6d3b\u3092\u6e80\u55ab\u3059\u308b",
         "bgm_id":450695,
         "poster":"http://lain.bgm.tv/pic/cover/l/7c/51/450695_533r9.jpg",
-        "mal_score":7.88,
+        "mal_score":7.86,
         "bgm_score":6.5,
-        "fm_score":7.2,
+        "fm_score":7.4,
         "ids":{
             "bgm_id":450695,
             "mal_id":"56352",
             "ank_id":"14351",
             "anl_id":168374,
-            "fm_score":"3.6"
+            "fm_score":"3.7"
         },
         "ank_score":6.4,
-        "anl_score":7.55,
+        "anl_score":"None",
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u4f11\u65e5\u306e\u308f\u308b\u3082\u306e\u3055\u3093":{
-        "score":6.202,
+        "score":6.16,
         "name_cn":"\u4f11\u5047\u65e5\u7684\u574f\u4eba\u5148\u751f",
         "name":"\u4f11\u65e5\u306e\u308f\u308b\u3082\u306e\u3055\u3093",
         "bgm_id":421677,
         "poster":"http://lain.bgm.tv/pic/cover/l/cf/f7/421677_N5hRh.jpg",
-        "mal_score":7.11,
-        "bgm_score":5.6,
+        "mal_score":7.15,
+        "bgm_score":5.5,
         "fm_score":6.6,
         "ids":{
             "bgm_id":421677,
@@ -447,114 +426,114 @@
         "ank_score":6.0,
         "anl_score":6.85,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u4f50\u3005\u6728\u3068\u30d4\u30fc\u3061\u3083\u3093":{
-        "score":6.884,
+        "score":6.634,
         "name_cn":"\u4f50\u4f50\u6728\u4e0e\u6587\u9e1f\u5c0f\u54d4",
         "name":"\u4f50\u3005\u6728\u3068\u30d4\u30fc\u3061\u3083\u3093",
         "bgm_id":393038,
         "poster":"http://lain.bgm.tv/pic/cover/l/7a/54/393038_6qnY1.jpg",
-        "mal_score":7.57,
-        "bgm_score":6.3,
-        "fm_score":7.4,
+        "mal_score":7.42,
+        "bgm_score":6.1,
+        "fm_score":7.0,
         "ids":{
             "bgm_id":393038,
             "mal_id":"52482",
             "ank_id":"14379",
             "anl_id":152682,
-            "fm_score":"3.7"
+            "fm_score":"3.5"
         },
-        "ank_score":6.2,
-        "anl_score":7.05,
+        "ank_score":6.0,
+        "anl_score":6.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u4ffa\u3060\u3051\u30ec\u30d9\u30eb\u30a2\u30c3\u30d7\u306a\u4ef6":{
-        "score":6.772,
+        "score":6.952,
         "name_cn":"\u6211\u72ec\u81ea\u5347\u7ea7",
         "name":"\u4ffa\u3060\u3051\u30ec\u30d9\u30eb\u30a2\u30c3\u30d7\u306a\u4ef6",
         "bgm_id":390353,
         "poster":"http://lain.bgm.tv/pic/cover/l/f5/2e/390353_07vz7.jpg",
         "mal_score":8.46,
         "bgm_score":6.2,
-        "fm_score":6.6,
+        "fm_score":7.2,
         "ids":{
             "bgm_id":390353,
             "mal_id":"52299",
             "ank_id":"14311",
             "anl_id":151807,
-            "fm_score":"3.3"
+            "fm_score":"3.6"
         },
-        "ank_score":5.4,
+        "ank_score":5.6,
         "anl_score":8.2,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u50d5\u306e\u5fc3\u306e\u30e4\u30d0\u30a4\u3084\u3064 \u7b2c2\u671f":{
-        "score":8.476,
+        "score":8.59,
         "name_cn":"\u6211\u5fc3\u91cc\u5371\u9669\u7684\u4e1c\u897f \u7b2c\u4e8c\u5b63",
         "name":"\u50d5\u306e\u5fc3\u306e\u30e4\u30d0\u30a4\u3084\u3064 \u7b2c2\u671f",
         "bgm_id":441795,
         "poster":"http://lain.bgm.tv/pic/cover/l/ba/7e/441795_q6Sc3.jpg",
-        "mal_score":8.73,
-        "bgm_score":8.3,
-        "fm_score":8.6,
+        "mal_score":8.75,
+        "bgm_score":8.4,
+        "fm_score":8.8,
         "ids":{
             "bgm_id":441795,
             "mal_id":"55690",
             "ank_id":"14342",
             "anl_id":166216,
-            "fm_score":"4.3"
+            "fm_score":"4.4"
         },
-        "ank_score":7.6,
-        "anl_score":8.45,
+        "ank_score":7.8,
+        "anl_score":8.55,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u52c7\u6c17\u7206\u767a\u30d0\u30fc\u30f3\u30d6\u30ec\u30a4\u30d0\u30fc\u30f3":{
-        "score":7.532,
+        "score":7.588,
         "name_cn":"\u52c7\u6c14\u7206\u53d1 Bang Bravern",
         "name":"\u52c7\u6c17\u7206\u767a\u30d0\u30fc\u30f3\u30d6\u30ec\u30a4\u30d0\u30fc\u30f3",
         "bgm_id":438187,
         "poster":"http://lain.bgm.tv/pic/cover/l/3a/98/438187_chzhD.jpg",
-        "mal_score":7.16,
+        "mal_score":7.14,
         "bgm_score":7.4,
-        "fm_score":8.0,
+        "fm_score":8.2,
         "ids":{
             "bgm_id":438187,
             "mal_id":"55528",
             "ank_id":"14348",
             "anl_id":165598,
-            "fm_score":"4.0"
+            "fm_score":"4.1"
         },
-        "ank_score":6.6,
-        "anl_score":6.8,
+        "ank_score":6.8,
+        "anl_score":6.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u5373\u6b7b\u30c1\u30fc\u30c8\u304c\u6700\u5f37\u3059\u304e\u3066\u3001\u7570\u4e16\u754c\u306e\u3084\u3064\u3089\u304c\u307e\u308b\u3067\u76f8\u624b\u306b\u306a\u3089\u306a\u3044\u3093\u3067\u3059\u304c\u3002":{
-        "score":5.596,
+        "score":5.578,
         "name_cn":"\u79d2\u6740\u5916\u6302\u592a\u5f3a\u4e86\uff0c\u5f02\u4e16\u754c\u7684\u5bb6\u4f19\u4eec\u6839\u672c\u5c31\u4e0d\u662f\u5bf9\u624b\u3002",
         "name":"\u5373\u6b7b\u30c1\u30fc\u30c8\u304c\u6700\u5f37\u3059\u304e\u3066\u3001\u7570\u4e16\u754c\u306e\u3084\u3064\u3089\u304c\u307e\u308b\u3067\u76f8\u624b\u306b\u306a\u3089\u306a\u3044\u3093\u3067\u3059\u304c\u3002",
         "bgm_id":409441,
         "poster":"http://lain.bgm.tv/pic/cover/l/ef/c7/409441_wrBwz.jpg",
-        "mal_score":6.43,
+        "mal_score":6.34,
         "bgm_score":5.5,
         "fm_score":5.2,
         "ids":{
@@ -564,71 +543,68 @@
             "anl_id":158028,
             "fm_score":"2.6"
         },
-        "ank_score":5.8,
+        "ank_score":5.6,
         "anl_score":6.05,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u540d\u63a2\u5075\u30b3\u30ca\u30f3":{
-        "score":7.894,
+        "score":7.714,
         "name_cn":"\u540d\u4fa6\u63a2\u67ef\u5357",
         "name":"\u540d\u63a2\u5075\u30b3\u30ca\u30f3",
         "bgm_id":899,
         "poster":"http://lain.bgm.tv/pic/cover/l/01/88/899_Q3F3X.jpg",
         "mal_score":8.17,
         "bgm_score":7.6,
-        "fm_score":8.2,
+        "fm_score":7.6,
         "ids":{
             "bgm_id":899,
             "mal_id":"235",
             "ank_id":"231",
             "anl_id":235,
-            "fm_score":"4.1"
+            "fm_score":"3.8"
         },
         "ank_score":7.6,
         "anl_score":8.1,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u540d\u6e6f\u300e\u7570\u4e16\u754c\u306e\u6e6f\u300f\u958b\u62d3\u8a18 \uff5e\u30a2\u30e9\u30d5\u30a9\u30fc\u6e29\u6cc9\u30de\u30cb\u30a2\u306e\u8ee2\u751f\u5148\u306f\u3001\u306e\u3093\u3073\u308a\u6e29\u6cc9\u5929\u56fd\u3067\u3057\u305f\uff5e":{
-        "score":4.7,
+        "score":4.818,
         "name_cn":"\u4eba\u6c14\u6e29\u6cc9\u300e\u5f02\u4e16\u754c\u6e29\u6cc9\u300f\u5f00\u62d3\u8bb0 \uff5e40\u5c81\u5de6\u53f3\u7684\u6e29\u6cc9\u7231\u597d\u8005\u8f6c\u4e16\u5230\u4e86\u60a0\u95f2\u7684\u6e29\u6cc9\u5929\u5802\uff5e",
         "name":"\u540d\u6e6f\u300e\u7570\u4e16\u754c\u306e\u6e6f\u300f\u958b\u62d3\u8a18 \uff5e\u30a2\u30e9\u30d5\u30a9\u30fc\u6e29\u6cc9\u30de\u30cb\u30a2\u306e\u8ee2\u751f\u5148\u306f\u3001\u306e\u3093\u3073\u308a\u6e29\u6cc9\u5929\u56fd\u3067\u3057\u305f\uff5e",
         "bgm_id":467083,
         "poster":"http://lain.bgm.tv/pic/cover/l/88/53/467083_Hroww.jpg",
-        "mal_score":5.9,
-        "bgm_score":5,
-        "fm_score":3.4,
+        "mal_score":5.54,
+        "bgm_score":4.9,
+        "fm_score":4.2,
         "ids":{
             "bgm_id":467083,
             "mal_id":"57315",
             "ank_id":"14383",
             "anl_id":171019,
-            "fm_score":"1.7"
+            "fm_score":"2.1"
         },
-        "ank_score":5.2,
-        "anl_score":5.45,
+        "ank_score":5.0,
+        "anl_score":5.4,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u5916\u79d1\u533b\u30a8\u30ea\u30fc\u30bc":{
-        "score":5.79,
+        "score":"None",
         "name_cn":"\u5916\u79d1\u533b\u751f\u7231\u4e3d\u4e1d",
         "name":"\u5916\u79d1\u533b\u30a8\u30ea\u30fc\u30bc",
         "bgm_id":422153,
         "poster":"http://lain.bgm.tv/pic/cover/l/5c/3b/422153_hcfFd.jpg",
-        "mal_score":7.25,
-        "bgm_score":5.2,
-        "fm_score":5.8,
         "ids":{
             "bgm_id":422153,
             "mal_id":"54632",
@@ -636,104 +612,83 @@
             "anl_id":162144,
             "fm_score":"2.9"
         },
-        "ank_score":5.4,
-        "anl_score":6.85,
+        "ank_score":5.6,
+        "anl_score":6.95,
         "time":{
-            "day":28,
-            "month":1,
-            "year":2024
-        }
-    },
-    "\u5927\u5b87\u5b99\u65f6\u4ee3":{
-        "score":"None",
-        "name_cn":"\u5927\u5b87\u5b99\u65f6\u4ee3",
-        "name":"\u5927\u5b87\u5b99\u65f6\u4ee3",
-        "bgm_id":358561,
-        "poster":"http://lain.bgm.tv/pic/cover/l/71/66/358561_UzsLu.jpg",
-        "ids":{
-            "bgm_id":358561,
-            "mal_id":"57629",
-            "ank_id":"Error",
-            "anl_id":141856,
-            "fm_score":"3.6"
-        },
-        "ank_score":"None",
-        "anl_score":3.0,
-        "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u59eb\u69d8\u201c\u62f7\u554f\u201d\u306e\u6642\u9593\u3067\u3059":{
-        "score":7.042,
+        "score":6.972,
         "name_cn":"\u516c\u4e3b\u5927\u4eba\u201c\u62f7\u95ee\u201d\u7684\u65f6\u95f4\u5230\u4e86",
         "name":"\u59eb\u69d8\u201c\u62f7\u554f\u201d\u306e\u6642\u9593\u3067\u3059",
         "bgm_id":443112,
         "poster":"http://lain.bgm.tv/pic/cover/l/84/36/443112_WYgIX.jpg",
-        "mal_score":6.86,
+        "mal_score":6.81,
         "bgm_score":6.9,
-        "fm_score":7.4,
+        "fm_score":7.2,
         "ids":{
             "bgm_id":443112,
             "mal_id":"55774",
             "ank_id":"14340",
             "anl_id":166522,
-            "fm_score":"3.7"
+            "fm_score":"3.6"
         },
         "ank_score":6.6,
         "anl_score":6.55,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u5f31\u30ad\u30e3\u30e9\u53cb\u5d0e\u304f\u3093 2nd STAGE":{
-        "score":6.302,
+        "score":6.178,
         "name_cn":"\u5f31\u89d2\u53cb\u5d0e\u540c\u5b66 2nd STAGE",
         "name":"\u5f31\u30ad\u30e3\u30e9\u53cb\u5d0e\u304f\u3093 2nd STAGE",
         "bgm_id":365572,
         "poster":"http://lain.bgm.tv/pic/cover/l/ca/92/365572_g22Q4.jpg",
-        "mal_score":7.21,
-        "bgm_score":6,
-        "fm_score":6.2,
+        "mal_score":7.14,
+        "bgm_score":5.9,
+        "fm_score":6.0,
         "ids":{
             "bgm_id":365572,
             "mal_id":"50803",
             "ank_id":"14323",
             "anl_id":143866,
-            "fm_score":"3.1"
+            "fm_score":"3.0"
         },
         "ank_score":6.2,
         "anl_score":6.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u60aa\u5f79\u4ee4\u5b22\u30ec\u30d9\u30eb99\uff5e\u79c1\u306f\u88cf\u30dc\u30b9\u3067\u3059\u304c\u9b54\u738b\u3067\u306f\u3042\u308a\u307e\u305b\u3093\uff5e":{
-        "score":6.478,
+        "score":6.266,
         "name_cn":"\u53cd\u6d3e\u5927\u5c0f\u59d0\u7b49\u7ea799\uff5e\u6211\u662f\u9690\u85cfBOSS\u4f46\u4e0d\u662f\u9b54\u738b\uff5e",
         "name":"\u60aa\u5f79\u4ee4\u5b22\u30ec\u30d9\u30eb99\uff5e\u79c1\u306f\u88cf\u30dc\u30b9\u3067\u3059\u304c\u9b54\u738b\u3067\u306f\u3042\u308a\u307e\u305b\u3093\uff5e",
         "bgm_id":425910,
         "poster":"http://lain.bgm.tv/pic/cover/l/f0/16/425910_lB235.jpg",
-        "mal_score":7.49,
-        "bgm_score":6,
-        "fm_score":6.6,
+        "mal_score":7.48,
+        "bgm_score":5.7,
+        "fm_score":6.4,
         "ids":{
             "bgm_id":425910,
             "mal_id":"54837",
             "ank_id":"Error",
             "anl_id":163076,
-            "fm_score":"3.3"
+            "fm_score":"3.2"
         },
         "ank_score":"None",
         "anl_score":7.25,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
@@ -743,7 +698,7 @@
         "name":"\u60b6\u3048\u3066\u3088\u3001\u30a2\u30c0\u30e0\u304f\u3093",
         "bgm_id":469072,
         "poster":"http://lain.bgm.tv/pic/cover/l/87/d6/469072_FH6ES.jpg",
-        "mal_score":6.59,
+        "mal_score":6.86,
         "ids":{
             "bgm_id":469072,
             "mal_id":"57470",
@@ -752,42 +707,45 @@
             "fm_score":"1.9"
         },
         "ank_score":5.4,
-        "anl_score":6.35,
+        "anl_score":6.45,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u611a\u304b\u306a\u5929\u4f7f\u306f\u60aa\u9b54\u3068\u8e0a\u308b":{
-        "score":"None",
+        "score":5.7,
         "name_cn":"\u611a\u8822\u5929\u4f7f\u4e0e\u6076\u9b54\u5171\u821e",
         "name":"\u611a\u304b\u306a\u5929\u4f7f\u306f\u60aa\u9b54\u3068\u8e0a\u308b",
         "bgm_id":431839,
         "poster":"http://lain.bgm.tv/pic/cover/l/11/bc/431839_s81KK.jpg",
+        "mal_score":6.4,
+        "bgm_score":5.6,
+        "fm_score":5.4,
         "ids":{
             "bgm_id":431839,
             "mal_id":"55129",
             "ank_id":"14312",
             "anl_id":164244,
-            "fm_score":"2.8"
+            "fm_score":"2.7"
         },
         "ank_score":6.0,
-        "anl_score":6.15,
+        "anl_score":6.1,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u6226\u56fd\u5996\u72d0":{
-        "score":6.566,
+        "score":6.492,
         "name_cn":"\u6218\u56fd\u5996\u72d0",
         "name":"\u6226\u56fd\u5996\u72d0",
         "bgm_id":449725,
         "poster":"http://lain.bgm.tv/pic/cover/l/8d/58/449725_Eey99.jpg",
-        "mal_score":6.88,
-        "bgm_score":6.9,
+        "mal_score":6.76,
+        "bgm_score":6.8,
         "fm_score":5.8,
         "ids":{
             "bgm_id":449725,
@@ -797,10 +755,10 @@
             "fm_score":"2.9"
         },
         "ank_score":6.4,
-        "anl_score":6.65,
+        "anl_score":6.55,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
@@ -818,68 +776,87 @@
             "fm_score":"3.7"
         },
         "ank_score":"None",
-        "anl_score":5.1,
+        "anl_score":4.3,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
+            "year":2024
+        }
+    },
+    "\u65e0\u8111\u9b54\u5973 \u7b2c\u4e8c\u5b63":{
+        "score":"None",
+        "name_cn":"\u65e0\u8111\u9b54\u5973 \u7b2c\u4e8c\u5b63",
+        "name":"\u65e0\u8111\u9b54\u5973 \u7b2c\u4e8c\u5b63",
+        "bgm_id":448623,
+        "poster":"http://lain.bgm.tv/pic/cover/l/44/b6/448623_4vu4S.jpg",
+        "ids":{
+            "bgm_id":448623,
+            "mal_id":"57575",
+            "ank_id":"Error",
+            "anl_id":174702,
+            "fm_score":"4.0"
+        },
+        "ank_score":"None",
+        "anl_score":6.0,
+        "time":{
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u660e\u6cbb\u6483\u5263\uff0d1874\uff0d":{
-        "score":6.034,
+        "score":5.962,
         "name_cn":"\u660e\u6cbb\u51fb\u5251\uff0d1874\uff0d",
         "name":"\u660e\u6cbb\u6483\u5263\uff0d1874\uff0d",
         "bgm_id":469437,
         "poster":"http://lain.bgm.tv/pic/cover/l/96/c5/469437_tCZsS.jpg",
-        "mal_score":6.47,
+        "mal_score":6.41,
         "bgm_score":6,
-        "fm_score":5.8,
+        "fm_score":5.6,
         "ids":{
             "bgm_id":469437,
             "mal_id":"57502",
             "ank_id":"Error",
             "anl_id":171144,
-            "fm_score":"2.9"
+            "fm_score":"2.8"
         },
         "ank_score":"None",
-        "anl_score":5.9,
+        "anl_score":5.85,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u6700\u5f31\u30c6\u30a4\u30de\u30fc\u306f\u30b4\u30df\u62fe\u3044\u306e\u65c5\u3092\u59cb\u3081\u307e\u3057\u305f \u3002":{
-        "score":6.428,
+        "score":"None",
         "name_cn":"\u6700\u5f31\u7684\u9a6f\u517b\u5e08\u5f00\u542f\u7684\u6361\u5783\u573e\u7684\u65c5\u9014\u3002",
         "name":"\u6700\u5f31\u30c6\u30a4\u30de\u30fc\u306f\u30b4\u30df\u62fe\u3044\u306e\u65c5\u3092\u59cb\u3081\u307e\u3057\u305f \u3002",
         "bgm_id":407697,
         "poster":"http://lain.bgm.tv/pic/cover/l/08/07/407697_8ViVY.jpg",
-        "mal_score":7.24,
-        "bgm_score":6.6,
-        "fm_score":5.6,
+        "mal_score":7.3,
         "ids":{
             "bgm_id":407697,
             "mal_id":"53590",
             "ank_id":"Error",
             "anl_id":156891,
-            "fm_score":"2.8"
+            "fm_score":"2.7"
         },
         "ank_score":"None",
-        "anl_score":6.9,
+        "anl_score":"None",
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u6700\u5f37\u30bf\u30f3\u30af\u306e\u8ff7\u5bae\u653b\u7565\uff5e\u4f53\u529b9999\u306e\u30ec\u30a2\u30b9\u30ad\u30eb\u6301\u3061\u30bf\u30f3\u30af\u3001\u52c7\u8005\u30d1\u30fc\u30c6\u30a3\u30fc\u3092\u8ffd\u653e\u3055\u308c\u308b\uff5e":{
-        "score":5.306,
+        "score":5.27,
         "name_cn":"\u6700\u5f3a\u8089\u76fe\u7684\u8ff7\u5bab\u653b\u7565\uff5e\u62e5\u6709\u7a00\u5c11\u6280\u80fd\u4f53\u529b9999\u7684\u8089\u76fe\uff0c\u88ab\u52c7\u8005\u961f\u4f0d\u8f9e\u9000\u4e86\uff5e",
         "name":"\u6700\u5f37\u30bf\u30f3\u30af\u306e\u8ff7\u5bae\u653b\u7565\uff5e\u4f53\u529b9999\u306e\u30ec\u30a2\u30b9\u30ad\u30eb\u6301\u3061\u30bf\u30f3\u30af\u3001\u52c7\u8005\u30d1\u30fc\u30c6\u30a3\u30fc\u3092\u8ffd\u653e\u3055\u308c\u308b\uff5e",
         "bgm_id":458047,
         "poster":"http://lain.bgm.tv/pic/cover/l/85/3e/458047_1Y9eY.jpg",
-        "mal_score":6.53,
+        "mal_score":6.35,
         "bgm_score":5,
         "fm_score":5.0,
         "ids":{
@@ -889,11 +866,11 @@
             "anl_id":169935,
             "fm_score":"2.5"
         },
-        "ank_score":5.4,
-        "anl_score":6.15,
+        "ank_score":5.2,
+        "anl_score":5.95,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
@@ -913,44 +890,42 @@
         "ank_score":"None",
         "anl_score":7.3,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u6708\u304c\u5c0e\u304f\u7570\u4e16\u754c\u9053\u4e2d \u7b2c\u4e8c\u5e55":{
-        "score":6.364,
+        "score":6.532,
         "name_cn":"\u6708\u5149\u4e0b\u7684\u5f02\u4e16\u754c\u4e4b\u65c5 \u7b2c\u4e8c\u5e55",
         "name":"\u6708\u304c\u5c0e\u304f\u7570\u4e16\u754c\u9053\u4e2d \u7b2c\u4e8c\u5e55",
         "bgm_id":350235,
         "poster":"http://lain.bgm.tv/pic/cover/l/3c/a5/350235_A0USf.jpg",
-        "mal_score":7.72,
-        "bgm_score":5.8,
-        "fm_score":6.4,
+        "mal_score":7.71,
+        "bgm_score":5.9,
+        "fm_score":6.8,
         "ids":{
             "bgm_id":350235,
             "mal_id":"49889",
             "ank_id":"14332",
             "anl_id":139518,
-            "fm_score":"3.2"
+            "fm_score":"3.4"
         },
-        "ank_score":5.8,
+        "ank_score":6.2,
         "anl_score":7.55,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u6708\u520a\u30e2\u30fc\u60f3\u79d1\u5b66":{
-        "score":4.218,
+        "score":"None",
         "name_cn":"\u6708\u520a\u5984\u60f3\u79d1\u5b66",
         "name":"\u6708\u520a\u30e2\u30fc\u60f3\u79d1\u5b66",
         "bgm_id":455355,
         "poster":"http://lain.bgm.tv/pic/cover/l/7d/e2/455355_YDzi6.jpg",
-        "mal_score":5.14,
-        "bgm_score":3.5,
-        "fm_score":4.8,
+        "mal_score":5.09,
         "ids":{
             "bgm_id":455355,
             "mal_id":"56691",
@@ -958,46 +933,46 @@
             "anl_id":169418,
             "fm_score":"2.4"
         },
-        "ank_score":5.6,
+        "ank_score":5.4,
         "anl_score":4.45,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u671b\u307e\u306c\u4e0d\u6b7b\u306e\u5192\u967a\u8005":{
-        "score":6.62,
+        "score":6.684,
         "name_cn":"\u4e8b\u4e0e\u613f\u8fdd\u7684\u4e0d\u6b7b\u5192\u9669\u8005",
         "name":"\u671b\u307e\u306c\u4e0d\u6b7b\u306e\u5192\u967a\u8005",
         "bgm_id":378298,
         "poster":"http://lain.bgm.tv/pic/cover/l/bc/bc/378298_zO8ek.jpg",
-        "mal_score":7.45,
+        "mal_score":7.47,
         "bgm_score":6.3,
-        "fm_score":6.6,
+        "fm_score":6.8,
         "ids":{
             "bgm_id":378298,
             "mal_id":"51648",
             "ank_id":"14335",
             "anl_id":147642,
-            "fm_score":"3.3"
+            "fm_score":"3.4"
         },
-        "ank_score":6.2,
+        "ank_score":6.4,
         "anl_score":7.15,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u6cbb\u7652\u9b54\u6cd5\u306e\u9593\u9055\u3063\u305f\u4f7f\u3044\u65b9":{
-        "score":6.684,
+        "score":6.624,
         "name_cn":"\u6cbb\u6108\u9b54\u6cd5\u7684\u9519\u8bef\u4f7f\u7528\u65b9\u6cd5",
         "name":"\u6cbb\u7652\u9b54\u6cd5\u306e\u9593\u9055\u3063\u305f\u4f7f\u3044\u65b9",
         "bgm_id":346426,
         "poster":"http://lain.bgm.tv/pic/cover/l/f8/fc/346426_kF3bf.jpg",
-        "mal_score":7.62,
-        "bgm_score":6.6,
+        "mal_score":7.57,
+        "bgm_score":6.5,
         "fm_score":6.2,
         "ids":{
             "bgm_id":346426,
@@ -1009,162 +984,138 @@
         "ank_score":6.2,
         "anl_score":7.4,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u706b\u72e9\u308a\u306e\u738b \u7b2c2\u30b7\u30fc\u30ba\u30f3":{
-        "score":6.122,
+        "score":5.922,
         "name_cn":"\u72e9\u706b\u4e4b\u738b \u7b2c\u4e8c\u5b63",
         "name":"\u706b\u72e9\u308a\u306e\u738b \u7b2c2\u30b7\u30fc\u30ba\u30f3",
         "bgm_id":425129,
         "poster":"http://lain.bgm.tv/pic/cover/l/86/35/425129_VlMa1.jpg",
-        "mal_score":6.51,
-        "bgm_score":5.8,
-        "fm_score":6.4,
+        "mal_score":6.31,
+        "bgm_score":5.6,
+        "fm_score":6.2,
         "ids":{
             "bgm_id":425129,
             "mal_id":"54754",
             "ank_id":"14339",
             "anl_id":162842,
-            "fm_score":"3.2"
+            "fm_score":"3.1"
         },
         "ank_score":6.2,
-        "anl_score":6.15,
+        "anl_score":6.05,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u7570\u4e16\u754c\u3067\u3082\u3075\u3082\u3075\u306a\u3067\u306a\u3067\u3059\u308b\u305f\u3081\u306b\u304c\u3093\u3070\u3063\u3066\u307e\u3059\u3002":{
-        "score":6.058,
+        "score":5.818,
         "name_cn":"\u4e3a\u4e86\u5728\u5f02\u4e16\u754c\u4e5f\u80fd\u629a\u6478\u6bdb\u8338\u8338\u800c\u52aa\u529b",
         "name":"\u7570\u4e16\u754c\u3067\u3082\u3075\u3082\u3075\u306a\u3067\u306a\u3067\u3059\u308b\u305f\u3081\u306b\u304c\u3093\u3070\u3063\u3066\u307e\u3059\u3002",
         "bgm_id":391117,
         "poster":"http://lain.bgm.tv/pic/cover/l/e7/5b/391117_Fz2T4.jpg",
-        "mal_score":7.29,
-        "bgm_score":5.6,
-        "fm_score":6.0,
+        "mal_score":7.19,
+        "bgm_score":5.4,
+        "fm_score":5.6,
         "ids":{
             "bgm_id":391117,
             "mal_id":"52359",
             "ank_id":"14309",
             "anl_id":152072,
-            "fm_score":"3.0"
+            "fm_score":"2.8"
         },
-        "ank_score":6.0,
+        "ank_score":5.8,
         "anl_score":6.85,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u7570\u4fee\u7f85":{
-        "score":6.348,
+        "score":6.264,
         "name_cn":"\u5f02\u4fee\u7f57",
         "name":"\u7570\u4fee\u7f85",
         "bgm_id":420084,
         "poster":"http://lain.bgm.tv/pic/cover/l/b5/a4/420084_zhWtk.jpg",
-        "mal_score":6.69,
+        "mal_score":6.57,
         "bgm_score":6.3,
-        "fm_score":6.2,
+        "fm_score":6.0,
         "ids":{
             "bgm_id":420084,
             "mal_id":"54449",
             "ank_id":"14308",
             "anl_id":161476,
-            "fm_score":"3.1"
+            "fm_score":"3.0"
         },
         "ank_score":6.8,
-        "anl_score":6.05,
+        "anl_score":6.0,
         "time":{
-            "day":28,
-            "month":1,
-            "year":2024
-        }
-    },
-    "\u767e\u5343\u3055\u3093\u5bb6\u306e\u3042\u3084\u304b\u3057\u738b\u5b50":{
-        "score":5.44,
-        "name_cn":"\u767e\u5343\u5bb6\u7684\u5996\u602a\u738b\u5b50",
-        "name":"\u767e\u5343\u3055\u3093\u5bb6\u306e\u3042\u3084\u304b\u3057\u738b\u5b50",
-        "bgm_id":445836,
-        "poster":"http://lain.bgm.tv/pic/cover/l/ad/3f/445836_5lPXz.jpg",
-        "mal_score":6.4,
-        "bgm_score":5.2,
-        "fm_score":5.2,
-        "ids":{
-            "bgm_id":445836,
-            "mal_id":"55998",
-            "ank_id":"14380",
-            "anl_id":167146,
-            "fm_score":"2.6"
-        },
-        "ank_score":5.6,
-        "anl_score":6.05,
-        "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u771f\u306e\u4ef2\u9593\u3058\u3083\u306a\u3044\u3068\u52c7\u8005\u306e\u30d1\u30fc\u30c6\u30a3\u30fc\u3092\u8ffd\u3044\u51fa\u3055\u308c\u305f\u306e\u3067\u3001\u8fba\u5883\u3067\u30b9\u30ed\u30fc\u30e9\u30a4\u30d5\u3059\u308b\u3053\u3068\u306b\u3057\u307e\u3057\u305f 2nd":{
-        "score":5.934,
+        "score":5.912,
         "name_cn":"\u56e0\u4e3a\u4e0d\u662f\u547d\u4e2d\u6ce8\u5b9a\u7684\u540c\u4f34\u800c\u88ab\u8d76\u51fa\u4e86\u52c7\u8005\u7684\u961f\u4f0d\u3001\u4ece\u6b64\u4ee5\u540e\u8fc7\u4e0a\u4e86\u60a0\u95f2\u7684\u9690\u5c45\u751f\u6d3b \u7b2c\u4e8c\u5b63",
         "name":"\u771f\u306e\u4ef2\u9593\u3058\u3083\u306a\u3044\u3068\u52c7\u8005\u306e\u30d1\u30fc\u30c6\u30a3\u30fc\u3092\u8ffd\u3044\u51fa\u3055\u308c\u305f\u306e\u3067\u3001\u8fba\u5883\u3067\u30b9\u30ed\u30fc\u30e9\u30a4\u30d5\u3059\u308b\u3053\u3068\u306b\u3057\u307e\u3057\u305f 2nd",
         "bgm_id":406628,
         "poster":"http://lain.bgm.tv/pic/cover/l/e2/51/406628_2u4B4.jpg",
-        "mal_score":7.12,
-        "bgm_score":5.9,
-        "fm_score":5.2,
+        "mal_score":6.96,
+        "bgm_score":5.8,
+        "fm_score":5.4,
         "ids":{
             "bgm_id":406628,
             "mal_id":"53488",
             "ank_id":"14326",
             "anl_id":156131,
-            "fm_score":"2.6"
+            "fm_score":"2.7"
         },
         "ank_score":6.2,
-        "anl_score":6.95,
+        "anl_score":6.85,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u7d50\u5a5a\u6307\u8f2a\u7269\u8a9e":{
-        "score":5.484,
+        "score":5.346,
         "name_cn":"\u5a5a\u6212\u7269\u8bed",
         "name":"\u7d50\u5a5a\u6307\u8f2a\u7269\u8a9e",
         "bgm_id":415772,
         "poster":"http://lain.bgm.tv/pic/cover/l/22/ef/415772_fU77d.jpg",
-        "mal_score":6.62,
-        "bgm_score":5.2,
-        "fm_score":5.2,
+        "mal_score":6.48,
+        "bgm_score":5.1,
+        "fm_score":5.0,
         "ids":{
             "bgm_id":415772,
             "mal_id":"54265",
             "ank_id":"14317",
             "anl_id":160389,
-            "fm_score":"2.6"
+            "fm_score":"2.5"
         },
         "ank_score":5.8,
-        "anl_score":6.25,
+        "anl_score":6.15,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u846c\u9001\u306e\u30d5\u30ea\u30fc\u30ec\u30f3":{
-        "score":8.646,
+        "score":8.648,
         "name_cn":"\u846c\u9001\u7684\u8299\u8389\u83b2",
         "name":"\u846c\u9001\u306e\u30d5\u30ea\u30fc\u30ec\u30f3",
         "bgm_id":400602,
         "poster":"http://lain.bgm.tv/pic/cover/l/13/c5/400602_ZI8Y9.jpg",
-        "mal_score":9.13,
+        "mal_score":9.14,
         "bgm_score":8.6,
         "fm_score":8.4,
         "ids":{
@@ -1174,11 +1125,11 @@
             "anl_id":154587,
             "fm_score":"4.2"
         },
-        "ank_score":7.8,
+        "ank_score":8.0,
         "anl_score":9.0,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
@@ -1193,121 +1144,94 @@
             "mal_id":"57012",
             "ank_id":"14338",
             "anl_id":169291,
-            "fm_score":"2.9"
+            "fm_score":"2.8"
         },
         "ank_score":7.2,
-        "anl_score":2.6,
+        "anl_score":4.5,
         "time":{
-            "day":28,
-            "month":1,
-            "year":2024
-        }
-    },
-    "\u8d85\u666e\u901a\u770c\u30c1\u30d0\u4f1d\u8aac":{
-        "score":6.308,
-        "name_cn":"\u8d85\u666e\u901a\u53bf\u5343\u53f6\u4f20\u8bf4",
-        "name":"\u8d85\u666e\u901a\u770c\u30c1\u30d0\u4f1d\u8aac",
-        "bgm_id":414866,
-        "poster":"http://lain.bgm.tv/pic/cover/l/31/09/414866_Q6S68.jpg",
-        "mal_score":5.14,
-        "bgm_score":6,
-        "fm_score":7.6,
-        "ids":{
-            "bgm_id":414866,
-            "mal_id":"54197",
-            "ank_id":"14395",
-            "anl_id":172966,
-            "fm_score":"3.8"
-        },
-        "ank_score":0.0,
-        "anl_score":4.3,
-        "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u9053\u7523\u5b50\u30ae\u30e3\u30eb\u306f\u306a\u307e\u3089\u3081\u3093\u3053\u3044":{
-        "score":5.99,
+        "score":6.04,
         "name_cn":"\u5317\u6d77\u9053\u8fa3\u59b9\u8d3c\u62c9\u53ef\u7231",
         "name":"\u9053\u7523\u5b50\u30ae\u30e3\u30eb\u306f\u306a\u307e\u3089\u3081\u3093\u3053\u3044",
         "bgm_id":406119,
         "poster":"http://lain.bgm.tv/pic/cover/l/79/4c/406119_X9kRl.jpg",
-        "mal_score":7.3,
+        "mal_score":7.25,
         "bgm_score":5.7,
-        "fm_score":5.6,
+        "fm_score":5.8,
         "ids":{
             "bgm_id":406119,
             "mal_id":"53421",
             "ank_id":"14334",
             "anl_id":155963,
-            "fm_score":"2.8"
+            "fm_score":"2.9"
         },
         "ank_score":6.4,
-        "anl_score":6.95,
+        "anl_score":7.0,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u9752\u306e\u7953\u9b54\u5e2b \u5cf6\u6839\u5553\u660e\u7d50\u793e\u7bc7":{
-        "score":7.066,
+        "score":6.946,
         "name_cn":"\u9752\u4e4b\u9a71\u9b54\u5e08 \u5c9b\u6839\u542f\u660e\u7ed3\u793e\u7bc7",
         "name":"\u9752\u306e\u7953\u9b54\u5e2b \u5cf6\u6839\u5553\u660e\u7d50\u793e\u7bc7",
         "bgm_id":411450,
         "poster":"http://lain.bgm.tv/pic/cover/l/ba/26/411450_5j4c7.jpg",
-        "mal_score":7.38,
-        "bgm_score":6.5,
-        "fm_score":7.8,
+        "mal_score":7.33,
+        "bgm_score":6.4,
+        "fm_score":7.6,
         "ids":{
             "bgm_id":411450,
             "mal_id":"53889",
             "ank_id":"14306",
             "anl_id":158931,
-            "fm_score":"3.9"
+            "fm_score":"3.8"
         },
-        "ank_score":6.4,
-        "anl_score":7.1,
+        "ank_score":6.8,
+        "anl_score":7.05,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u9b54\u5973\u3068\u91ce\u7363":{
-        "score":6.542,
+        "score":6.466,
         "name_cn":"\u9b54\u5973\u4e0e\u91ce\u517d",
         "name":"\u9b54\u5973\u3068\u91ce\u7363",
         "bgm_id":396595,
         "poster":"http://lain.bgm.tv/pic/cover/l/9a/ca/396595_99I9Q.jpg",
-        "mal_score":7.26,
+        "mal_score":7.18,
         "bgm_score":6.1,
-        "fm_score":6.8,
+        "fm_score":6.6,
         "ids":{
             "bgm_id":396595,
             "mal_id":"52816",
-            "ank_id":"Error",
+            "ank_id":"14344",
             "anl_id":153818,
-            "fm_score":"3.4"
+            "fm_score":"3.3"
         },
-        "ank_score":"None",
-        "anl_score":6.85,
+        "ank_score":5.8,
+        "anl_score":6.8,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u9b54\u6cd5\u5c11\u5973\u306b\u3042\u3053\u304c\u308c\u3066":{
-        "score":7.392,
+        "score":"None",
         "name_cn":"\u68a6\u60f3\u6210\u4e3a\u9b54\u6cd5\u5c11\u5973",
         "name":"\u9b54\u6cd5\u5c11\u5973\u306b\u3042\u3053\u304c\u308c\u3066",
         "bgm_id":424663,
         "poster":"http://lain.bgm.tv/pic/cover/l/96/d1/424663_mM5GN.jpg",
-        "mal_score":7.61,
-        "bgm_score":7.3,
-        "fm_score":7.4,
         "ids":{
             "bgm_id":424663,
             "mal_id":"54722",
@@ -1318,18 +1242,18 @@
         "ank_score":6.6,
         "anl_score":7.25,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     },
     "\u9b54\u90fd\u7cbe\u5175\u306e\u30b9\u30ec\u30a4\u30d6":{
-        "score":6.238,
+        "score":6.22,
         "name_cn":"\u9b54\u90fd\u7cbe\u5175\u7684\u5974\u96b6",
         "name":"\u9b54\u90fd\u7cbe\u5175\u306e\u30b9\u30ec\u30a4\u30d6",
         "bgm_id":357962,
         "poster":"http://lain.bgm.tv/pic/cover/l/ae/19/357962_eEjJA.jpg",
-        "mal_score":6.99,
+        "mal_score":6.9,
         "bgm_score":6.2,
         "fm_score":5.8,
         "ids":{
@@ -1340,10 +1264,10 @@
             "fm_score":"2.9"
         },
         "ank_score":6.0,
-        "anl_score":6.55,
+        "anl_score":6.5,
         "time":{
-            "day":28,
-            "month":1,
+            "day":13,
+            "month":2,
             "year":2024
         }
     }
