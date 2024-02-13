@@ -21,7 +21,7 @@ timeout = 10
 time_sleep = 5
 
 # 日志设置
-log_level = "DEBUG"
+log_level = "INFO"
 # 是否启用国漫识别(当动画名中文字符达到阈值时跳过统计)
 enable_chinese_check = False
 # 国漫识别阈值
