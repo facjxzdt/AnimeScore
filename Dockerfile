@@ -1,7 +1,7 @@
 FROM ubuntu:22.04
 WORKDIR /app
 COPY . /app
-RUN apt-get update && apt-get install -y python3 python3-pip libxml2-dev libxslt-dev \
+RUN apt-get update && apt-get install -y python3 python3-pip libxml2-dev libxslt-dev python3-lxml\
     && pip install virtualenv \
     && virtualenv venv \
     && . venv/bin/activate \
