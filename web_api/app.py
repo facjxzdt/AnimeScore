@@ -117,6 +117,6 @@ def change_id(body: IdBody):
 
 if __name__ == '__main__':
     ans.init()
-    schedule.every().day.at("10:30").do(updata_score)
+    schedule.every().day.at("19:30").do(updata_score)
     _deamon = deamon()
     uvicorn.run(app="app:app", host="0.0.0.0", port=5001)
