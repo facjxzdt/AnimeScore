@@ -14,4 +14,4 @@ def updata_score():
     utils.json2csv.json2csv(method='air')
 
 def meili_update():
-    meili.add_anime2search()
+    meili.add_anime2search(method='air')
