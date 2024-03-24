@@ -12,7 +12,7 @@ jobs:
 
   build:
   #选择云端运行的环境
-    runs-on: self-hosted
+    runs-on: ubuntu-latest
     steps:
     #uses代表使用一个模块，此处使用的是checkout模块，将github项目文件导入到当前环境中
     - uses: actions/checkout@v3
