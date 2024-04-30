@@ -5,6 +5,10 @@ import threading
 import time
 import schedule
 import sql_add
+import os
+
+if os.path.exists(config.work_dir+'/web/instance/anime.db') == False:
+    sql_add.store_data()
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'  # 指向您的数据库文件
