@@ -50,6 +50,7 @@ def show_rankings():
     return render_template('ranking.html', animes=animes)
 
 if __name__ == '__main__':
+    time.sleep(1200)
     schedule.every().day.at("19:45").do(sql_add.migrate)
     schedule.every().day.at("19:47").do(sql_add.store_data)
     _deamon = deamon()
