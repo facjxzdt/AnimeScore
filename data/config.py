@@ -36,4 +36,4 @@ key = 'test'
 ttl = 600
 max_size = 100
 
-work_dir = '/app'
+work_dir = "/app"

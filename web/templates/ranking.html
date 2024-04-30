@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Anime Rankings</title>
+    <!-- 引入Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Anime Rankings</h1>
+        <div class="row">
+            {% for anime in animes %}
+                <div class="col-md-4 mb-4">
+                    <div class="card">
+                        <img src="{{ anime.poster }}" class="card-img-top" alt="{{ anime.name }}">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ anime.name }} / {{ anime.name_cn }}</h5>
+                            <p class="card-text">Score: {{ anime.score }}</p>
+                            <p class="card-text">BGM Score: {{ anime.bgm_score }}</p>
+                            <p class="card-text">FM Score: {{ anime.fm_score }}</p>
+                            <p class="card-text">ANK Score: {{ anime.ank_score }}</p>
+                            <p class="card-text">ANL Score: {{ anime.anl_score }}</p>
+                            <p class="card-text">{{ anime.time }}</p>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+    <!-- 可选：引入Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>
