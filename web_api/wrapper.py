@@ -9,6 +9,7 @@ import utils.errors as errors
 import apps.search
 import json
 import os
+import web.sql_add as sql_add
 
 from data.config import ttl,max_size,work_dir
 from utils.tools import Tools
@@ -53,6 +54,7 @@ class AnimeScore:
             utils.score.total_score(method='air')
             self.meili.add_anime2search('air')
             utils.json2csv.json2csv(method='air')
+            sql_add.store_data()
             _file = open(work_dir+'/data/database.lock','w')
     #类封装
     #Bangumi类下各方法

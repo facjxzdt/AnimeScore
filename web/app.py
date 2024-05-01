@@ -7,13 +7,13 @@ import schedule
 import sql_add
 import os
 
-if os.path.exists(config.work_dir+'/web/instance/anime.db') == False:
-    sql_add.store_data()
-
-app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'
-app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
-db = SQLAlchemy(app)
+if os.path.exists(config.work_dir + '/data/database.lock'):
+    app = Flask(__name__)
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'
+    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    db = SQLAlchemy(app)
+else:
+    time.sleep(5)
 
 def deamon(interval=1):
     cease_continuous_run = threading.Event()
