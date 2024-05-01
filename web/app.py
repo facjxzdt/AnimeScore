@@ -55,6 +55,6 @@ if __name__ == '__main__':
             schedule.every().day.at("19:45").do(sql_add.migrate)
             schedule.every().day.at("19:47").do(sql_add.store_data)
             _deamon = deamon()
-            app.run(debug=True,host="0.0.0.0",port=5002)
+            app.run(debug=False,host="0.0.0.0",port=5002)
         else:
             time.sleep(5)
