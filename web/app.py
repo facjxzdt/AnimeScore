@@ -11,7 +11,7 @@ if os.path.exists(config.work_dir+'/web/instance/anime.db') == False:
     sql_add.store_data()
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'  # 指向您的数据库文件
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 db = SQLAlchemy(app)
 
@@ -50,8 +50,11 @@ def show_rankings():
     return render_template('ranking.html', animes=animes)
 
 if __name__ == '__main__':
-    time.sleep(1200)
-    schedule.every().day.at("19:45").do(sql_add.migrate)
-    schedule.every().day.at("19:47").do(sql_add.store_data)
-    _deamon = deamon()
-    app.run(debug=True,host="0.0.0.0",port=5002)
+    while True:
+        if os.path.exists(config.work_dir+'/data/database.lock'):
+            schedule.every().day.at("19:45").do(sql_add.migrate)
+            schedule.every().day.at("19:47").do(sql_add.store_data)
+            _deamon = deamon()
+            app.run(debug=True,host="0.0.0.0",port=5002)
+        else:
+            time.sleep(5)
