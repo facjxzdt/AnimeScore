@@ -54,6 +54,8 @@ class AnimeScore:
             utils.score.total_score(method='air')
             self.meili.add_anime2search('air')
             utils.json2csv.json2csv(method='air')
+            file0 = open(work_dir + '/web/instance/anime.db', 'w')
+            file0.close()
             sql_add.store_data()
             file1 = open(work_dir+'/data/database.lock','w')
             file1.close()
