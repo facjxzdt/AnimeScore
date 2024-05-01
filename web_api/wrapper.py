@@ -55,7 +55,8 @@ class AnimeScore:
             self.meili.add_anime2search('air')
             utils.json2csv.json2csv(method='air')
             sql_add.store_data()
-            _file = open(work_dir+'/data/database.lock','w')
+            file1 = open(work_dir+'/data/database.lock','w')
+            file1.close()
     #类封装
     #Bangumi类下各方法
     # get_info(): 获取bgm每日放送
