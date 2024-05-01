@@ -10,7 +10,7 @@ import os
 while True:
     if os.path.exists(config.work_dir + '/data/database.lock'):
         app = Flask(__name__)
-        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'
+        app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+config.work_dir+'/web/instance/anime.db'
         app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
         db = SQLAlchemy(app)
         class Latest(db.Model):
