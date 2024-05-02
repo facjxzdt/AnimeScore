@@ -1,31 +1,63 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <title>Anime Rankings</title>
     <!-- 引入Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
 </head>
+
 <body>
     <div class="container mt-5">
         <h1 class="mb-4">Anime Rankings</h1>
-        <div class="row">
-            {% for anime in animes %}
-                <div class="col-md-4 mb-4">
-                    <div class="card">
-                        <img src="{{ anime.poster }}" class="card-img-top" alt="{{ anime.name }}">
-                        <div class="card-body">
-                            <h5 class="card-title">{{ anime.name }} / {{ anime.name_cn }}</h5>
-                            <p class="card-text">Score: {{ anime.score }}</p>
-                            <p class="card-text">BGM Score: {{ anime.bgm_score }}</p>
-                            <p class="card-text">FM Score: {{ anime.fm_score }}</p>
-                            <p class="card-text">ANK Score: {{ anime.ank_score }}</p>
-                            <p class="card-text">ANL Score: {{ anime.anl_score }}</p>
-                            <p class="card-text">MAL Score: {{ anime.mal_score }}</p>
-                            <p class="card-text">{{ anime.time }}</p>
-                        </div>
+        <!-- 添加一个按钮来显示权重选择表单 -->
+        <button id="showWeightsFormBtn" class="btn btn-info" style="margin-bottom: 20px;">Customize Rankings</button>
+        <div id="weightsForm" style="display:none; margin-bottom: 20px;">
+            <form action="" method="get" id="weightForm">
+                <div class="form-row">
+                    <div class="col">
+                        <label for="bgm_weight">BGM Weight:</label>
+                        <input type="number" class="form-control" name="bgm_weight" id="bgm_weight" min="0" max="1" step="0.1" value="0.5">
+                    </div>
+                    <div class="col">
+                        <label for="fm_weight">FM Weight:</label>
+                        <input type="number" class="form-control" name="fm_weight" id="fm_weight" min="0" max="1" step="0.1" value="0.3">
+                    </div>
+                    <div class="col">
+                        <label for="ank_weight">ANK Weight:</label>
+                        <input type="number" class="form-control" name="ank_weight" id="ank_weight" min="0" max="1" step="0.1" value="0">
+                    </div>
+                    <div class="col">
+                        <label for="anl_weight">ANL Weight:</label>
+                        <input type="number" class="form-control" name="anl_weight" id="anl_weight" min="0" max="1" step="0.1" value="0">
+                    </div>
+                    <div class="col">
+                        <label for="mal_weight">MAL Weight:</label>
+                        <input type="number" class="form-control" name="mal_weight" id="mal_weight" min="0" max="1" step="0.1" value="0.2">
                     </div>
                 </div>
+                <button type="submit" class="btn btn-primary mt-3">Sort</button>
+                <button type="button" id="resetButton" class="btn btn-primary mt-3">Reset</button>
+            </form>
+        </div>
+        <div class="row">
+            {% for anime in animes %}
+            <div class="col-md-4 mb-4">
+                <div class="card">
+                    <img src="{{ anime.poster }}" class="card-img-top" alt="{{ anime.name }}">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ anime.name }} / {{ anime.name_cn }}</h5>
+                        <p class="card-text">Weighted Score: {{ anime.weighted_score }}</p>
+                        <p class="card-text">BGM Score: {{ anime.bgm_score }}</p>
+                        <p class="card-text">FM Score: {{ anime.fm_score }}</p>
+                        <p class="card-text">ANK Score: {{ anime.ank_score }}</p>
+                        <p class="card-text">ANL Score: {{ anime.anl_score }}</p>
+                        <p class="card-text">MAL Score: {{ anime.mal_score }}</p>
+                        <p class="card-text">{{ anime.time }}</p>
+                    </div>
+                </div>
+            </div>
             {% endfor %}
         </div>
     </div>
@@ -33,5 +65,53 @@
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+    <script>
+        document.getElementById('showWeightsFormBtn').onclick = function() {
+            var form = document.getElementById('weightsForm');
+            if (form.style.display === 'none' || form.style.display === '') {
+                form.style.display = 'block';
+            } else {
+                form.style.display = 'none';
+            }
+        };
+
+        document.getElementById('weightForm').onsubmit = function(e) {
+            e.preventDefault(); // 阻止表单默认提交行为
+            // 获取权重值
+          var bgmWeight = document.getElementById('bgm_weight').value;
+          var fmWeight = document.getElementById('fm_weight').value;
+          var ankWeight = document.getElementById('ank_weight').value;
+          var anlWeight = document.getElementById('anl_weight').value;
+          var malWeight = document.getElementById('mal_weight').value;
+
+          // 构造带有权重参数的URL
+          var redirectUrl = "/?bgm_weight=" + bgmWeight + "&fm_weight=" + fmWeight + "&ank_weight=" + ankWeight + "&anl_weight=" + anlWeight + "&mal_weight=" + malWeight;
+
+          // 保存权重到cookie
+          document.cookie = "bgm_weight=" + bgmWeight + "; path=/";
+          document.cookie = "fm_weight=" + fmWeight + "; path=/";
+          document.cookie = "ank_weight=" + ankWeight + "; path=/";
+          document.cookie = "anl_weight=" + anlWeight + "; path=/";
+          document.cookie = "mal_weight=" + malWeight + "; path=/";
+
+          // 重定向到带有权重参数的URL
+          window.location.href = "/?bgm_weight=" + bgmWeight + "&fm_weight=" + fmWeight + "&ank_weight=" + ankWeight + "&anl_weight=" + anlWeight + "&mal_weight=" + malWeight;
+        };
+
+        document.addEventListener('DOMContentLoaded', (event) => {
+            document.getElementById("resetButton").addEventListener("click", resetFormAndCookies);
+        });
+
+        function resetFormAndCookies() {
+            fetch('/reset_cookies')
+                .then(response => {
+                    document.getElementById("weightForm").reset();
+                    window.location.href = '/';
+                })
+                .catch(error => console.error('Error:', error));
+        }
+    </script>
 </body>
+
 </html>

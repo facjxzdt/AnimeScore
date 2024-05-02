@@ -99,6 +99,7 @@ def store_anime_data(data, table_name="latest"):
     db.session.commit()
 
 def migrate():
+    db.session.expire_all()
     try:
         with app.app_context():
             migrate_data()
@@ -106,6 +107,7 @@ def migrate():
     return 0
 
 def store_data():
+    db.session.expire_all()
     with app.app_context():
         # 确保latest表存在
         get_anime_model("latest").__table__.create(db.engine, checkfirst=True)
@@ -114,9 +116,9 @@ def store_data():
     return 0
 
 if __name__ == '__main__':
+    db.session.expire_all()
     with app.app_context():
         # 确保latest表存在
         get_anime_model("latest").__table__.create(db.engine, checkfirst=True)
         if os.path.exists(config.work_dir+'/web/instance/anime.db'):migrate_data()
         store_anime_data(json_data, "latest")
-
