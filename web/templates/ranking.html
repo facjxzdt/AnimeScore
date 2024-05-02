@@ -6,6 +6,38 @@
     <title>Anime Rankings</title>
     <!-- 引入Bootstrap CSS -->
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style type="text/css">
+        .loadingOverlay {
+            position: fixed; /* 固定定位，覆盖整个页面 */
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.8); /* 半透明背景 */
+            backdrop-filter: blur(5px); /* 毛玻璃效果 */
+            display: flex;
+            justify-content: center; /* 水平居中 */
+            align-items: center; /* 垂直居中 */
+            z-index: 1000; /* 确保覆盖层位于最上层 */
+        }
+        .spinner {
+            border: 4px solid rgba(0, 0, 0, 0.1);
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border-left-color: #09f;
+            animation: spin 1s ease infinite;
+        }
+        @keyframes spin {
+          0% {
+            transform: rotate(0deg);
+          }
+          100% {
+            transform: rotate(360deg);
+          }
+        }
+
+    </style>
 </head>
 
 <body>
@@ -41,7 +73,15 @@
                 <button type="button" id="resetButton" class="btn btn-primary mt-3">Reset</button>
             </form>
         </div>
-        <div class="row">
+        <!-- 搜索框和按钮 -->
+        <div class="search-bar mb-4">
+            <form id="searchForm" class="form-inline">
+                <input class="form-control mr-sm-2" type="search" placeholder="Enter BGM ID" aria-label="Search" name="bgm_id">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+        <div id="searchResults"></div>
+        <div class="row" id="rankings">
             {% for anime in animes %}
             <div class="col-md-4 mb-4">
                 <div class="card">
@@ -49,16 +89,19 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ anime.name }} / {{ anime.name_cn }}</h5>
                         <p class="card-text">Weighted Score: {{ anime.weighted_score }}</p>
-                        <p class="card-text">BGM Score: {{ anime.bgm_score }}</p>
-                        <p class="card-text">FM Score: {{ anime.fm_score }}</p>
-                        <p class="card-text">ANK Score: {{ anime.ank_score }}</p>
-                        <p class="card-text">ANL Score: {{ anime.anl_score }}</p>
-                        <p class="card-text">MAL Score: {{ anime.mal_score }}</p>
+                        <p class="card-text"><a href="https://bgm.tv/subject_search/{{ anime.name }}">BGM Score: {{ anime.bgm_score }}</a></a></p>
+                        <p class="card-text"><a href="https://filmarks.com/search/animes?q={{ anime.name }}">FM Score: {{ anime.fm_score }}</a></p>
+                        <p class="card-text"><a href="https://www.anikore.jp/anime_title/{{ anime.name }}">ANK Score: {{ anime.ank_score }}</a></p>
+                        <p class="card-text"><a href="https://anilist.co/search/anime?search={{ anime.name }}">ANL Score: {{ anime.anl_score }}</a></p>
+                        <p class="card-text"><a href="https://myanimelist.net/search/all?q={{ anime.name }}&cat=all">MAL Score: {{ anime.mal_score }}</a></p>
                         <p class="card-text">{{ anime.time }}</p>
                     </div>
                 </div>
             </div>
             {% endfor %}
+        </div>
+        <div id="loadingSpinner" class="loadingOverlay" style="display: none;">
+            <div class="spinner"></div>
         </div>
     </div>
     <!-- 可选：引入Bootstrap JS -->
@@ -111,6 +154,58 @@
                 })
                 .catch(error => console.error('Error:', error));
         }
+        document.getElementById('searchForm').onsubmit = function(e) {
+        e.preventDefault(); // 阻止表单默认提交行为
+        document.getElementById('loadingSpinner').style.display = 'flex'; // 显示动画
+
+        var bgmId = document.querySelector('input[type="search"]').value;
+
+        fetch('/search', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ bgm_id: bgmId }),
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok');
+            }
+            return response.json();
+        })
+        .then(data => {
+            var searchResults = document.getElementById('searchResults');
+            var rankings = document.getElementById('rankings');
+            rankings.style.display = 'none';
+            if (data.error) {
+                searchResults.innerHTML = `<p>${data.error}</p>`;
+            } else {
+                var resultHTML = `
+                    <div class="col-md-4 mb-4">
+                        <div class="card">
+                            <img src="${data.poster}" class="card-img-top" alt="${data.name}">
+                            <div class="card-body" style="margin-bottom: 20px;">
+                                <h5 class="card-title">${data.name} / ${data.name_cn}</h5>
+                                <p class="card-text">BGM Score: ${data.bgm_score}</p>
+                                <p class="card-text">FM Score: ${data.fm_score}</p>
+                                <p class="card-text">ANK Score: ${data.ank_score}</p>
+                                <p class="card-text">ANL Score: ${data.anl_score}</p>
+                                <p class="card-text">MAL Score: ${data.mal_score}</p>
+                            </div>
+                        </div>
+                        <a href="/" class="btn btn-primary">Back</a>
+                    </div>`;
+                searchResults.innerHTML = resultHTML;
+            }
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        })
+        .finally(() => {
+            // 隐藏等待动画
+            document.getElementById('loadingSpinner').style.display = 'none';
+        });
+    };
     </script>
 </body>
 

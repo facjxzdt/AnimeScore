@@ -1,5 +1,6 @@
 from flask import Flask, render_template, request, make_response, redirect
 from flask_sqlalchemy import SQLAlchemy
+from utils.get_score import get_single_score
 import data.config as config
 import threading
 import time
@@ -93,6 +94,18 @@ def show_rankings():
         # 按加权分数降序排序
     animes_sorted = sorted(animes, key=lambda x: x.weighted_score, reverse=True)
     return render_template('ranking.html', animes=animes_sorted)
+
+@app.route('/search', methods=['POST'])
+def search():
+    # 从请求体中获取BGM ID
+    bgm_id = str(request.json.get('bgm_id'))
+    anime = get_single_score(bgm_id)
+    if anime:
+        # 如果找到了，返回动画信息的JSON
+        return anime
+    else:
+        # 如果没找到，返回错误信息
+        return {"error": "Anime not found"}, 404
 
 if __name__ == '__main__':
     while True:

@@ -192,3 +192,6 @@ def update_score(bgm_id: str):
     f1 = open(score_path, 'w')
     f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
     f1.close()
+
+if __name__ == "__main__":
+    print(get_single_score("425909"))
