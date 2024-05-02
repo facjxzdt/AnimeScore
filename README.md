@@ -1,10 +1,16 @@
-# AnimeScore-API
+# AnimeScore
 
 ## 简介
 
-一个从各个网站获取当季新番分数的api
+一个汇集了各大评分网站评分的新番排名网站
+对外提供API
 
-## 快速启动
+### 网址：[https://rank.amoe.moe](https://rank.amoe.moe)
+### API: [https://api.amoe.moe](https://amoe.moe)
+
+## 效果
+
+## 快速启动(API)
 
 ### 0.使用我提供的服务
 ```
