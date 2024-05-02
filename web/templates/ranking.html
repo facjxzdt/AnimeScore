@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <title>Anime Rankings</title>
     <!-- 引入Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://typecho-boom.oss-cn-beijing.aliyuncs.com/cdn/bootstrap.min.css">
     <style type="text/css">
         .loadingOverlay {
             position: fixed; /* 固定定位，覆盖整个页面 */
@@ -105,9 +105,9 @@
         </div>
     </div>
     <!-- 可选：引入Bootstrap JS -->
-    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.2/dist/umd/popper.min.js"></script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <script src="https://typecho-boom.oss-cn-beijing.aliyuncs.com/cdn/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://typecho-boom.oss-cn-beijing.aliyuncs.com/cdn/popper.min.js"></script>
+    <script src="https://typecho-boom.oss-cn-beijing.aliyuncs.com/cdn/bootstrap.min.js"></script>
 
     <script>
         document.getElementById('showWeightsFormBtn').onclick = function() {
@@ -181,8 +181,8 @@
                 searchResults.innerHTML = `<p>${data.error}</p>`;
             } else {
                 var resultHTML = `
-                    <div class="col-md-4 mb-4">
-                        <div class="card">
+                    <div class="col-md-4 mb-4" style="margin-bottom: 20px;>
+                        <div class="card" style="margin-bottom: 20px;>
                             <img src="${data.poster}" class="card-img-top" alt="${data.name}">
                             <div class="card-body" style="margin-bottom: 20px;">
                                 <h5 class="card-title">${data.name} / ${data.name_cn}</h5>
