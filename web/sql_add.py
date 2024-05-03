@@ -116,7 +116,6 @@ def store_data():
     return 0
 
 if __name__ == '__main__':
-    db.session.expire_all()
     with app.app_context():
         # 确保latest表存在
         get_anime_model("latest").__table__.create(db.engine, checkfirst=True)
