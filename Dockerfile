@@ -1,4 +1,4 @@
-FROM ubuntu:22.04
+FROM ubuntu:24.04
 WORKDIR /app
 COPY . /app
 COPY supervisord.conf /etc/supervisord.conf
