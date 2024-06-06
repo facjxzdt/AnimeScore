@@ -2,7 +2,7 @@ FROM ubuntu:24.04
 WORKDIR /app
 COPY . /app
 COPY supervisord.conf /etc/supervisord.conf
-RUN apt-get update && apt-get install -y python3-pip python3.12-venv\
+RUN apt-get update && apt-get install -y python3-pip python3.12-venv libxml2-dev libxslt-dev \
     && python3 -m venv .venv \
     && . .venv/bin/activate \
     && pip3 install supervisor \
