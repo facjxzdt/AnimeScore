@@ -17,7 +17,7 @@ def create_app():
     db = SQLAlchemy(app)
     app.secret_key = data.config.key
     bcrypt = Bcrypt(app)
-
+    _deamon = deamon()
     # 定义数据库模型
     class Anime(db.Model):
         title = db.Column(db.String(100), primary_key=True)
