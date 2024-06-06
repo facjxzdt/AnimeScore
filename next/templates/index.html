@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Anime List</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-4">Anime List</h1>
+    <div class="d-flex justify-content-between mb-3">
+      <a href="{{ url_for('logout') }}" class="btn btn-secondary">Logout</a>
+      <form action="{{ url_for('sync_animes') }}" method="post" class="ml-2">
+        <button type="submit" class="btn btn-info">Sync Anime Data</button>
+      </form>
+    </div>
+    <table class="table table-striped mt-3">
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Poster</th>
+          <th>Skip</th>
+          <th>Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        {% for anime in animes %}
+        <tr>
+          <td>{{ anime.title }}</td>
+          <td>
+            {% if anime.poster %}
+              <img src="{{ anime.poster }}" alt="Poster for {{ anime.title }}" class="img-thumbnail" style="max-width: 100px;">
+            {% else %}
+              No Image
+            {% endif %}
+          </td>
+          <td>{{ anime.skip }}</td>
+          <td>
+            <form action="{{ url_for('delete_anime', title=anime.title) }}" method="post" style="display:inline;">
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+            <a href="{{ url_for('update_anime', title=anime.title) }}" class="btn btn-primary btn-sm">Edit</a>
+            </form>
+          </td>
+        </tr>
+        {% endfor %}
+      </tbody>
+    </table>
+  </div>
+  <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+</body>
+</html>

@@ -45,6 +45,9 @@
         <h1 class="mb-4">Anime Rankings</h1>
         <!-- 添加一个按钮来显示权重选择表单 -->
         <button id="showWeightsFormBtn" class="btn btn-info" style="margin-bottom: 20px;">Customize Rankings</button>
+        <form action="{{ url_for('get_score') }}" method="post" class="mb-3">
+            <button type="submit" class="btn btn-primary">获取所有动画分数</button>
+        </form>
         <div id="weightsForm" style="display:none; margin-bottom: 20px;">
             <form action="" method="get" id="weightForm">
                 <div class="form-row">
@@ -85,17 +88,20 @@
             {% for anime in animes %}
             <div class="col-md-4 mb-4">
                 <div class="card">
-                    <img src="{{ anime.poster }}" class="card-img-top" alt="{{ anime.name }}">
+                    <img src="{{ anime.poster }}" class="card-img-top" alt="{{ anime.title }}">
                     <div class="card-body">
-                        <h5 class="card-title">{{ anime.name }} / {{ anime.name_cn }}</h5>
+                        <h5 class="card-title">{{ anime.title }} / {{ anime.name_cn }}</h5>
                         <p class="card-text">Weighted Score: {{ anime.weighted_score }}</p>
-                        <p class="card-text"><a href="https://bgm.tv/subject_search/{{ anime.name }}">BGM Score: {{ anime.bgm_score }}</a></a></p>
-                        <p class="card-text"><a href="https://filmarks.com/search/animes?q={{ anime.name }}">FM Score: {{ anime.fm_score }}</a></p>
-                        <p class="card-text"><a href="https://www.anikore.jp/anime_title/{{ anime.name }}">ANK Score: {{ anime.ank_score }}</a></p>
-                        <p class="card-text"><a href="https://anilist.co/search/anime?search={{ anime.name }}">ANL Score: {{ anime.anl_score }}</a></p>
-                        <p class="card-text"><a href="https://myanimelist.net/search/all?q={{ anime.name }}&cat=all">MAL Score: {{ anime.mal_score }}</a></p>
+                        <p class="card-text"><a href="https://bgm.tv/subject_search/{{ anime.title }}">BGM Score: {{ anime.bgm_score }}</a></a></p>
+                        <p class="card-text"><a href="https://filmarks.com/search/animes?q={{ anime.title }}">FM Score: {{ anime.fm_score }}</a></p>
+                        <p class="card-text"><a href="https://www.anikore.jp/anime_title/{{ anime.title }}">ANK Score: {{ anime.ank_score }}</a></p>
+                        <p class="card-text"><a href="https://anilist.co/search/anime?search={{ anime.title }}">ANL Score: {{ anime.anl_score }}</a></p>
+                        <p class="card-text"><a href="https://myanimelist.net/search/all?q={{ anime.title }}&cat=all">MAL Score: {{ anime.mal_score }}</a></p>
                         <p class="card-text">{{ anime.time }}</p>
                     </div>
+                    <form action="{{ url_for('update_single_anime_score', title=anime.title) }}" method="post" style="display:inline;">
+                            <button type="submit" class="btn btn-info">更新分数</button>
+                    </form>
                 </div>
             </div>
             {% endfor %}
@@ -183,9 +189,9 @@
                 var resultHTML = `
                     <div class="col-md-4 mb-4" style="margin-bottom: 20px;">
                         <div class="card" style="margin-bottom: 20px;">
-                            <img src="${data.poster}" class="card-img-top" alt="${data.name}">
+                            <img src="${data.poster}" class="card-img-top" alt="${data.title}">
                             <div class="card-body" style="margin-bottom: 20px;">
-                                <h5 class="card-title">${data.name} / ${data.name_cn}</h5>
+                                <h5 class="card-title">${data.title} / ${data.name_cn}</h5>
                                 <p class="card-text">BGM Score: ${data.bgm_score}</p>
                                 <p class="card-text">FM Score: ${data.fm_score}</p>
                                 <p class="card-text">ANK Score: ${data.ank_score}</p>

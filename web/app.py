@@ -1,40 +1,151 @@
-from flask import Flask, render_template, request, make_response, redirect
+from flask import Flask, render_template, request, make_response, redirect, flash, url_for, session
 from flask_sqlalchemy import SQLAlchemy
 from utils.get_score import get_single_score
+from apis.mal import MyAnimeList
+from apis.anikore import Anikore
+from apis.anilist import AniList
+from apis.filmarks import Filmarks
+from apis.bangumi import Bangumi
+from functools import wraps
 import data.config as config
 import threading
 import time
 import schedule
-import sql_add
 import os
+import sqlite3
+import datetime
+
+mal = MyAnimeList()
+ank = Anikore()
+anl = AniList()
+fm = Filmarks()
+bgm = Bangumi()
 
 def create_app():
     while True:
         if os.path.exists(config.work_dir + '/data/database.lock'):
             app = Flask(__name__)
-            app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+config.work_dir+'/web/instance/anime.db'
+            app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///'+config.work_dir+'/next/instance/anime.db'
             app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+            app.secret_key = config.key
             db = SQLAlchemy(app)
-            schedule.every().day.at("19:45").do(sql_add.migrate)
-            schedule.every().day.at("19:47").do(sql_add.store_data)
             _deamon = deamon()
-            class Latest(db.Model):
-                __tablename__ = 'latest'  # 指定数据库中的表名
-                id = db.Column(db.Integer, primary_key=True)
-                name = db.Column(db.String(250), nullable=False)
-                name_cn = db.Column(db.String(250), nullable=True)
-                bgm_id = db.Column(db.Integer, unique=True, nullable=False)
-                poster = db.Column(db.String(250), nullable=True)
+            class Anime(db.Model):
+                __tablename__ = 'score'
+                title = db.Column(db.String(100), primary_key=True)
+                name_cn = db.Column(db.String(100), nullable=True)
+                bgm_id = db.Column(db.Integer, nullable=True)
+                poster = db.Column(db.String(200), nullable=True)
                 mal_score = db.Column(db.Float, nullable=True)
                 bgm_score = db.Column(db.Float, nullable=True)
                 fm_score = db.Column(db.Float, nullable=True)
                 ank_score = db.Column(db.Float, nullable=True)
                 anl_score = db.Column(db.Float, nullable=True)
-                score = db.Column(db.Float, nullable=True)
                 time = db.Column(db.String(250), nullable=True)
+            class Anime_Info(db.Model):
+                __tablename__ = 'anime'
+                title = db.Column(db.String(100), primary_key=True)
+                name_cn = db.Column(db.String(100), nullable=True)
+                bgm_id = db.Column(db.Integer, nullable=True)
+                poster = db.Column(db.String(200), nullable=True)
+                mal_id = db.Column(db.Float, nullable=True)
+                fm_id = db.Column(db.Float, nullable=True)
+                ank_id = db.Column(db.Float, nullable=True)
+                anl_id = db.Column(db.Float, nullable=True)
             break
         else:
             time.sleep(5)
+
+    def replace_na_with_none(db_path=config.work_dir + '/next/instance/anime.db'):
+        # 连接到SQLite数据库
+        conn = sqlite3.connect(db_path)
+        cursor = conn.cursor()
+
+        # 获取数据库中所有表的信息
+        cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+        tables = cursor.fetchall()
+
+        # 遍历所有表和列，将N/A替换为None
+        for table in tables:
+            table_name = table[0]
+            cursor.execute(f"PRAGMA table_info({table_name});")
+            columns = cursor.fetchall()
+
+            for column in columns:
+                column_name = column[1]
+                # 更新表中N/A为None
+                cursor.execute(f"UPDATE {table_name} SET {column_name} = NULL WHERE {column_name} = 'N/A'")
+
+        # 提交更改并关闭连接
+        conn.commit()
+        conn.close()
+
+    def remove_orphaned_scores():
+        # 连接到SQLite数据库
+        conn = sqlite3.connect(config.work_dir + '/next/instance/anime.db')
+        cursor = conn.cursor()
+
+        # 获取anime表中的所有title
+        cursor.execute('SELECT title FROM anime')
+        anime_titles = set(row[0] for row in cursor.fetchall())
+
+        # 获取score表中的所有title
+        cursor.execute('SELECT title FROM score')
+        score_titles = set(row[0] for row in cursor.fetchall())
+
+        # 找出存在于score表中但不存在于anime表中的title
+        orphaned_titles = score_titles - anime_titles
+
+        # 删除这些孤立的记录
+        for title in orphaned_titles:
+            cursor.execute('DELETE FROM score WHERE title = ?', (title,))
+
+        # 提交更改并关闭连接
+        conn.commit()
+        conn.close()
+    def update_single_score(title):
+        anime_info = Anime_Info.query.get(title)
+        anime = Anime.query.get(title)
+        if not anime_info:
+            flash(f'Anime with title {title} not found.')
+            return
+
+        try:
+            mal_score = mal.get_anime_score(anime_info.mal_id)
+        except:
+            mal_score = None
+        try:
+            bgm_score = bgm.get_score(anime_info.bgm_id)
+        except:
+            bgm_score = None
+        try:
+            ank_score = ank.get_ani_score(anime_info.ank_id)
+        except:
+            ank_score = None
+        try:
+            anl_score = anl.get_al_score(anime_info.anl_id)
+        except:
+            anl_score = None
+        fm_score = fm.get_fm_score(anime_info.title)
+
+        anime.mal_score = mal_score
+        anime.bgm_score = bgm_score
+        anime.fm_score = fm_score
+        anime.ank_score = ank_score
+        anime.anl_score = anl_score
+        anime.time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        db.session.commit()
+        flash(f'Scores for {title} updated successfully.')
+
+    def login_required(f):
+        @wraps(f)
+        def decorated_function(*args, **kwargs):
+            if 'logged_in' not in session:
+                return redirect(url_for('login'))
+            return f(*args, **kwargs)
+
+        return decorated_function
 
     @app.route('/reset_cookies')
     def reset_cookies():
@@ -49,9 +160,8 @@ def create_app():
 
     @app.route('/')
     def show_rankings():
-        # 按 score 降序获取所有记录
         db.session.expire_all()
-        animes = Latest.query.order_by(Latest.score.desc()).all()
+        animes = Anime.query.all()
         bgm_weight = float(request.cookies.get('bgm_weight', 0.5))
         fm_weight = float(request.cookies.get('fm_weight', 0.3))
         ank_weight = float(request.cookies.get('ank_weight', 0))
@@ -82,10 +192,101 @@ def create_app():
                     break
 
             # 将加权分数作为动画对象的一个临时属性
-            setattr(anime, 'weighted_score', weighted_score)
+            setattr(anime, 'weighted_score', format(weighted_score,'.3f'))
             # 按加权分数降序排序
         animes_sorted = sorted(animes, key=lambda x: x.weighted_score, reverse=True)
         return render_template('ranking.html', animes=animes_sorted)
+
+    @app.route('/login', methods=['GET', 'POST'])
+    def login():
+        error = None
+        if request.method == 'POST':
+            if request.form['password'] != config.key:
+                error = 'Invalid password. Please try again.'
+            else:
+                session['logged_in'] = True
+                flash('You were successfully logged in')
+                return redirect(url_for('show_rankings'))
+        return render_template('login.html', error=error)
+
+    @app.route('/logout')
+    def logout():
+        session.pop('logged_in', None)
+        flash('You were successfully logged out')
+        return redirect(url_for('show_rankings'))
+
+    @app.route('/update_single_score/<title>', methods=['POST'])
+    @login_required
+    def update_single_anime_score(title):
+        update_single_score(title)
+        return redirect(url_for('show_rankings'))
+
+    @app.route('/get_score', methods=['POST'])
+    @login_required
+    def get_score():
+        remove_orphaned_scores()
+        # 连接到SQLite数据库
+        conn = sqlite3.connect(config.work_dir + '/next/instance/anime.db')
+        cursor = conn.cursor()
+
+        # 创建新的score表
+        cursor.execute('''
+            CREATE TABLE IF NOT EXISTS score (
+                title TEXT,
+                name_cn TEXT,
+                bgm_id INTEGER,
+                poster TEXT,
+                mal_score REAL,
+                bgm_score REAL,
+                fm_score REAL,
+                ank_score REAL,
+                anl_score REAL,
+                time TEXT
+            )
+            ''')
+
+        # 获取所有动画的相关数据
+        cursor.execute('SELECT title, name_cn, bgm_id, poster, mal_id, ank_id, anl_id, fm_id FROM anime')
+        animes = cursor.fetchall()
+
+        # 遍历所有动画并计算分数
+        for anime in animes:
+            title, name_cn, bgm_id, poster, mal_id, ank_id, anl_id, fm_id = anime
+            try:
+                mal_score = mal.get_anime_score(mal_id)
+            except:
+                mal_score = None
+            try:
+                bgm_score = bgm.get_score(bgm_id)
+            except:
+                bgm_score = None
+            try:
+                ank_score = ank.get_ani_score(ank_id)
+            except:
+                ank_score = None
+            try:
+                anl_score = anl.get_al_score(anl_id)
+            except:
+                anl_score = None
+            fm_score = 2 * float(fm_id) if fm_id and fm_id.replace('.', '',
+                                                                   1).isdigit() else None  # 假设fm_score等于fm_id，如果fm_id是数值
+
+            # 获取当前时间
+            current_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+            # 将结果插入到score表中
+            cursor.execute('''
+                INSERT INTO score (title, name_cn, bgm_id, poster, mal_score, bgm_score, fm_score, ank_score, anl_score, time)
+                VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+                ''', (
+            title, name_cn, bgm_id, poster, mal_score, bgm_score, fm_score, ank_score, anl_score, current_time))
+
+        # 提交更改并关闭连接
+        conn.commit()
+        conn.close()
+        replace_na_with_none()
+        flash('All anime scores updated successfully.')
+        return redirect(url_for('show_rankings'))
 
     @app.route('/search', methods=['POST'])
     def search():

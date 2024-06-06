@@ -1,0 +1,28 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Login</title>
+  <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+  <div class="container">
+    <h1 class="mt-4">Login</h1>
+    <form action="{{ url_for('login') }}" method="post">
+      <div class="form-group">
+        <label for="password">Password:</label>
+        <input type="password" class="form-control" id="password" name="password" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Login</button>
+    </form>
+    {% with messages = get_flashed_messages() %}
+      {% if messages %}
+        <div class="alert alert-danger mt-3">
+          {{ messages[0] }}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+</body>
+</html>
