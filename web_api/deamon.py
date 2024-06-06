@@ -1,7 +1,10 @@
 import apis.bangumi
-import utils.get_ids, utils.get_score, utils.score, utils.json2csv,utils.sub_anime
-import schedule
 import meili_search
+import utils.get_ids
+import utils.get_score
+import utils.json2csv
+import utils.score
+import utils.sub_anime
 
 bgm = apis.bangumi.Bangumi()
 meili = meili_search.Meilisearch()

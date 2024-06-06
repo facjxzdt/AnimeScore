@@ -1,18 +1,17 @@
-from fastapi import FastAPI
-
-import utils.get_ids
-import web_api.meili_search
-import threading
-from starlette.responses import FileResponse
-from web_api.wrapper import AnimeScore
-from data.config import key
-from pydantic import BaseModel
-from data.config import work_dir
-from deamon import updata_score,meili_update
 import json
-import uvicorn
+import threading
 import time
+
 import schedule
+import uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel
+from starlette.responses import FileResponse
+
+import web_api.meili_search
+from data.config import work_dir
+from deamon import updata_score, meili_update
+from web_api.wrapper import AnimeScore
 
 animes_path = work_dir+'/data/jsons/score_sorted.json'
 ans = AnimeScore()
@@ -81,8 +80,8 @@ def get_csv(method):
     else:
         filename = work_dir+'/data/sub_score.csv'
     return FileResponse(
-            filename,  # 这里的文件名是你要发送的文件名
-            filename="score.csv", # 这里的文件名是你要给用户展示的下载的文件名，比如我这里叫lol.exe
+            filename,
+            filename="score.csv",
         )
 
 if __name__ == '__main__':
