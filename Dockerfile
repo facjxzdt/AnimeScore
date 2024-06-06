@@ -2,7 +2,7 @@ FROM ubuntu:24.04
 WORKDIR /app
 COPY . /app
 COPY supervisord.conf /etc/supervisord.conf
-RUN apt-get update && apt-get install -y libxml2-dev libxslt-dev python3-lxml \
+RUN apt-get update && apt-get install -y python3-pip libxml2-dev libxslt-dev \
     && pip3 install virtualenv \
     && pip3 install supervisor \
     && virtualenv venv \
