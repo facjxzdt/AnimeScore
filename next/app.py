@@ -2,7 +2,6 @@ import json
 
 import schedule
 from flask import Flask, request, flash, session, render_template, redirect, url_for
-from flask_bcrypt import Bcrypt
 from flask_sqlalchemy import SQLAlchemy
 import threading
 import time
@@ -16,7 +15,6 @@ def create_app():
     app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
     db = SQLAlchemy(app)
     app.secret_key = data.config.key
-    bcrypt = Bcrypt(app)
     _deamon = deamon()
     # 定义数据库模型
     class Anime(db.Model):
@@ -42,8 +40,6 @@ def create_app():
         animes = Anime.query.all()
         return render_template('index.html', animes=animes)
 
-    hashed_password = bcrypt.generate_password_hash(data.config.key).decode('utf-8')
-
     @app.route('/sync_animes', methods=['POST'])
     def sync_animes():
         add_animes_from_json(data.config.work_dir + '/data/jsons/animes.json')
@@ -52,14 +48,15 @@ def create_app():
 
     @app.route('/login', methods=['GET', 'POST'])
     def login():
+        error = None
         if request.method == 'POST':
             password = request.form['password']
-            if bcrypt.check_password_hash(hashed_password, password):
+            if password == data.config.key:
                 session['logged_in'] = True
                 return redirect(url_for('index'))
             else:
-                flash('Invalid password, please try again.')
-        return render_template('login.html')
+                error = 'Invalid password, please try again.'
+        return render_template('login.html', error=error)
 
     @app.route('/logout')
     def logout():
