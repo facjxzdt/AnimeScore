@@ -3,7 +3,7 @@ WORKDIR /app
 COPY . /app
 COPY supervisord.conf /etc/supervisord.conf
 RUN apt-get update && apt-get install -y python3-pip \
-    && virtualenv venv \
+    && python3 -m venv .venv \
     && . venv/bin/activate \
     && pip3 install supervisor \
     && pip3 install -r requirements.txt \
