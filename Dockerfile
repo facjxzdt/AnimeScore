@@ -10,7 +10,8 @@ RUN apt-get update && apt-get install -y python3 python3-pip libxml2-dev libxslt
     && pip3 install -r requirements.txt \
     && pip3 install gunicorn uvicorn \
     && chmod +x entrypoint.sh \
-    && chmod +x flask.sh
+    && chmod +x flask.sh \
+    && chmod +x backend.sh
 EXPOSE 5001
 ENV PYTHONPATH "${PYTHONPATH}:/app"
 ENV PATH "${PATH}:/app"
