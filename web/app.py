@@ -200,7 +200,7 @@ def create_app():
             anl_score = anl.get_al_score(anime_info.anl_id)
         except:
             anl_score = None
-        fm_score = fm.get_fm_score(anime_info.title)
+        fm_score = fm.get_fm_score(anime_info.title) * 2
 
         anime.mal_score = mal_score
         anime.bgm_score = bgm_score
