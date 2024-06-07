@@ -28,11 +28,11 @@ enable_chinese_check = False
 chinese_check_threshold = 0.75
 
 #meilisearcch设置
-meili_url = os.getenv('meili_url')
-meili_key = os.getenv('meili_key')
+meili_url = os.getenv('MEILI_URL')
+meili_key = os.getenv('MEILI_KEY')
 
 #api设置
-key = 'test'
+key = os.getenv('KEY')
 ttl = 600
 max_size = 100
 
