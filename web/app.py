@@ -94,19 +94,19 @@ def create_app():
         for anime in animes:
             title, name_cn, bgm_id, poster, mal_id, ank_id, anl_id, fm_id = anime
             try:
-                mal_score = mal.get_anime_score(mal_id)
+                mal_score = float(mal.get_anime_score(mal_id))
             except:
                 mal_score = None
             try:
-                bgm_score = bgm.get_score(bgm_id)
+                bgm_score = float(bgm.get_score(bgm_id))
             except:
                 bgm_score = None
             try:
-                ank_score = ank.get_ani_score(ank_id)
+                ank_score = float(ank.get_ani_score(ank_id)) * 2
             except:
                 ank_score = None
             try:
-                anl_score = anl.get_al_score(anl_id)
+                anl_score = float(anl.get_al_score(anl_id))
             except:
                 anl_score = None
             fm_score = 2 * float(fm_id) if fm_id and fm_id.replace('.', '',
@@ -185,22 +185,22 @@ def create_app():
             return
 
         try:
-            mal_score = mal.get_anime_score(anime_info.mal_id)
+            mal_score = float(mal.get_anime_score(anime_info.mal_id))
         except:
             mal_score = None
         try:
-            bgm_score = bgm.get_score(anime_info.bgm_id)
+            bgm_score = float(bgm.get_score(anime_info.bgm_id))
         except:
             bgm_score = None
         try:
-            ank_score = ank.get_ani_score(anime_info.ank_id)
+            ank_score = float(ank.get_ani_score(anime_info.ank_id))
         except:
             ank_score = None
         try:
-            anl_score = anl.get_al_score(anime_info.anl_id)
+            anl_score = float(anl.get_al_score(anime_info.anl_id))
         except:
             anl_score = None
-        fm_score = fm.get_fm_score(anime_info.title) * 2
+        fm_score = float(fm.get_fm_score(anime_info.title)) * 2
 
         anime.mal_score = mal_score
         anime.bgm_score = bgm_score
