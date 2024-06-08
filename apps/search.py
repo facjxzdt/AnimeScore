@@ -9,12 +9,13 @@ meili = Meilisearch()
 animes_id = []
 id = ""
 
+
 def search_anime():
-    print('请输入你想查询的bgm id，以end结束')
+    print("请输入你想查询的bgm id，以end结束")
 
     while True:
         id = input()
-        if id != 'end':
+        if id != "end":
             animes_id.append(str(id))
         else:
             break

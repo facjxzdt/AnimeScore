@@ -11,11 +11,12 @@ from utils.get_ids import get_ids
 
 def create_app():
     app = Flask(__name__)
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///anime.db'
-    app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+    app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///anime.db"
+    app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
     db = SQLAlchemy(app)
     app.secret_key = data.config.key
     _deamon = deamon()
+
     # 定义数据库模型
     class Anime(db.Model):
         title = db.Column(db.String(100), primary_key=True)
@@ -30,103 +31,129 @@ def create_app():
 
     def _get_info():
         get_ids()
-        add_animes_from_json(data.config.work_dir + '/data/jsons/animes.json')
+        add_animes_from_json(data.config.work_dir + "/data/jsons/animes.json")
 
     # 主页，显示所有数据
-    @app.route('/')
+    @app.route("/")
     def index():
-        if not session.get('logged_in'):
-            return redirect(url_for('login'))
+        if not session.get("logged_in"):
+            return redirect(url_for("login"))
         animes = Anime.query.all()
-        return render_template('index.html', animes=animes)
+        return render_template("index.html", animes=animes)
 
-    @app.route('/sync_animes', methods=['POST'])
+    @app.route("/sync_animes", methods=["POST"])
     def sync_animes():
-        add_animes_from_json(data.config.work_dir + '/data/jsons/animes.json')
-        flash('Anime data synchronized successfully.')
-        return redirect(url_for('index'))
+        add_animes_from_json(data.config.work_dir + "/data/jsons/animes.json")
+        flash("Anime data synchronized successfully.")
+        return redirect(url_for("index"))
 
-    @app.route('/login', methods=['GET', 'POST'])
+    @app.route("/login", methods=["GET", "POST"])
     def login():
         error = None
-        if request.method == 'POST':
-            password = request.form['password']
+        if request.method == "POST":
+            password = request.form["password"]
             if password == data.config.key:
-                session['logged_in'] = True
-                return redirect(url_for('index'))
+                session["logged_in"] = True
+                return redirect(url_for("index"))
             else:
-                error = 'Invalid password, please try again.'
-        return render_template('login.html', error=error)
+                error = "Invalid password, please try again."
+        return render_template("login.html", error=error)
 
-    @app.route('/logout')
+    @app.route("/logout")
     def logout():
-        session.pop('logged_in', None)
-        return redirect(url_for('login'))
+        session.pop("logged_in", None)
+        return redirect(url_for("login"))
 
     # 添加新番条目
-    @app.route('/add', methods=['POST'])
+    @app.route("/add", methods=["POST"])
     def add_anime():
         data = request.form
-        title = data['title']
+        title = data["title"]
 
         # 检查是否已经存在具有相同标题的记录
         existing_anime = Anime.query.get(title)
         if existing_anime:
-            return redirect(url_for('index'))  # 如果存在，则跳过插入
+            return redirect(url_for("index"))  # 如果存在，则跳过插入
 
         new_anime = Anime(
             title=title,
-            ank_id=data.get('ank_id', None) if data.get('ank_id') != "Error" else None,
-            anl_id=int(data['anl_id']) if data.get('anl_id') and data.get('anl_id') != "Error" else None,
-            bgm_id=int(data['bgm_id']) if data.get('bgm_id') and data.get('bgm_id') != "Error" else None,
-            fm_id=data.get('fm_id', None) if data.get('fm_id') != "Error" else None,
-            mal_id=data.get('mal_id', None) if data.get('mal_id') != "Error" else None,
-            name_cn=data.get('name_cn', None) if data.get('name_cn') != "Error" else None,
-            poster=data.get('poster', None) if data.get('poster') != "Error" else None,
-            skip=False
+            ank_id=data.get("ank_id", None) if data.get("ank_id") != "Error" else None,
+            anl_id=int(data["anl_id"])
+            if data.get("anl_id") and data.get("anl_id") != "Error"
+            else None,
+            bgm_id=int(data["bgm_id"])
+            if data.get("bgm_id") and data.get("bgm_id") != "Error"
+            else None,
+            fm_id=data.get("fm_id", None) if data.get("fm_id") != "Error" else None,
+            mal_id=data.get("mal_id", None) if data.get("mal_id") != "Error" else None,
+            name_cn=data.get("name_cn", None)
+            if data.get("name_cn") != "Error"
+            else None,
+            poster=data.get("poster", None) if data.get("poster") != "Error" else None,
+            skip=False,
         )
         db.session.add(new_anime)
         db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
     # 更新新番条目
-    @app.route('/update/<title>', methods=['GET', 'POST'])
+    @app.route("/update/<title>", methods=["GET", "POST"])
     def update_anime(title):
         anime = Anime.query.get(title)
-        if request.method == 'POST':
+        if request.method == "POST":
             if anime:
                 data = request.form
-                anime.title = data.get('title', anime.title)
-                anime.ank_id = data.get('ank_id', None) if data.get('ank_id') != "Error" else None
-                anime.anl_id = int(data['anl_id']) if data.get('anl_id') and data.get('anl_id') != "Error" else None
-                anime.bgm_id = int(data['bgm_id']) if data.get('bgm_id') and data.get('bgm_id') != "Error" else None
-                anime.fm_id = data.get('fm_id', None) if data.get('fm_id') != "Error" else None
-                anime.mal_id = data.get('mal_id', None) if data.get('mal_id') != "Error" else None
-                anime.name_cn = data.get('name_cn', None) if data.get('name_cn') != "Error" else None
-                anime.poster = data.get('poster', None) if data.get('poster') != "Error" else None
-                anime.skip = data.get('skip') == 'True'  # 更新skip字段
+                anime.title = data.get("title", anime.title)
+                anime.ank_id = (
+                    data.get("ank_id", None) if data.get("ank_id") != "Error" else None
+                )
+                anime.anl_id = (
+                    int(data["anl_id"])
+                    if data.get("anl_id") and data.get("anl_id") != "Error"
+                    else None
+                )
+                anime.bgm_id = (
+                    int(data["bgm_id"])
+                    if data.get("bgm_id") and data.get("bgm_id") != "Error"
+                    else None
+                )
+                anime.fm_id = (
+                    data.get("fm_id", None) if data.get("fm_id") != "Error" else None
+                )
+                anime.mal_id = (
+                    data.get("mal_id", None) if data.get("mal_id") != "Error" else None
+                )
+                anime.name_cn = (
+                    data.get("name_cn", None)
+                    if data.get("name_cn") != "Error"
+                    else None
+                )
+                anime.poster = (
+                    data.get("poster", None) if data.get("poster") != "Error" else None
+                )
+                anime.skip = data.get("skip") == "True"  # 更新skip字段
                 db.session.commit()
-            return redirect(url_for('index'))
-        return render_template('update.html', anime=anime)
+            return redirect(url_for("index"))
+        return render_template("update.html", anime=anime)
 
     # 删除新番条目
-    @app.route('/delete/<title>', methods=['POST'])
+    @app.route("/delete/<title>", methods=["POST"])
     def delete_anime(title):
         anime = Anime.query.get(title)
         if anime:
             db.session.delete(anime)
             db.session.commit()
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
-    @app.route('/get_info', methods=['POST'])
+    @app.route("/get_info", methods=["POST"])
     def get_info():
         _get_info()
-        return redirect(url_for('index'))
+        return redirect(url_for("index"))
 
     schedule.every().day.at("19:15").do(_get_info)
 
     def add_animes_from_json(json_file_path):
-        with open(json_file_path, 'r', encoding='utf-8') as file:
+        with open(json_file_path, "r", encoding="utf-8") as file:
             data = json.load(file)
 
         with app.app_context():
@@ -151,35 +178,35 @@ def create_app():
                 if not isinstance(details, dict):
                     continue  # 跳过非字典项，如 "total"
 
-                ank_id = details.get('ank_id')
+                ank_id = details.get("ank_id")
                 if ank_id == "Error":
                     ank_id = None
 
-                anl_id = details.get('anl_id')
+                anl_id = details.get("anl_id")
                 if anl_id == "Error":
                     anl_id = None
                 elif isinstance(anl_id, str) and anl_id.isdigit():
                     anl_id = int(anl_id)
 
-                bgm_id = details.get('bgm_id')
+                bgm_id = details.get("bgm_id")
                 if bgm_id == "Error":
                     bgm_id = None
                 elif isinstance(bgm_id, str) and bgm_id.isdigit():
                     bgm_id = int(bgm_id)
 
-                fm_id = details.get('fm_id')
+                fm_id = details.get("fm_id")
                 if fm_id == "Error":
                     fm_id = None
 
-                mal_id = details.get('mal_id')
+                mal_id = details.get("mal_id")
                 if mal_id == "Error":
                     mal_id = None
 
-                name_cn = details.get('name_cn')
+                name_cn = details.get("name_cn")
                 if name_cn == "Error":
                     name_cn = None
 
-                poster = details.get('poster')
+                poster = details.get("poster")
                 if poster == "Error":
                     poster = None
 
@@ -208,7 +235,7 @@ def create_app():
                         mal_id=mal_id,
                         name_cn=name_cn,
                         poster=poster,
-                        skip=False
+                        skip=False,
                     )
                     db.session.add(new_anime)
             db.session.commit()
@@ -231,6 +258,6 @@ def deamon(interval=1):
     return cease_continuous_run
 
 
-if __name__ == '__main__':
+if __name__ == "__main__":
     app = create_app()
     app.run(debug=False, host="0.0.0.0", port=5000)

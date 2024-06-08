@@ -26,57 +26,90 @@ info_0 = {}
 
 log_score = Log(__name__).getlog()
 
-def get_bgm_id(bgm_id,score: dict):
-    score['bgm_score'] = bgm.get_score(bgm_id)
+
+def get_bgm_id(bgm_id, score: dict):
+    score["bgm_score"] = bgm.get_score(bgm_id)
     time.sleep(1)
 
-def get_ank_id(ank_id,score: dict):
-    if ank_id != 'Error':
-        score['ank_score'] = 2 * float(ank.get_ani_score(ank_id))
+
+def get_ank_id(ank_id, score: dict):
+    if ank_id != "Error":
+        score["ank_score"] = 2 * float(ank.get_ani_score(ank_id))
     time.sleep(1)
 
-def get_anl_id(anl_id,score: dict):
-    if anl_id != 'Error':
-        score['anl_score'] = anl.get_al_score(anl_id)
+
+def get_anl_id(anl_id, score: dict):
+    if anl_id != "Error":
+        score["anl_score"] = anl.get_al_score(anl_id)
     time.sleep(1)
 
-def get_mal_id(mal_id,score: dict):
-    if mal_id != '404':
+
+def get_mal_id(mal_id, score: dict):
+    if mal_id != "404":
         mal_score = mal.get_anime_score(mal_id)
-        if mal_score != 'N/A':
-            score['mal_score'] = float(mal_score)
+        if mal_score != "N/A":
+            score["mal_score"] = float(mal_score)
     time.sleep(1)
+
+
 def get_bgm_info(bgm_id):
     global info_0
     info_0 = bgm.get_anime_info(bgm_id)
     time.sleep(1)
+
+
 def get_bgm_name(bgm_id):
     global score_1
-    score_1['name'] = bgm.get_anime_name(bgm_id)
+    score_1["name"] = bgm.get_anime_name(bgm_id)
     time.sleep(1)
 
-def create_threads(dicts:dict,score: dict,method=0):
+
+def create_threads(dicts: dict, score: dict, method=0):
     tlist = []
-    t1 = threading.Thread(target=get_bgm_id, args=(str(dicts['bgm_id']),score,))
-    t2 = threading.Thread(target=get_mal_id, args=(str(dicts['mal_id']),score,))
-    t3 = threading.Thread(target=get_ank_id, args=(str(dicts['ank_id']),score,))
-    t4 = threading.Thread(target=get_anl_id, args=(str(dicts['anl_id']),score,))
+    t1 = threading.Thread(
+        target=get_bgm_id,
+        args=(
+            str(dicts["bgm_id"]),
+            score,
+        ),
+    )
+    t2 = threading.Thread(
+        target=get_mal_id,
+        args=(
+            str(dicts["mal_id"]),
+            score,
+        ),
+    )
+    t3 = threading.Thread(
+        target=get_ank_id,
+        args=(
+            str(dicts["ank_id"]),
+            score,
+        ),
+    )
+    t4 = threading.Thread(
+        target=get_anl_id,
+        args=(
+            str(dicts["anl_id"]),
+            score,
+        ),
+    )
     if method == 1:
-        t5 = threading.Thread(target=get_bgm_info, args=(str(dicts['bgm_id']),))
+        t5 = threading.Thread(target=get_bgm_info, args=(str(dicts["bgm_id"]),))
         t5.start()
-        log_score.debug('{}线程创建成功'.format(t5.name))
-        t6 = threading.Thread(target=get_bgm_name,args=(str(dicts['bgm_id']),))
+        log_score.debug("{}线程创建成功".format(t5.name))
+        t6 = threading.Thread(target=get_bgm_name, args=(str(dicts["bgm_id"]),))
         t6.start()
-        log_score.debug('{}线程创建成功'.format(t6.name))
+        log_score.debug("{}线程创建成功".format(t6.name))
         tlist.append(t5)
     t1.start()
-    log_score.debug('{}线程创建成功'.format(t1.name))
+    log_score.debug("{}线程创建成功".format(t1.name))
     t2.start()
-    log_score.debug('{}线程创建成功'.format(t2.name))
+    log_score.debug("{}线程创建成功".format(t2.name))
     t3.start()
-    log_score.debug('{}线程创建成功'.format(t3.name))
+    log_score.debug("{}线程创建成功".format(t3.name))
     t4.start()
-    log_score.debug('{}线程创建成功'.format(t4.name))
+    log_score.debug("{}线程创建成功".format(t4.name))
     tlist.append(t1)
     tlist.append(t2)
     tlist.append(t3)
@@ -84,34 +117,36 @@ def create_threads(dicts:dict,score: dict,method=0):
     for t in tlist:
         t.join()
 
+
 def get_time():
     time_dict = {}
     t = time.localtime()
-    time_dict['year'] = t.tm_year
-    time_dict['month'] = t.tm_mon
-    time_dict['day'] = t.tm_mday
+    time_dict["year"] = t.tm_year
+    time_dict["month"] = t.tm_mon
+    time_dict["day"] = t.tm_mday
     return time_dict
 
+
 def get_score(method):
-    if method == 'sub':
-        animes_path = config.work_dir+'/data/jsons/sub.json'
-        score_path = config.work_dir+'/data/jsons/sub_score.json'
+    if method == "sub":
+        animes_path = config.work_dir + "/data/jsons/sub.json"
+        score_path = config.work_dir + "/data/jsons/sub_score.json"
     else:
-        animes_path = config.work_dir+'/data/jsons/animes.json'
-        score_path = config.work_dir+'/data/jsons/score.json'
-    log_score.info('正在获取动画评分')
-    animes = json.load(open(animes_path, 'r'))
-    animes_count = animes['total']
+        animes_path = config.work_dir + "/data/jsons/animes.json"
+        score_path = config.work_dir + "/data/jsons/score.json"
+    log_score.info("正在获取动画评分")
+    animes = json.load(open(animes_path, "r"))
+    animes_count = animes["total"]
     scores = {}
     count = 0
     for k, v in animes.items():
         global score
         try:
-            if k == 'total':
+            if k == "total":
                 pass
-            elif v['ank_id'] == 'Error' and v['anl_id'] == 'Error':
+            elif v["ank_id"] == "Error" and v["anl_id"] == "Error":
                 pass
-            elif v['fm_id'] and v['fm_id'] == '-' or k == 'time':
+            elif v["fm_id"] and v["fm_id"] == "-" or k == "time":
                 pass
             else:
                 keep = True
@@ -119,26 +154,33 @@ def get_score(method):
                 while keep and count_retry < config.retry_max:
                     try:
                         global score
-                        create_threads(v,score)
-                        score['fm_score'] = 2 * float(v['fm_id'])
-                        score['time'] = get_time()
+                        create_threads(v, score)
+                        score["fm_score"] = 2 * float(v["fm_id"])
+                        score["time"] = get_time()
                         scores[k] = score
-                        f1 = open(score_path, 'w')
-                        f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
+                        f1 = open(score_path, "w")
+                        f1.write(
+                            json.dumps(
+                                scores, sort_keys=True, indent=4, separators=(",", ":")
+                            )
+                        )
                         f1.close()
                         count += 1
-                        log_score.info('动画评分获取已完成: ' + str(count))
+                        log_score.info("动画评分获取已完成: " + str(count))
                         keep = False
                     except:
                         count_retry += 1
                         time.sleep(config.time_sleep)
-                        log_score.info('重试: ' + str(count_retry))
+                        log_score.info("重试: " + str(count_retry))
                         if count_retry == config.retry_max - 1:
-                            log_score.error('获取bgm_id: {}失败'.format(str(v['bgm_id'])))
+                            log_score.error(
+                                "获取bgm_id: {}失败".format(str(v["bgm_id"]))
+                            )
             score = {}
         except:
             pass
-    log_score.info('获取动画分数成功数 {}'.format(str(count)+'/'+str(animes_count)))
+    log_score.info("获取动画分数成功数 {}".format(str(count) + "/" + str(animes_count)))
+
 
 def get_single_score(bgm_id: str):
     global score_1
@@ -146,52 +188,49 @@ def get_single_score(bgm_id: str):
     score_1 = {}
     ids = get_single_id(bgm_id)
     print(ids)
-    if ids['ank_id'] == 'Error' and ids['anl_id'] == 'Error':
+    if ids["ank_id"] == "Error" and ids["anl_id"] == "Error":
         pass
-    elif ids['fm_id'] == '-':
+    elif ids["fm_id"] == "-":
         pass
     else:
         keep = True
         count_retry = 0
-        create_threads(ids, score_1,method=1)
-        score_1['fm_score'] = 2 * float(ids['fm_id'])
-    score_1['ids'] = ids
+        create_threads(ids, score_1, method=1)
+        score_1["fm_score"] = 2 * float(ids["fm_id"])
+    score_1["ids"] = ids
     print(info_0)
-    score_1['poster'] = info_0['images']['large']
-    score_1['name_cn'] = info_0['name_cn']
-    score_1['time'] = get_time()
-    score_1['bgm_id'] = ids['bgm_id']
+    score_1["poster"] = info_0["images"]["large"]
+    score_1["name_cn"] = info_0["name_cn"]
+    score_1["time"] = get_time()
+    score_1["bgm_id"] = ids["bgm_id"]
     return score_1
+
 
 def update_score(bgm_id: str):
     # 该函数用于更新sub下的分数
     # air由于会每日自动更新 故不添加update_score
     meili = Meilisearch()
     bgm_id = str(bgm_id)
-    score_path = config.work_dir+'/data/jsons/sub_score_sorted.json'
-    info = meili.index.search(
-        bgm_id,
-        {
-            'filter':['id={}'.format(bgm_id)]
-        }
-    )['hits'][0]
+    score_path = config.work_dir + "/data/jsons/sub_score_sorted.json"
+    info = meili.index.search(bgm_id, {"filter": ["id={}".format(bgm_id)]})["hits"][0]
     global score_2
     score_2 = {}
-    create_threads(info['ids'],score_2)
-    score_2['fm_score'] = fm.get_fm_score(info['name'])
-    info['bgm_score'] = score_2['bgm_score']
-    info['fm_score'] = score_2['fm_score']
-    info['mal_score'] = score_2['mal_score']
-    info['ank_score'] = score_2['ank_score']
-    info['anl_score'] = score_2['anl_score']
-    info['time'] = get_time()
+    create_threads(info["ids"], score_2)
+    score_2["fm_score"] = fm.get_fm_score(info["name"])
+    info["bgm_score"] = score_2["bgm_score"]
+    info["fm_score"] = score_2["fm_score"]
+    info["mal_score"] = score_2["mal_score"]
+    info["ank_score"] = score_2["ank_score"]
+    info["anl_score"] = score_2["anl_score"]
+    info["time"] = get_time()
     meili.add_single_anime(dict(info))
-    #更新json
-    scores = json.load(open(score_path,'r'))
-    scores[info['name']] = info
-    f1 = open(score_path, 'w')
-    f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(',', ':')))
+    # 更新json
+    scores = json.load(open(score_path, "r"))
+    scores[info["name"]] = info
+    f1 = open(score_path, "w")
+    f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(",", ":")))
     f1.close()
+
 
 if __name__ == "__main__":
     print(get_single_score("425909"))
