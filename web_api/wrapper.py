@@ -17,7 +17,6 @@ from apis.anilist import AniList
 from apis.mal import MyAnimeList
 from apis.filmarks import Filmarks
 from apis.anikore import Anikore
-from meili_search import Meilisearch
 from cachetools import cached, TTLCache
 
 logger = utils.logger.Log()
@@ -33,7 +32,6 @@ class AnimeScore:
         self.fm = Filmarks()
         self.bgm = Bangumi()
         self.tools = Tools()
-        self.meili = Meilisearch()
 
     def init(self):
         first = False
@@ -54,7 +52,6 @@ class AnimeScore:
             utils.get_ids.get_ids()
             utils.get_score.get_score(method="air")
             utils.score.total_score(method="air")
-            self.meili.add_anime2search("air")
             utils.json2csv.json2csv(method="air")
             os.makedirs(work_dir + "/web/instance", exist_ok=True)
             sql_add.store_data()
@@ -84,14 +81,6 @@ class AnimeScore:
 
     def Anikore(self):
         return self.ank
-
-    # Meilisearch类的方法
-    # add_anime2search(method='sub' or 'air') 将订阅动画评分或放送中动画评分同步到meilisearch
-    # tips: 该方法是完全同步 即sub_score_sorted.json或score_sorted.json完全同步到meilisearch
-    # search_anime(string: str): 在meilisearch中搜索
-    # add_single_anime(dicts: dict): 将dicts同步到meilisearch
-    def Meilisearch(self):
-        return self.Meilisearch()
 
     # 方法封装
     def get_ids(self):  # 获取anime.json中动画的id
@@ -125,13 +114,9 @@ class AnimeScore:
             info = utils.score.count_single_score(
                 utils.get_score.get_single_score(bgm_id)
             )
-            self.meili.add_single_anime(info)
             return info
         else:
             return apps.search.search_anime()
-
-    def search_anime_name(self, string):
-        return self.meili.search_anime(string)
 
     # sub_anime函数参数说明
     # 必须参数: method='bgm_id' or 'name'
@@ -145,7 +130,6 @@ class AnimeScore:
             method=method, anime_name=anime_name, bgm_id=bgm_id
         )
         info = utils.score.count_single_score(utils.score.get_single_score(bgm_id))
-        self.meili.add_single_anime(info)
         score_path = work_dir + "/data/jsons/sub_score_sorted.json"
         scores_exist = json.load(open(score_path, "r"))
         scores_exist[info["name"]] = info
@@ -168,18 +152,14 @@ class AnimeScore:
     def update_single_score(self, bgm_id):
         utils.get_score.update_score(bgm_id)
 
-    def meili_update(self, method="air"):
-        self.meili.add_anime2search(method)
-
-    def change_id(self, bgm_id, change_id):
-        return utils.get_ids.change_id(bgm_id, change_id)
-
     def change_id(self, bgm_id: str, change_id: dict):
         filename = work_dir + "/data/jsons/sub.json"
         sub = json.load(open(filename, "r"))
-        for k, v in sub:
-            if "bgm_id" in v.values() and v["bgm_id"] == bgm_id:
-                for k1, v1 in change_id:
+        for k, v in sub.items():
+            if not isinstance(v, dict):
+                continue
+            if str(v.get("bgm_id")) == str(bgm_id):
+                for k1, v1 in change_id.items():
                     v[k1] = v1
         utils.get_score.update_score(bgm_id)
         f1 = open(filename, "w")

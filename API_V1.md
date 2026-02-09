@@ -151,7 +151,7 @@ API v1 采用 RESTful 设计，提供标准化的响应格式和版本控制。
 
 **查询参数**:
 - `q` (str, required): 搜索关键词
-- `source` (str, optional): 搜索源 (`precise`, `meili`, `bangumi`)，默认 `precise`
+- `source` (str, optional): 搜索源 (`precise`, `bangumi`)，默认 `precise`
 - `year` (int, optional): 年份过滤
 - `month` (int, optional): 月份过滤
 - `studio` (str, optional): 制作公司过滤
@@ -292,7 +292,7 @@ GET /api/v1/export/csv?type=airing
 | 搜索源 | 说明 | 适用场景 |
 |--------|------|----------|
 | `precise` | 多源交叉验证搜索 | 需要完整信息和准确匹配 |
-| `meili` | MeiliSearch 本地搜索 | 快速搜索本地数据 |
+
 | `bangumi` | Bangumi API 搜索 | 获取 Bangumi 最新数据 |
 
 ---

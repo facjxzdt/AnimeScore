@@ -30,7 +30,6 @@ async def health_check():
     services = {
         "api": True,
         "data_files": check_data_files(),
-        "meilisearch": check_meilisearch(),
     }
     
     # 判断整体状态
@@ -74,18 +73,6 @@ def check_data_files() -> bool:
         for f in required_files:
             if not os.path.exists(f):
                 return False
-        return True
-    except Exception:
-        return False
-
-
-def check_meilisearch() -> bool:
-    """检查 MeiliSearch 是否可用"""
-    try:
-        # 尝试导入和连接
-        from web_api.meili_search import Meilisearch
-        meili = Meilisearch()
-        # 这里可以添加实际的连接测试
         return True
     except Exception:
         return False

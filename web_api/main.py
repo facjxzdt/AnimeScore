@@ -25,9 +25,8 @@ from web_api.api_v1 import api_router as api_v1_router
 # 如果导入失败，API 仍然可以运行但旧版端点不可用
 OLD_API_AVAILABLE = False
 try:
-    import web_api.meili_search
     from apis.precise import search_anime_precise
-    from deamon import meili_update, updata_score
+    from deamon import updata_score
     from web_api.wrapper import AnimeScore
     
     ans = AnimeScore()
@@ -52,7 +51,7 @@ app = FastAPI(
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
-    allow_credentials=True,
+    allow_credentials=False,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -103,18 +102,6 @@ if OLD_API_AVAILABLE:
         """根据 Bangumi ID 搜索（旧版）"""
         try:
             result = ans.search_bgm_id(bgm_id)
-            return {"status": 200, "body": result}
-        except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={"status": 500, "error": str(e)}
-            )
-
-    @app.get("/search/meili/{string}")
-    def search_meili(string: str):
-        """MeiliSearch 搜索（旧版）"""
-        try:
-            result = ans.search_anime_name(string)
             return {"status": 200, "body": result}
         except Exception as e:
             return JSONResponse(
@@ -228,7 +215,6 @@ if __name__ == "__main__":
             ans.init()
             # 设置定时任务
             schedule.every().day.at("19:30").do(updata_score)
-            schedule.every().day.at("19:30").do(meili_update)
             _deamon = deamon()
             print("[INFO] Background scheduler started")
         except Exception as e:

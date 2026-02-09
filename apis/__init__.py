@@ -7,7 +7,7 @@ API模块
 
 from .bangumi import Bangumi
 from .anilist import AniList
-from .mal import MAL
+from .mal import MyAnimeList as MAL
 from .anikore import Anikore
 from .filmarks import Filmarks
 from .precise import (

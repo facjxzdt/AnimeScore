@@ -118,8 +118,6 @@ docker run -d -p 5001:5001 --name animescore --network bridge facjxzdt/animescor
 ---
 
 ## 说明：
-- **meilisearch密匙和api设置在/data/config.py中 如果使用docker部署，可以设置环境变量`meili_url`和`meili_key`**
-- **使用搜索功能后搜索到的动画会直接存到meilisearch中，调用时可以先看看meilisearch中有没有**
 - **搜索功能耗时较长，请设置较长超时**
 
 ## 开发

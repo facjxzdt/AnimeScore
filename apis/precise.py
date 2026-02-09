@@ -6,11 +6,30 @@
 """
 
 import re
+import unicodedata
+from functools import lru_cache
 from dataclasses import dataclass
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Set, Tuple
 
 import requests
+
+try:
+    from rapidfuzz import fuzz as rapidfuzz_fuzz
+except Exception:
+    rapidfuzz_fuzz = None
+
+try:
+    from sentence_transformers import SentenceTransformer
+except Exception:
+    SentenceTransformer = None
+
+_EMBEDDING_MODEL = None
+
+try:
+    from utils.ext_linker import lookup_ext_ids
+except Exception:
+    lookup_ext_ids = None
 
 
 @dataclass
@@ -71,6 +90,114 @@ class AnimeInfo:
         return names
 
 
+def _has_japanese(text: str) -> bool:
+    for ch in text:
+        code = ord(ch)
+        if (
+            0x3040 <= code <= 0x309F  # Hiragana
+            or 0x30A0 <= code <= 0x30FF  # Katakana
+            or 0x4E00 <= code <= 0x9FFF  # CJK Unified
+        ):
+            return True
+    return False
+
+
+def _normalize_title(text: str) -> str:
+    if not text:
+        return ""
+    t = unicodedata.normalize("NFKC", text).lower()
+    t = re.sub(r"\[.*?\]|\(.*?\)|\{.*?\}|<.*?>", " ", t)
+    t = re.sub(r"(season|part|cour)\s*\d+", " ", t, flags=re.IGNORECASE)
+    t = re.sub(r"\b(s\d+|s\d+\s*e\d+|ova|oad|sp|special|movie|tv)\b", " ", t)
+    t = re.sub(r"[^\w\u3040-\u30ff\u4e00-\u9fff]+", " ", t)
+    t = re.sub(r"\s+", " ", t).strip()
+    return t
+
+
+
+
+def _ngram_jaccard(a: str, b: str, n: int = 2) -> float:
+    if not a or not b:
+        return 0.0
+    def ngrams(s: str) -> Set[str]:
+        if len(s) < n:
+            return {s}
+        return {s[i : i + n] for i in range(len(s) - n + 1)}
+    na = ngrams(a)
+    nb = ngrams(b)
+    if not na or not nb:
+        return 0.0
+    return len(na & nb) / len(na | nb)
+
+
+def _similarity_score(a: str, b: str) -> float:
+    if not a or not b:
+        return 0.0
+    na = _normalize_title(a)
+    nb = _normalize_title(b)
+    if not na or not nb:
+        return 0.0
+    seq = SequenceMatcher(None, na, nb).ratio()
+    jac = _ngram_jaccard(na, nb, n=2)
+    rf = 0.0
+    if rapidfuzz_fuzz:
+        try:
+            rf = rapidfuzz_fuzz.token_set_ratio(na, nb) / 100.0
+        except Exception:
+            rf = 0.0
+    scores = [seq, jac, rf]
+    scores.sort()
+    base_score = scores[2] * 0.7 + scores[1] * 0.3
+
+    # Optional embedding similarity (high accuracy, higher compute)
+    emb_score = _embedding_similarity(na, nb)
+    if emb_score is not None:
+        return max(base_score, emb_score)
+    return base_score
+
+
+def _get_embedding_model():
+    global _EMBEDDING_MODEL
+    if _EMBEDDING_MODEL is not None:
+        return _EMBEDDING_MODEL
+    if SentenceTransformer is None:
+        return None
+    try:
+        # Use a small model; must be pre-downloaded to avoid long startup
+        _EMBEDDING_MODEL = SentenceTransformer("all-MiniLM-L6-v2")
+    except Exception:
+        _EMBEDDING_MODEL = None
+    return _EMBEDDING_MODEL
+
+
+@lru_cache(maxsize=2048)
+def _embed_text(text: str):
+    model = _get_embedding_model()
+    if model is None:
+        return None
+    try:
+        emb = model.encode([text], normalize_embeddings=True)
+        return emb[0]
+    except Exception:
+        return None
+
+
+def _embedding_similarity(a: str, b: str) -> Optional[float]:
+    model = _get_embedding_model()
+    if model is None:
+        return None
+    ea = _embed_text(a)
+    eb = _embed_text(b)
+    if ea is None or eb is None:
+        return None
+    try:
+        # Cosine similarity (embeddings are normalized)
+        return float((ea * eb).sum())
+    except Exception:
+        return None
+
+
+
 class BaseSearcher:
     """搜索器基类"""
 
@@ -78,14 +205,14 @@ class BaseSearcher:
         self.name = name
 
     def _calculate_confidence(self, keyword: str, *titles: Optional[str]) -> float:
-        """计算匹配置信度"""
         max_ratio = 0.0
-        keyword_lower = keyword.lower()
         for title in titles:
             if title:
-                ratio = SequenceMatcher(None, keyword_lower, title.lower()).ratio()
+                ratio = _similarity_score(keyword, title)
                 max_ratio = max(max_ratio, ratio)
         return max_ratio
+
+
 
 
 class BangumiSearcher(BaseSearcher):
@@ -457,8 +584,40 @@ class CrossValidator:
         anilist_results = self.anilist.search(keyword, **filters)
         all_results.extend(anilist_results)
 
+        # Extra AniList search using Japanese titles when available
+        if not _has_japanese(keyword) and bgm_results:
+            jp_candidates = []
+            for info in bgm_results:
+                if info.name and _has_japanese(info.name):
+                    jp_candidates.append(info.name)
+            # keep unique order, cap to 3 queries for latency
+            seen = set()
+            uniq = []
+            for t in jp_candidates:
+                if t not in seen:
+                    seen.add(t)
+                    uniq.append(t)
+            for jp_title in uniq[:3]:
+                try:
+                    extra = self.anilist.search(jp_title, **filters)
+                    all_results.extend(extra)
+                except Exception:
+                    pass
+
+
         jikan_results = self.jikan.search(keyword, **filters)
         all_results.extend(jikan_results)
+
+        # Enrich IDs using BangumiExtLinker mapping
+        if lookup_ext_ids:
+            for info in all_results:
+                ext = lookup_ext_ids(bgm_id=info.bgm_id, mal_id=info.mal_id)
+                if not ext:
+                    continue
+                if not info.bgm_id and ext.get("bgm_id"):
+                    info.bgm_id = str(ext.get("bgm_id"))
+                if not info.mal_id and ext.get("mal_id"):
+                    info.mal_id = str(ext.get("mal_id"))
 
         # 合并和交叉验证
         validated = self._cross_validate(all_results, filters)
@@ -538,28 +697,23 @@ class CrossValidator:
         return False
 
     def _titles_match(self, title1: str, title2: str) -> bool:
-        """判断两个标题是否匹配"""
         if not title1 or not title2:
             return False
 
-        t1 = self._normalize_name(title1)
-        t2 = self._normalize_name(title2)
-
-        # 完全匹配
-        if t1 == t2:
+        score = _similarity_score(title1, title2)
+        both_jp = _has_japanese(title1) and _has_japanese(title2)
+        threshold = 0.78 if both_jp else 0.85
+        if score >= threshold:
             return True
 
-        # 相似度匹配
-        similarity = SequenceMatcher(None, t1, t2).ratio()
-        if similarity > 0.6:
-            return True
-
-        # 一个是另一个的子串（处理不同长度的标题）
-        if len(t1) > 5 and len(t2) > 5:
-            if t1 in t2 or t2 in t1:
+        n1 = _normalize_title(title1)
+        n2 = _normalize_title(title2)
+        if len(n1) > 6 and len(n2) > 6:
+            if n1 in n2 or n2 in n1:
                 return True
 
         return False
+
 
     def _merge_group(self, group: List[AnimeInfo]) -> AnimeInfo:
         """合并同一组的结果"""
@@ -699,4 +853,31 @@ def search_anime_precise(
     validator = CrossValidator()
     results = validator.search(keyword, **filters)
 
-    return [r.to_dict() for r in results[:top_n]]
+    output = []
+    for r in results[:top_n]:
+        item = r.to_dict()
+        if lookup_ext_ids:
+            ext = lookup_ext_ids(bgm_id=item.get("bgm_id"), mal_id=item.get("mal_id"))
+            if ext:
+                # Fill missing core IDs
+                if not item.get("bgm_id") and ext.get("bgm_id"):
+                    item["bgm_id"] = str(ext.get("bgm_id"))
+                if not item.get("mal_id") and ext.get("mal_id"):
+                    item["mal_id"] = str(ext.get("mal_id"))
+
+                # Attach extra IDs if present
+                for key in [
+                    "douban_id",
+                    "bili_id",
+                    "anidb_id",
+                    "tmdb_id",
+                    "imdb_id",
+                    "tvdb_id",
+                    "wikidata_id",
+                ]:
+                    if ext.get(key) and not item.get(key):
+                        item[key] = ext.get(key)
+
+        output.append(item)
+
+    return output

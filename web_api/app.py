@@ -9,16 +9,14 @@ from fastapi import FastAPI
 from pydantic import BaseModel
 from starlette.responses import FileResponse
 
-import web_api.meili_search
 from apis.precise import search_anime_precise
 from data.config import work_dir
-from deamon import meili_update, updata_score
+from deamon import updata_score
 from web_api.wrapper import AnimeScore
 
 animes_path = work_dir + "/data/jsons/score_sorted.json"
 ans = AnimeScore()
 app = FastAPI()
-meili = web_api.meili_search.Meilisearch()
 
 
 class PostBody(BaseModel):
@@ -85,12 +83,6 @@ def sub():
 @app.get("/search/{bgm_id}")
 def search(bgm_id):
     result = ans.search_bgm_id(bgm_id)
-    return {"status": 200, "body": result}
-
-
-@app.get("/search/meili/{string}")
-def search_meili(string):
-    result = ans.search_anime_name(string)
     return {"status": 200, "body": result}
 
 
@@ -163,6 +155,5 @@ def get_csv(method):
 if __name__ == "__main__":
     ans.init()
     schedule.every().day.at("19:30").do(updata_score)
-    schedule.every().day.at("19:30").do(meili_update)
     _deamon = deamon()
     uvicorn.run(app="app:app", host="0.0.0.0", port=5001)
