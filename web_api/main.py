@@ -1,41 +1,21 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-AnimeScore API 主入口
-
-提供 API v1 和旧版 API 的兼容支持
+AnimeScore API 主入口 (仅保留 v1)
 """
 
-import json
+import os
 import sys
-import threading
-import time
-from typing import Optional
-
-import schedule
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import JSONResponse
 
-from data.config import work_dir
-from web_api.api_v1 import api_router as api_v1_router
+PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
+if PROJECT_ROOT not in sys.path:
+    sys.path.insert(0, PROJECT_ROOT)
 
-# 尝试导入旧版模块
-# 如果导入失败，API 仍然可以运行但旧版端点不可用
-OLD_API_AVAILABLE = False
-try:
-    from apis.precise import search_anime_precise
-    from deamon import updata_score
-    from web_api.wrapper import AnimeScore
-    
-    ans = AnimeScore()
-    OLD_API_AVAILABLE = True
-    print("[INFO] Legacy API modules loaded successfully")
-except ImportError as e:
-    print(f"[WARN] Failed to load legacy API modules: {e}")
-    print("[WARN] Legacy API endpoints will not be available")
-    ans = None
+from web_api.api_v1 import api_router as api_v1_router
 
 # ==================== FastAPI 应用配置 ====================
 
@@ -64,116 +44,12 @@ app.include_router(
     tags=["v1"],
 )
 
-# ==================== 旧版 API (兼容) ====================
+# ==================== 根路由 ====================
 
-if OLD_API_AVAILABLE:
-    
-    def get_list(method):
-        """获取列表数据（旧版）"""
-        if method == "sub":
-            file_path = work_dir + "/data/jsons/sub_score_sorted.json"
-        else:
-            file_path = work_dir + "/data/jsons/score_sorted.json"
-        try:
-            with open(file_path, "r", encoding="utf-8") as f:
-                return json.load(f)
-        except (FileNotFoundError, json.JSONDecodeError):
-            return {}
-
-    @app.get("/")
-    async def root():
-        """根路由（旧版）"""
-        return {"status": 200, "message": "AnimeScore API", "version": "1.0.0", "docs": "/docs"}
-
-    @app.get("/air")
-    async def air():
-        """获取正在放送的动漫列表（旧版）"""
-        lists = get_list(method="air")
-        return {"status": 200, "body": lists}
-
-    @app.get("/sub")
-    def sub():
-        """获取订阅的动漫列表（旧版）"""
-        lists = get_list(method="sub")
-        return {"status": 200, "body": lists}
-
-    @app.get("/search/{bgm_id}")
-    def search(bgm_id: str):
-        """根据 Bangumi ID 搜索（旧版）"""
-        try:
-            result = ans.search_bgm_id(bgm_id)
-            return {"status": 200, "body": result}
-        except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={"status": 500, "error": str(e)}
-            )
-
-    @app.get("/search/precise/{keyword}")
-    def search_precise(
-        keyword: str,
-        year: Optional[int] = None,
-        month: Optional[int] = None,
-        studio: Optional[str] = None,
-        director: Optional[str] = None,
-        source: Optional[str] = None,
-        limit: int = 10,
-    ):
-        """
-        多源交叉验证精确搜索（旧版）
-        
-        推荐使用新 API: GET /api/v1/search?q={keyword}
-        """
-        try:
-            results = search_anime_precise(
-                keyword=keyword,
-                year=year,
-                month=month,
-                studio=studio,
-                director=director,
-                source=source,
-                top_n=limit,
-            )
-            return {"status": 200, "body": results}
-        except Exception as e:
-            return JSONResponse(
-                status_code=500,
-                content={"status": 500, "error": str(e)}
-            )
-
-    @app.get("/csv/{method}")
-    def get_csv(method: str):
-        """下载 CSV（旧版）"""
-        from fastapi.responses import FileResponse
-        
-        if method == "air":
-            filename = work_dir + "/data/score.csv"
-        else:
-            filename = work_dir + "/data/sub_score.csv"
-        
-        import os
-        if not os.path.exists(filename):
-            return JSONResponse(
-                status_code=404,
-                content={"status": 404, "error": "File not found"}
-            )
-        
-        return FileResponse(
-            filename,
-            filename="score.csv",
-        )
-
-else:
-    @app.get("/")
-    async def root():
-        """根路由"""
-        return {
-            "status": 200,
-            "message": "AnimeScore API",
-            "version": "1.0.0",
-            "docs": "/docs",
-            "note": "Legacy API not available due to missing dependencies"
-        }
+@app.get("/")
+async def root():
+    """根路由"""
+    return {"status": 200, "message": "AnimeScore API", "version": "1.0.0", "docs": "/docs"}
 
 # ==================== 错误处理 ====================
 
@@ -189,40 +65,10 @@ async def global_exception_handler(request: Request, exc: Exception):
         }
     )
 
-# ==================== 后台任务 ====================
-
-def deamon(interval=1):
-    """后台定时任务"""
-    cease_continuous_run = threading.Event()
-
-    class ScheduleThread(threading.Thread):
-        @classmethod
-        def run(cls):
-            while not cease_continuous_run.is_set():
-                schedule.run_pending()
-                time.sleep(interval)
-
-    continuous_thread = ScheduleThread()
-    continuous_thread.start()
-    return cease_continuous_run
-
-# ==================== 启动入口 ====================
-
 if __name__ == "__main__":
-    # 初始化
-    if OLD_API_AVAILABLE and ans:
-        try:
-            ans.init()
-            # 设置定时任务
-            schedule.every().day.at("19:30").do(updata_score)
-            _deamon = deamon()
-            print("[INFO] Background scheduler started")
-        except Exception as e:
-            print(f"[WARN] Failed to initialize legacy components: {e}")
-    
     # 启动服务
     uvicorn.run(
-        app="main:app",
+        app="web_api.main:app",
         host="0.0.0.0",
         port=5001,
         reload=False,

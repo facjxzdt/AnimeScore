@@ -25,6 +25,9 @@ async def search_anime(
     studio: Optional[str] = Query(None, description="Studio filter"),
     director: Optional[str] = Query(None, description="Director filter"),
     source_type: Optional[str] = Query(None, description="Source type filter"),
+    match_mode: str = Query("normal", description="Match mode: normal, recall, strict"),
+    extra_scores: bool = Query(False, description="Include Anikore/Filmarks scores"),
+    debug_scores: bool = Query(False, description="Include debug details for extra scores"),
     limit: int = Query(10, ge=1, le=50, description="Limit"),
     ans: AnimeScore = Depends(get_anime_score),
 ):
@@ -46,7 +49,14 @@ async def search_anime(
             filters = {k: v for k, v in filters.items() if v is not None}
             filters_applied = filters
 
-            precise_results = search_anime_precise(q, **filters, top_n=limit)
+            precise_results = search_anime_precise(
+                q,
+                **filters,
+                include_extra_scores=extra_scores,
+                debug_scores=debug_scores,
+                match_mode=match_mode,
+                top_n=limit,
+            )
 
             for item in precise_results:
                 result = schemas.AnimeSearchResult(
@@ -57,6 +67,7 @@ async def search_anime(
                         bgm_id=item.get("bgm_id"),
                         mal_id=item.get("mal_id"),
                         anilist_id=item.get("anilist_id"),
+                        anikore_id=item.get("ank_id"),
                         douban_id=item.get("douban_id"),
                         bili_id=item.get("bili_id"),
                         anidb_id=item.get("anidb_id"),
@@ -69,6 +80,8 @@ async def search_anime(
                         bgm=item.get("bgm_score"),
                         mal=item.get("mal_score"),
                         anilist=item.get("anilist_score"),
+                        anikore=item.get("ank_score"),
+                        filmarks=item.get("fm_score"),
                     ),
                     time=schemas.AnimeTime(
                         year=item.get("year"),
@@ -86,6 +99,7 @@ async def search_anime(
                             "mal": item.get("mal_id"),
                         }.items() if v
                     ],
+                    debug_scores=item.get("debug_scores"),
                 )
                 results.append(result)
 
@@ -132,5 +146,8 @@ async def search_anime_post(query: schemas.AnimeSearchQuery):
         studio=query.studio,
         director=query.director,
         source_type=query.source_type,
+        match_mode=query.match_mode,
+        extra_scores=query.extra_scores,
+        debug_scores=query.debug_scores,
         limit=query.limit,
     )

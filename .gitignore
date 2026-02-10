@@ -1,0 +1,25 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+
+# Virtual environments
+.venv/
+venv/
+
+# IDE
+.idea/
+.vscode/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Local runtime artifacts
+*.log
+*.lock
+
+# Local DB/cache artifacts
+web/instance/*.db
+next/instance/*.db

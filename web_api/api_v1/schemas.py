@@ -109,6 +109,10 @@ class AnimeSearchQuery(BaseModel):
     director: Optional[str] = Field(None, description="Director filter")
     source_type: Optional[str] = Field(None, description="Source type filter", alias="source")
 
+    match_mode: str = Field("normal", description="Match mode: normal, recall, strict")
+    extra_scores: bool = Field(False, description="Include Anikore/Filmarks scores")
+    debug_scores: bool = Field(False, description="Include debug details for extra scores")
+
     limit: int = Field(10, ge=1, le=50, description="Limit")
     offset: int = Field(0, ge=0, description="Offset")
 
@@ -120,6 +124,7 @@ class AnimeSearchResult(AnimeInfo):
     """Search result with confidence"""
     confidence: Optional[float] = Field(None, description="Match confidence")
     matched_source: Optional[List[str]] = Field(None, description="Matched sources")
+    debug_scores: Optional[Dict[str, Any]] = Field(None, description="Debug data for score scraping")
 
 
 class AnimeSearchResponse(BaseModel):

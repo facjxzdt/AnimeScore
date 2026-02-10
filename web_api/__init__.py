@@ -1,0 +1,2 @@
+"""AnimeScore API package."""
+

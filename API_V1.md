@@ -2,39 +2,25 @@
 
 ## 概述
 
-API v1 采用 RESTful 设计，提供标准化的响应格式和版本控制。
+API v1 采用 RESTful 设计，统一前缀为 `/api/v1`。
 
-**基础 URL**: `/api/v1`
+- 基础 URL: `/api/v1`
+- 认证: 无
+- 返回格式: 直接返回 JSON（无统一 `success` 包装）
 
-## 响应格式
+## 端点总览
 
-### 成功响应
+- 健康检查: `GET /api/v1/health/`, `GET /api/v1/health/ping`
+- 动漫列表: `GET /api/v1/anime/airing`, `GET /api/v1/anime/subscribed`, `GET /api/v1/anime/season/current`, `GET /api/v1/anime/{bgm_id}`
+- 搜索: `GET /api/v1/search/`, `POST /api/v1/search/`
+- 导出: `GET /api/v1/export/csv`, `GET /api/v1/export/json`
+- 统计: `GET /api/v1/stats/`, `GET /api/v1/stats/score-distribution`, `GET /api/v1/stats/studio-ranking`
 
-```json
-{
-  "success": true,
-  "data": { ... },
-  "message": null
-}
-```
+---
 
-### 错误响应
+## 健康检查
 
-```json
-{
-  "success": false,
-  "error_code": "NOT_FOUND",
-  "message": "Anime not found",
-  "details": { ... }
-}
-```
-
-## 端点列表
-
-### 健康检查
-
-#### GET /api/v1/health/
-
+### GET /api/v1/health/
 返回 API 运行状态。
 
 **响应示例**:
@@ -42,36 +28,33 @@ API v1 采用 RESTful 设计，提供标准化的响应格式和版本控制。
 {
   "status": "ok",
   "version": "1.0.0",
-  "timestamp": "2024-01-15T10:30:00",
-  "uptime": 3600,
+  "timestamp": "2026-02-10T10:30:00",
+  "uptime": 3600.5,
   "services": {
     "api": true,
-    "data_files": true,
-    "meilisearch": true
+    "data_files": true
   }
 }
 ```
 
-#### GET /api/v1/health/ping
+### GET /api/v1/health/ping
+快速存活检查。
 
-快速健康检查。
-
-**响应**:
+**响应示例**:
 ```json
-{"message": "pong"}
+{ "message": "pong" }
 ```
 
 ---
 
-### 动漫列表
+## 动漫列表
 
-#### GET /api/v1/anime/airing
-
-获取正在放送的动漫列表。
+### GET /api/v1/anime/airing
+获取正在放送列表。
 
 **查询参数**:
 - `limit` (int, optional): 返回数量限制 (1-100)
-- `sort_by` (str, optional): 排序字段 (`score`, `name`, `time`)
+- `sort_by` (str, optional): 排序字段 `score` | `name` | `time`（默认 `score`）
 
 **响应示例**:
 ```json
@@ -102,21 +85,15 @@ API v1 采用 RESTful 设计，提供标准化的响应格式和版本控制。
 }
 ```
 
----
-
-#### GET /api/v1/anime/subscribed
-
-获取订阅的动漫列表。
+### GET /api/v1/anime/subscribed
+获取订阅列表。
 
 **查询参数**:
-- `limit` (int, optional): 返回数量限制
-- `sort_by` (str, optional): 排序字段
+- `limit` (int, optional): 返回数量限制 (1-100)
+- `sort_by` (str, optional): 排序字段 `score` | `name` | `time`
 
----
-
-#### GET /api/v1/anime/season/current
-
-获取当前季番。
+### GET /api/v1/anime/season/current
+获取当前季番信息与列表。
 
 **响应示例**:
 ```json
@@ -124,18 +101,14 @@ API v1 采用 RESTful 设计，提供标准化的响应格式和版本控制。
   "season": {
     "year": 2024,
     "season": "winter",
-    "name": "2024年1月冬番"
+    "name": "2024 winter"
   },
   "anime_list": [ ... ],
-  "total": 50,
-  "updated_at": "2024-01-15T10:00:00"
+  "total": 50
 }
 ```
 
----
-
-#### GET /api/v1/anime/{bgm_id}
-
+### GET /api/v1/anime/{bgm_id}
 根据 Bangumi ID 获取动漫详情。
 
 **路径参数**:
@@ -143,31 +116,40 @@ API v1 采用 RESTful 设计，提供标准化的响应格式和版本控制。
 
 ---
 
-### 搜索
+## 搜索
 
-#### GET /api/v1/search/
-
-搜索动漫。
+### GET /api/v1/search/
+搜索动漫。`source=precise` 时使用 `apis/precise.py` 的多源交叉验证。
 
 **查询参数**:
 - `q` (str, required): 搜索关键词
-- `source` (str, optional): 搜索源 (`precise`, `bangumi`)，默认 `precise`
+- `source` (str, optional): `precise` | `bangumi`（默认 `precise`）
 - `year` (int, optional): 年份过滤
 - `month` (int, optional): 月份过滤
 - `studio` (str, optional): 制作公司过滤
 - `director` (str, optional): 监督过滤
+- `source_type` (str, optional): 原作类型过滤
 - `limit` (int, optional): 返回数量限制 (1-50)，默认 10
+- `match_mode` (str, optional): `normal` | `recall` | `strict`（仅 `precise` 生效）
+- `extra_scores` (bool, optional): 是否额外抓取站外评分（当前以 Filmarks 为主，慢），默认 `false`
+- `debug_scores` (bool, optional): 返回评分抓取调试信息（用于定位站外评分抓取失败原因），默认 `false`
 
 **示例**:
 ```bash
 # 基础搜索
 GET /api/v1/search?q=葬送的芙莉莲
 
+# 提高召回
+GET /api/v1/search?q=Frieren&match_mode=recall
+
+# 获取站外评分（更慢）
+GET /api/v1/search?q=Frieren&extra_scores=true
+
+# 获取评分抓取调试信息
+GET /api/v1/search?q=Frieren&extra_scores=true&debug_scores=true
+
 # 带过滤条件
 GET /api/v1/search?q=Frieren&year=2023&source=precise
-
-# MeiliSearch 搜索
-GET /api/v1/search?q=芙莉莲&source=meili
 ```
 
 **响应示例**:
@@ -189,67 +171,59 @@ GET /api/v1/search?q=芙莉莲&source=meili
         "mal": 9.28,
         "anilist": 9.1
       },
-      "year": 2023,
+      "time": {
+        "year": 2023,
+        "month": 10
+      },
       "studio": "MADHOUSE",
       "confidence": 0.95,
       "matched_source": ["bangumi", "mal", "anilist"]
     }
   ],
-  "total": 3,
+  "total": 1,
   "filters_applied": {
     "year": 2023
   }
 }
 ```
 
----
-
-#### POST /api/v1/search/
-
+### POST /api/v1/search/
 搜索动漫 (POST 方式)。
 
-**请求体**:
+**请求体示例**:
 ```json
 {
   "q": "葬送的芙莉莲",
   "source": "precise",
   "year": 2023,
-  "studio": "MADHOUSE",
+  "match_mode": "recall",
+  "extra_scores": true,
+  "debug_scores": true,
   "limit": 5
 }
 ```
 
 ---
 
-### 导出
+## 导出
 
-#### GET /api/v1/export/csv
-
-导出 CSV 文件。
+### GET /api/v1/export/csv
+导出 CSV。
 
 **查询参数**:
-- `type` (str, optional): 导出类型 (`airing`, `subscribed`)，默认 `airing`
+- `type` (str, optional): `airing` | `subscribed`，默认 `airing`
 
-**示例**:
-```bash
-GET /api/v1/export/csv?type=airing
-```
+### GET /api/v1/export/json
+导出 JSON。
+
+**查询参数**:
+- `type` (str, optional): `airing` | `subscribed`，默认 `airing`
 
 ---
 
-#### GET /api/v1/export/json
+## 统计
 
-导出 JSON 文件。
-
-**查询参数**:
-- `type` (str, optional): 导出类型 (`airing`, `subscribed`)
-
----
-
-### 统计
-
-#### GET /api/v1/stats/
-
+### GET /api/v1/stats/
 获取统计信息。
 
 **响应示例**:
@@ -266,20 +240,14 @@ GET /api/v1/export/csv?type=airing
     "2024": 50,
     "2023": 30
   },
-  "last_updated": "2024-01-15T10:00:00"
+  "last_updated": null
 }
 ```
 
----
-
-#### GET /api/v1/stats/score-distribution
-
+### GET /api/v1/stats/score-distribution
 获取评分分布。
 
----
-
-#### GET /api/v1/stats/studio-ranking
-
+### GET /api/v1/stats/studio-ranking
 获取制作公司排名。
 
 **查询参数**:
@@ -287,35 +255,13 @@ GET /api/v1/export/csv?type=airing
 
 ---
 
-## 搜索源说明
+## 错误响应
 
-| 搜索源 | 说明 | 适用场景 |
-|--------|------|----------|
-| `precise` | 多源交叉验证搜索 | 需要完整信息和准确匹配 |
+错误时返回标准 HTTP 状态码，body 为 FastAPI 抛出的 `detail` 字段。
 
-| `bangumi` | Bangumi API 搜索 | 获取 Bangumi 最新数据 |
-
----
-
-## 旧版 API 兼容
-
-旧版 API 仍然可用，但建议使用新版 API v1。
-
-| 旧版端点 | 新版端点 | 说明 |
-|----------|----------|------|
-| `GET /air` | `GET /api/v1/anime/airing` | 获取正在放送列表 |
-| `GET /sub` | `GET /api/v1/anime/subscribed` | 获取订阅列表 |
-| `GET /search/{bgm_id}` | `GET /api/v1/anime/{bgm_id}` | 根据 ID 获取 |
-| `GET /search/meili/{string}` | `GET /api/v1/search?q={string}&source=meili` | Meili 搜索 |
-| `GET /search/precise/{keyword}` | `GET /api/v1/search?q={keyword}` | 精确搜索 |
-| `GET /csv/{method}` | `GET /api/v1/export/csv?type={method}` | 导出 CSV |
-
----
-
-## 错误码
-
-| 错误码 | HTTP 状态码 | 说明 |
-|--------|-------------|------|
-| `BAD_REQUEST` | 400 | 请求参数错误 |
-| `NOT_FOUND` | 404 | 资源不存在 |
-| `INTERNAL_ERROR` | 500 | 服务器内部错误 |
+**示例**:
+```json
+{
+  "detail": "Anime with bgm_id 123 not found"
+}
+```
