@@ -15,7 +15,7 @@ import time
 from functools import lru_cache
 from typing import Dict, Optional, Tuple
 
-import requests
+import httpx
 
 from data.config import work_dir
 
@@ -121,7 +121,7 @@ def refresh_map_file(
             pass
 
     try:
-        resp = requests.get(url, timeout=timeout)
+        resp = httpx.get(url, timeout=timeout)
         resp.raise_for_status()
         payload = resp.json()
     except Exception as e:

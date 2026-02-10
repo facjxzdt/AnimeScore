@@ -7,8 +7,9 @@ Search APIs
 from typing import Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
+from fastapi.concurrency import run_in_threadpool
 
-from apis.precise import search_anime_precise
+from apis.precise import search_anime_precise_async
 from web_api.api_v1 import schemas
 from web_api.api_v1.deps import get_anime_score
 from web_api.wrapper import AnimeScore
@@ -49,7 +50,7 @@ async def search_anime(
             filters = {k: v for k, v in filters.items() if v is not None}
             filters_applied = filters
 
-            precise_results = search_anime_precise(
+            precise_results = await search_anime_precise_async(
                 q,
                 **filters,
                 include_extra_scores=extra_scores,
@@ -104,7 +105,7 @@ async def search_anime(
                 results.append(result)
 
         elif source == "bangumi":
-            bgm_results = ans.Bangumi().search_anime(q)
+            bgm_results = await run_in_threadpool(ans.Bangumi().search_anime, q)
 
             if isinstance(bgm_results, dict) and "data" in bgm_results:
                 for item in bgm_results["data"][:limit]:

@@ -101,9 +101,11 @@ async def global_exception_handler(request: Request, exc: Exception):
 
 if __name__ == "__main__":
     # 启动服务
+    workers = max(1, int(os.getenv("API_WORKERS", "1")))
     uvicorn.run(
         app="web_api.main:app",
         host="0.0.0.0",
         port=5001,
         reload=False,
+        workers=workers,
     )

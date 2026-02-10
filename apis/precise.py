@@ -5,6 +5,7 @@
 支持Bangumi、AniList、MAL(Jikan API)多源搜索并交叉验证
 """
 
+import asyncio
 import re
 import unicodedata
 import json
@@ -14,7 +15,7 @@ from dataclasses import dataclass
 from difflib import SequenceMatcher
 from typing import Dict, List, Optional, Set, Tuple
 
-import requests
+import httpx
 
 from data.config import work_dir
 
@@ -48,6 +49,32 @@ try:
     from utils.ext_linker import lookup_ext_ids
 except Exception:
     lookup_ext_ids = None
+
+
+_ASYNC_TIMEOUT = float(os.getenv("PRECISE_HTTP_TIMEOUT", "10"))
+_ASYNC_MAX_CONNECTIONS = int(os.getenv("PRECISE_HTTP_MAX_CONNECTIONS", "50"))
+_ASYNC_MAX_KEEPALIVE = int(os.getenv("PRECISE_HTTP_MAX_KEEPALIVE", "20"))
+_ASYNC_QUERY_CONCURRENCY = int(os.getenv("PRECISE_QUERY_CONCURRENCY", "4"))
+_SEARCH_SEM_BY_LOOP: Dict[int, asyncio.Semaphore] = {}
+
+
+def _build_async_client() -> httpx.AsyncClient:
+    limits = httpx.Limits(
+        max_connections=_ASYNC_MAX_CONNECTIONS,
+        max_keepalive_connections=_ASYNC_MAX_KEEPALIVE,
+    )
+    timeout = httpx.Timeout(_ASYNC_TIMEOUT)
+    return httpx.AsyncClient(limits=limits, timeout=timeout)
+
+
+def _get_search_semaphore() -> asyncio.Semaphore:
+    loop = asyncio.get_running_loop()
+    key = id(loop)
+    sem = _SEARCH_SEM_BY_LOOP.get(key)
+    if sem is None:
+        sem = asyncio.Semaphore(_ASYNC_QUERY_CONCURRENCY)
+        _SEARCH_SEM_BY_LOOP[key] = sem
+    return sem
 
 
 @dataclass
@@ -605,7 +632,7 @@ class BangumiSearcher(BaseSearcher):
                 }
                 payload["filter"]["month"] = [[month_map[filters["month"]]]]
 
-            response = requests.post(
+            response = httpx.post(
                 url, headers=self.headers, json=payload, timeout=10
             )
             data = response.json()
@@ -654,6 +681,78 @@ class BangumiSearcher(BaseSearcher):
         except Exception as e:
             print(f"Bangumi搜索错误: {e}")
 
+        return results
+
+    async def asearch(
+        self, client: httpx.AsyncClient, keyword: str, **filters
+    ) -> List[AnimeInfo]:
+        """异步搜索Bangumi"""
+        results: List[AnimeInfo] = []
+        try:
+            url = f"{self.api_base}/v0/search/subjects"
+            payload = {
+                "keyword": keyword,
+                "sort": "match",
+                "filter": {"type": [2]},
+            }
+
+            if filters.get("year"):
+                payload["filter"]["year"] = [filters["year"]]
+
+            if filters.get("month"):
+                month_map = {
+                    1: "1月",
+                    2: "2月",
+                    3: "3月",
+                    4: "4月",
+                    5: "5月",
+                    6: "6月",
+                    7: "7月",
+                    8: "8月",
+                    9: "9月",
+                    10: "10月",
+                    11: "11月",
+                    12: "12月",
+                }
+                payload["filter"]["month"] = [[month_map[filters["month"]]]]
+
+            async with _get_search_semaphore():
+                response = await client.post(url, headers=self.headers, json=payload)
+            response.raise_for_status()
+            data = response.json()
+
+            for item in data.get("data", [])[:20]:
+                info = AnimeInfo()
+                info.bgm_id = str(item.get("id"))
+                info.name = item.get("name", "")
+                info.name_cn = item.get("name_cn", "")
+
+                if item.get("rating"):
+                    info.bgm_score = item["rating"].get("score")
+
+                if item.get("date"):
+                    date_str = item["date"]
+                    match = re.search(r"(\d{4})-(\d{2})", date_str)
+                    if match:
+                        info.year = int(match.group(1))
+                        info.month = int(match.group(2))
+
+                if item.get("infobox"):
+                    for info_box in item["infobox"]:
+                        key = info_box.get("key", "")
+                        value = info_box.get("value", "")
+                        if key == "动画制作":
+                            info.studio = value
+                        elif key == "监督":
+                            info.director = value
+                        elif key == "原作":
+                            info.source = value
+
+                info.summary = item.get("summary", "")[:200]
+                info.confidence = self._calculate_confidence(keyword, info.name, info.name_cn)
+                results.append(info)
+        except Exception as e:
+            print(f"Bangumi异步搜索错误: {e}")
         return results
 
 
@@ -720,7 +819,7 @@ class AniListSearcher(BaseSearcher):
                         variables["season"] = season
                         break
 
-            response = requests.post(
+            response = httpx.post(
                 self.api_url,
                 headers=self.headers,
                 json={"query": self.GRAPHQL_QUERY, "variables": variables},
@@ -779,6 +878,67 @@ class AniListSearcher(BaseSearcher):
 
         return results
 
+    async def asearch(
+        self, client: httpx.AsyncClient, keyword: str, **filters
+    ) -> List[AnimeInfo]:
+        """异步搜索AniList"""
+        results: List[AnimeInfo] = []
+        try:
+            variables = {"search": keyword, "type": "ANIME"}
+            if filters.get("year"):
+                variables["year"] = filters["year"]
+            if filters.get("month"):
+                month = filters["month"]
+                for months, season in self.SEASON_MAP.items():
+                    if month in months:
+                        variables["season"] = season
+                        break
+
+            async with _get_search_semaphore():
+                response = await client.post(
+                    self.api_url,
+                    headers=self.headers,
+                    json={"query": self.GRAPHQL_QUERY, "variables": variables},
+                )
+            response.raise_for_status()
+            data = response.json()
+
+            for item in data.get("data", {}).get("Page", {}).get("media", []) or []:
+                info = AnimeInfo()
+                info.anilist_id = str(item.get("id"))
+
+                title = item.get("title", {})
+                info.name = title.get("romaji", "")
+                info.name_jp = title.get("native", "")
+                info.name_cn = title.get("english", "")
+
+                start_date = item.get("startDate", {})
+                info.year = start_date.get("year")
+                info.month = start_date.get("month")
+
+                studios = item.get("studios", {}).get("nodes", [])
+                if studios:
+                    info.studio = studios[0].get("name", "")
+
+                for staff in item.get("staff", {}).get("edges", []):
+                    if staff.get("role") == "Director":
+                        info.director = staff["node"]["name"]["full"]
+                        break
+
+                info.source = self.SOURCE_MAP.get(item.get("source"), item.get("source", ""))
+                if item.get("meanScore"):
+                    info.anilist_score = item["meanScore"] / 10
+
+                summary = item.get("description") or ""
+                info.summary = re.sub(r"<[^>]+", "", summary)[:200]
+                info.confidence = self._calculate_confidence(
+                    keyword, info.name, info.name_cn, info.name_jp
+                )
+                results.append(info)
+        except Exception as e:
+            print(f"AniList异步搜索错误: {e}")
+        return results
+
 
 class JikanSearcher(BaseSearcher):
     """Jikan API (MAL非官方API) 搜索器"""
@@ -812,7 +972,7 @@ class JikanSearcher(BaseSearcher):
         # 改为在获取结果后手动过滤
         year_filter = filters.get("year")
 
-        response = requests.get(
+        response = httpx.get(
             f"{self.api_base}/anime", params=params, timeout=15
         )
         data = response.json()
@@ -893,6 +1053,81 @@ class JikanSearcher(BaseSearcher):
             print(f"Jikan搜索错误: {e}")
 
         return results
+
+    async def _asearch_once(
+        self, client: httpx.AsyncClient, keyword: str, **filters
+    ) -> List[AnimeInfo]:
+        results: List[AnimeInfo] = []
+        params = {
+            "q": keyword,
+            "sfw": "true",
+            "limit": 25,
+            "order_by": "popularity",
+            "sort": "desc",
+        }
+        year_filter = filters.get("year")
+
+        async with _get_search_semaphore():
+            response = await client.get(f"{self.api_base}/anime", params=params)
+        response.raise_for_status()
+        data = response.json()
+
+        for item in data.get("data", []):
+            anime_type = str(item.get("type") or "").strip()
+            if anime_type and anime_type not in self.ALLOWED_TYPES:
+                continue
+
+            if year_filter and item.get("aired"):
+                from_date = item["aired"].get("from", "")
+                if from_date:
+                    match = re.search(r"(\d{4})", from_date)
+                    if match:
+                        item_year = int(match.group(1))
+                        if abs(item_year - year_filter) > 1:
+                            continue
+
+            info = AnimeInfo()
+            info.mal_id = str(item.get("mal_id"))
+            info.name = item.get("titles", [{}])[0].get("title", "")
+
+            for title_obj in item.get("titles", []):
+                title_type = title_obj.get("type", "")
+                title_text = title_obj.get("title", "")
+                if title_type == "Japanese":
+                    info.name_jp = title_text
+                elif title_type == "English":
+                    info.name_cn = title_text
+
+            if item.get("aired"):
+                from_date = item["aired"].get("from", "")
+                if from_date:
+                    match = re.search(r"(\d{4})-(\d{2})", from_date)
+                    if match:
+                        info.year = int(match.group(1))
+                        info.month = int(match.group(2))
+
+            studios = item.get("studios", [])
+            if studios:
+                info.studio = studios[0].get("name", "")
+
+            info.source = self.SOURCE_MAP.get(item.get("source"), item.get("source", ""))
+            info.mal_score = item.get("score")
+            info.summary = (item.get("synopsis") or "")[:200]
+            info.confidence = self._calculate_confidence(
+                keyword, info.name, info.name_cn, info.name_jp
+            )
+            results.append(info)
+        return results
+
+    async def asearch(
+        self, client: httpx.AsyncClient, keyword: str, **filters
+    ) -> List[AnimeInfo]:
+        """异步搜索Jikan"""
+        try:
+            return await self._asearch_once(client, keyword, **filters)
+        except Exception as e:
+            print(f"Jikan异步搜索错误: {e}")
+            return []
 
 
 class CrossValidator:
@@ -996,6 +1231,60 @@ class CrossValidator:
         # 按置信度排序
         validated.sort(key=lambda x: x.confidence, reverse=True)
 
+        return validated
+
+    async def asearch(self, keyword: str, **filters) -> List[AnimeInfo]:
+        """异步多源交叉验证搜索"""
+        all_results: List[AnimeInfo] = []
+
+        async with _build_async_client() as client:
+            bgm_task = self.bgm.asearch(client, keyword, **filters)
+            anl_task = self.anilist.asearch(client, keyword, **filters)
+            bgm_results, anilist_results = await asyncio.gather(
+                bgm_task, anl_task, return_exceptions=True
+            )
+
+            if isinstance(bgm_results, Exception):
+                bgm_results = []
+            if isinstance(anilist_results, Exception):
+                anilist_results = []
+
+            all_results.extend(bgm_results)
+            all_results.extend(anilist_results)
+
+            extra_queries = self._build_extra_name_queries(keyword, bgm_results, anilist_results)
+
+            anl_extra_tasks = [
+                self.anilist.asearch(client, q, **filters) for q in extra_queries[1:4]
+            ]
+            if anl_extra_tasks:
+                anl_extra = await asyncio.gather(*anl_extra_tasks, return_exceptions=True)
+                for one in anl_extra:
+                    if isinstance(one, list):
+                        all_results.extend(one)
+
+            jikan_tasks = [
+                self.jikan.asearch(client, q, **filters) for q in extra_queries[1:6]
+            ]
+            jikan_tasks.append(self.jikan.asearch(client, keyword, **filters))
+            jikan_extra = await asyncio.gather(*jikan_tasks, return_exceptions=True)
+            for one in jikan_extra:
+                if isinstance(one, list):
+                    all_results.extend(one)
+
+        if lookup_ext_ids:
+            for info in all_results:
+                ext = lookup_ext_ids(bgm_id=info.bgm_id, mal_id=info.mal_id)
+                if not ext:
+                    continue
+                if not info.bgm_id and ext.get("bgm_id"):
+                    info.bgm_id = str(ext.get("bgm_id"))
+                if not info.mal_id and ext.get("mal_id"):
+                    info.mal_id = str(ext.get("mal_id"))
+
+        validated = self._cross_validate(all_results, filters)
+        self._enrich_missing_mal(validated, filters)
+        validated.sort(key=lambda x: x.confidence, reverse=True)
         return validated
 
     @staticmethod
@@ -1334,6 +1623,82 @@ class CrossValidator:
         for word in ["the", "a", "an", "no", "na"]:
             normalized = normalized.replace(word, "")
         return normalized
+
+
+async def search_anime_precise_async(
+    keyword: str,
+    year: Optional[int] = None,
+    month: Optional[int] = None,
+    studio: Optional[str] = None,
+    director: Optional[str] = None,
+    source: Optional[str] = None,
+    include_extra_scores: bool = False,
+    debug_scores: bool = False,
+    match_mode: str = "normal",
+    top_n: int = 10,
+) -> List[dict]:
+    """
+    异步便捷函数：执行精确搜索并返回字典列表。
+    """
+    filters = {
+        "year": year,
+        "month": month,
+        "studio": studio,
+        "director": director,
+        "source": source,
+    }
+    filters = {k: v for k, v in filters.items() if v is not None}
+
+    validator = CrossValidator(match_mode=match_mode)
+    results = await validator.asearch(keyword, **filters)
+
+    output = []
+    for r in results[:top_n]:
+        item = r.to_dict()
+        if lookup_ext_ids:
+            ext = lookup_ext_ids(bgm_id=item.get("bgm_id"), mal_id=item.get("mal_id"))
+            if ext:
+                if not item.get("bgm_id") and ext.get("bgm_id"):
+                    item["bgm_id"] = str(ext.get("bgm_id"))
+                if not item.get("mal_id") and ext.get("mal_id"):
+                    item["mal_id"] = str(ext.get("mal_id"))
+                for key in [
+                    "douban_id",
+                    "bili_id",
+                    "anidb_id",
+                    "tmdb_id",
+                    "imdb_id",
+                    "tvdb_id",
+                    "wikidata_id",
+                ]:
+                    if ext.get(key) and not item.get(key):
+                        item[key] = ext.get(key)
+
+        if include_extra_scores:
+            debug_payload = None
+            if debug_scores:
+                extra, debug_payload = await asyncio.to_thread(
+                    _fetch_extra_scores_debug,
+                    item.get("name", ""),
+                    item.get("name_cn", ""),
+                    item.get("name_jp", ""),
+                )
+            else:
+                extra = await asyncio.to_thread(
+                    _fetch_extra_scores,
+                    item.get("name", ""),
+                    item.get("name_cn", ""),
+                    item.get("name_jp", ""),
+                )
+            if extra:
+                item.update(extra)
+            _merge_local_extra_scores(item, debug=debug_payload)
+            if debug_scores:
+                item["debug_scores"] = debug_payload or {}
+
+        output.append(item)
+
+    return output
 
 
 def search_anime_precise(

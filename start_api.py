@@ -26,10 +26,13 @@ if __name__ == "__main__":
     print("  - API v1: http://localhost:5001/api/v1/")
     print("\n按 Ctrl+C 停止服务\n")
     
+    workers = max(1, int(os.getenv("API_WORKERS", "1")))
+
     uvicorn.run(
         app="web_api.main:app",
         host="0.0.0.0",
         port=5001,
         reload=False,
         log_level="info",
+        workers=workers,
     )

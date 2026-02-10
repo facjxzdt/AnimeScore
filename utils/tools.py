@@ -1,5 +1,5 @@
 import data.config
-import requests
+import httpx
 
 
 class Tools:
@@ -29,7 +29,8 @@ class Tools:
         ]
         try:
             for i in range(0, 5):
-                requests.get(url_list[i])
+                resp = httpx.get(url_list[i], timeout=data.config.timeout)
+                resp.raise_for_status()
         except:
             return False
         return True

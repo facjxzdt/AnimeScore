@@ -1,4 +1,4 @@
-import requests
+import httpx
 
 from bs4 import BeautifulSoup
 from data import config
@@ -15,7 +15,7 @@ class Filmarks:
         log_fm.debug("正在获取{}的fm分数".format(anime))
         search_url = self.url + "/search/animes?q=" + anime
         log_fm.debug("正在向{}发送请求".format(search_url))
-        page = requests.get(
+        page = httpx.get(
             search_url, headers=config.real_headers, timeout=config.timeout
         ).content
         try:
@@ -26,4 +26,19 @@ class Filmarks:
             return fm_score
         except:
             log_fm.error("{}的fm评分查询失败".format(anime))
+            return "Error"
+
+    async def get_fm_score_async(self, anime: str):
+        log_fm.debug("正在获取{}的fm分数(async)".format(anime))
+        search_url = self.url + "/search/animes?q=" + anime
+        log_fm.debug("正在向{}发送请求(async)".format(search_url))
+        async with httpx.AsyncClient(timeout=config.timeout) as client:
+            page = (await client.get(search_url, headers=config.real_headers)).content
+        try:
+            log_fm.debug("正在解析页面(async)")
+            soup = BeautifulSoup(page, "lxml")
+            fm_score = soup.find("div", attrs={"class": "c-rating__score"}).string
+            return fm_score
+        except:
+            log_fm.error("{}的fm评分查询失败(async)".format(anime))
             return "Error"
