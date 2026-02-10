@@ -2,7 +2,6 @@ import json
 import time
 import threading
 
-from web_api.meili_search import Meilisearch
 from utils.logger import Log
 from utils.get_ids import get_single_id
 from apis.mal import MyAnimeList
@@ -17,8 +16,6 @@ ank = Anikore()
 anl = AniList()
 fm = Filmarks()
 bgm = Bangumi()
-meili = Meilisearch()
-
 score = {}
 score_1 = {}
 score_2 = {}
@@ -209,10 +206,20 @@ def get_single_score(bgm_id: str):
 def update_score(bgm_id: str):
     # 该函数用于更新sub下的分数
     # air由于会每日自动更新 故不添加update_score
-    meili = Meilisearch()
     bgm_id = str(bgm_id)
     score_path = config.work_dir + "/data/jsons/sub_score_sorted.json"
-    info = meili.index.search(bgm_id, {"filter": ["id={}".format(bgm_id)]})["hits"][0]
+    # 从JSON文件中查找信息
+    scores = json.load(open(score_path, "r"))
+    info = None
+    for name, data in scores.items():
+        if str(data.get("bgm_id")) == bgm_id:
+            info = data
+            break
+    
+    if not info:
+        log_score.error(f"找不到 bgm_id: {bgm_id}")
+        return
+    
     global score_2
     score_2 = {}
     create_threads(info["ids"], score_2)
@@ -223,9 +230,8 @@ def update_score(bgm_id: str):
     info["ank_score"] = score_2["ank_score"]
     info["anl_score"] = score_2["anl_score"]
     info["time"] = get_time()
-    meili.add_single_anime(dict(info))
+    
     # 更新json
-    scores = json.load(open(score_path, "r"))
     scores[info["name"]] = info
     f1 = open(score_path, "w")
     f1.write(json.dumps(scores, sort_keys=True, indent=4, separators=(",", ":")))

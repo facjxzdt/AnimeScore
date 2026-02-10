@@ -45,14 +45,11 @@ enable_chinese_check = False
 # 国漫识别阈值
 chinese_check_threshold = 0.75
 
-# meilisearcch设置
-meili_url = os.getenv("MEILI_URL")
-meili_key = os.getenv("MEILI_KEY")
-
 # api设置
 # key = os.getenv('KEY')
 key = "test"
 ttl = 600
 max_size = 100
 
-work_dir = os.path.abspath(os.path.dirname(os.getcwd()))
+# 项目根目录（当前文件的上级目录）
+work_dir = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
