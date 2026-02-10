@@ -8,7 +8,14 @@ WORKDIR /app
 
 # Runtime deps for parsers/network
 RUN apt-get update \
-    && apt-get install -y --no-install-recommends libxml2 libxslt1.1 ca-certificates \
+    && apt-get install -y --no-install-recommends \
+        ca-certificates \
+        build-essential \
+        gcc \
+        libxml2 \
+        libxslt1.1 \
+        libxml2-dev \
+        libxslt1-dev \
     && rm -rf /var/lib/apt/lists/*
 
 # Install dependencies in a project-local virtualenv
@@ -16,7 +23,9 @@ COPY requirements.txt /app/requirements.txt
 RUN python -m venv /app/venv \
     && /app/venv/bin/pip install --upgrade pip setuptools wheel \
     && /app/venv/bin/pip install supervisor \
-    && /app/venv/bin/pip install -r /app/requirements.txt
+    && /app/venv/bin/pip install -r /app/requirements.txt \
+    && apt-get purge -y --auto-remove build-essential gcc libxml2-dev libxslt1-dev \
+    && rm -rf /var/lib/apt/lists/*
 
 # Copy app source
 COPY . /app
