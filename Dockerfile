@@ -29,6 +29,7 @@ RUN python -m venv /app/venv \
 
 # Copy app source
 COPY . /app
+COPY supervisord.conf /etc/supervisord.conf
 
 RUN chmod +x /app/entrypoint.sh
 
