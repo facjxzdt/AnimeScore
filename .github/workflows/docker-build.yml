@@ -34,6 +34,32 @@ jobs:
             type=raw,value=latest
             type=sha,format=short
 
+      - name: Build test image (local load)
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          file: Dockerfile
+          load: true
+          platforms: linux/amd64
+          tags: animescore:ci-test
+
+      - name: Container health check
+        run: |
+          set -euo pipefail
+          docker run -d --name animescore-ci-test -p 5001:5001 animescore:ci-test
+          for i in $(seq 1 30); do
+            if curl -fsS http://127.0.0.1:5001/api/v1/health/ >/tmp/health.json; then
+              cat /tmp/health.json
+              docker rm -f animescore-ci-test
+              exit 0
+            fi
+            sleep 2
+          done
+          docker logs animescore-ci-test || true
+          docker rm -f animescore-ci-test || true
+          echo "health check failed"
+          exit 1
+
       - name: Build and push image
         uses: docker/build-push-action@v5
         with:

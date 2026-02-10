@@ -1,0 +1,24 @@
+.git
+.github
+.idea
+.vscode
+.venv
+venv
+__pycache__
+*.pyc
+*.pyo
+*.pyd
+*.log
+*.lock
+
+# local runtime/db/cache artifacts
+web/instance
+next/instance
+data/log.txt
+
+# docs and scripts not required at runtime
+LICENSE
+docker_build.sh
+run.bat
+run.ps1
+scripts
