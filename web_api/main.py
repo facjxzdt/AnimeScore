@@ -15,6 +15,7 @@ PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
 
+from utils.ext_linker import refresh_map_file
 from web_api.api_v1 import api_router as api_v1_router
 
 # ==================== FastAPI 应用配置 ====================
@@ -43,6 +44,39 @@ app.include_router(
     prefix="/api/v1",
     tags=["v1"],
 )
+
+
+def _env_true(name: str, default: str = "1") -> bool:
+    return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
+
+
+@app.on_event("startup")
+async def startup_refresh_map() -> None:
+    """
+    Refresh external ID mapping on startup.
+    Controlled by env vars:
+      - MAP_AUTO_UPDATE (default: 1)
+      - ANIME_MAP_URL
+      - MAP_UPDATE_FORCE (default: 0)
+      - MAP_UPDATE_MAX_AGE_HOURS (default: 24)
+    """
+    if not _env_true("MAP_AUTO_UPDATE", "1"):
+        print("[map] auto update disabled")
+        return
+
+    max_age = os.getenv("MAP_UPDATE_MAX_AGE_HOURS", "24")
+    try:
+        max_age_hours = int(max_age)
+    except Exception:
+        max_age_hours = 24
+
+    updated, message = refresh_map_file(
+        source_url=os.getenv("ANIME_MAP_URL"),
+        force=_env_true("MAP_UPDATE_FORCE", "0"),
+        max_age_hours=max_age_hours,
+    )
+    state = "updated" if updated else "skipped"
+    print(f"[map] {state}: {message}")
 
 # ==================== 根路由 ====================
 

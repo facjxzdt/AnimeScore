@@ -51,6 +51,18 @@ docker run -d -p 5001:5001 --name animescore animescore:latest
 - `extra_scores=true`: 追加站外评分抓取（当前以 Filmarks 为主）
 - `debug_scores=true`: 返回评分抓取调试信息（定位抓取失败原因）
 
+## 映射文件自动更新
+
+主程序启动时会自动尝试更新 `mapping/anime_map.json`（失败不阻塞服务）。
+
+可用环境变量：
+
+- `MAP_AUTO_UPDATE`：是否自动更新，默认 `1`
+- `ANIME_MAP_URL`：映射文件下载地址（JSON）
+默认使用 `https://github.com/Rhilip/BangumiExtLinker/blob/main/data/anime_map.json`（程序会自动转换为 raw 地址）
+- `MAP_UPDATE_FORCE`：是否强制更新，默认 `0`
+- `MAP_UPDATE_MAX_AGE_HOURS`：本地文件新鲜时间，默认 `24`
+
 ## 项目结构
 
 ```text
@@ -77,4 +89,3 @@ AnimeScore/
 - Python 语法检查
 - API 关键模块导入检查
 - 基本文档链接检查
-
