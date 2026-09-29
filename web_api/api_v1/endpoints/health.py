@@ -10,6 +10,7 @@ from datetime import datetime
 from fastapi import APIRouter
 
 from web_api.api_v1 import schemas
+from services.catalog import get_repository
 
 router = APIRouter()
 
@@ -18,7 +19,7 @@ START_TIME = time.time()
 
 
 @router.get("/", response_model=schemas.HealthStatus)
-async def health_check():
+def health_check():
     """
     健康检查
     
@@ -27,9 +28,12 @@ async def health_check():
     uptime = time.time() - START_TIME
     
     # 检查各服务状态
+    catalog = get_repository().status()
     services = {
         "api": True,
-        "data_files": check_data_files(),
+        "data_files": catalog["available"],
+        "bangumi_data": catalog["available"],
+        "catalog_fresh": catalog["available"] and not catalog["stale"] and not catalog["last_error"],
     }
     
     # 判断整体状态
@@ -60,19 +64,4 @@ async def ping():
 
 
 def check_data_files() -> bool:
-    """检查数据文件是否存在"""
-    try:
-        from data.config import work_dir
-        import os
-        
-        required_files = [
-            work_dir + "/data/jsons/score_sorted.json",
-            work_dir + "/data/jsons/animes.json",
-        ]
-        
-        for f in required_files:
-            if not os.path.exists(f):
-                return False
-        return True
-    except Exception:
-        return False
+    return get_repository().status()["available"]

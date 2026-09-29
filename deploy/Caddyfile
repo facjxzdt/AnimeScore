@@ -1,0 +1,4 @@
+{$ANIMESCORE_DOMAIN} {
+	encode zstd gzip
+	reverse_proxy animescore:5001
+}

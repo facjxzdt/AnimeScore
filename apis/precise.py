@@ -1663,6 +1663,7 @@ async def search_anime_precise_async(
                 if not item.get("mal_id") and ext.get("mal_id"):
                     item["mal_id"] = str(ext.get("mal_id"))
                 for key in [
+                    "anilist_id",
                     "douban_id",
                     "bili_id",
                     "anidb_id",
@@ -1755,6 +1756,7 @@ def search_anime_precise(
 
                 # Attach extra IDs if present
                 for key in [
+                    "anilist_id",
                     "douban_id",
                     "bili_id",
                     "anidb_id",

@@ -6,7 +6,11 @@ echo ==========================================
 echo.
 
 REM 激活虚拟环境
-call venv\Scripts\activate.bat
+if exist .venv\Scripts\activate.bat (
+    call .venv\Scripts\activate.bat
+) else (
+    call venv\Scripts\activate.bat
+)
 
 REM 设置 Python 环境变量
 set PYTHONIOENCODING=utf-8
@@ -17,7 +21,7 @@ echo.
 echo API Endpoints:
 echo   - Swagger UI: http://localhost:5001/docs
 echo   - Health Check: http://localhost:5001/api/v1/health/
-echo   - Old API: http://localhost:5001/air
+echo   - Catalog: http://localhost:5001/api/v1/catalog/
 echo   - New API: http://localhost:5001/api/v1/anime/airing
 echo.
 echo Press Ctrl+C to stop the server.

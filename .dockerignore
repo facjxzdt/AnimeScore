@@ -15,10 +15,29 @@ __pycache__
 web/instance
 next/instance
 data/log.txt
+data/cache
+.pytest_cache
+tests
+node_modules
+frontend/node_modules
+frontend/dist
+frontend/test-results
+frontend/playwright-report
+.env
+.env.*
+!.env.example
 
 # docs and scripts not required at runtime
-LICENSE
 docker_build.sh
 run.bat
 run.ps1
-scripts
+backups
+deploy
+compose*.yaml
+DEPLOYMENT.md
+frontend/tests
+frontend/playwright.config.js
+**/*.db
+**/*.sqlite
+**/*.sqlite3
+**/*.sqlite3-*

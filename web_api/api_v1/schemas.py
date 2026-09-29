@@ -4,7 +4,7 @@
 API v1 data models (Pydantic schemas)
 """
 
-from typing import Any, Dict, List, Optional
+from typing import Any, Dict, List, Literal, Optional
 
 from pydantic import BaseModel, Field
 
@@ -67,6 +67,23 @@ class AnimeInfo(BaseModel):
     name: str = Field(..., description="Japanese title")
     name_cn: Optional[str] = Field(None, description="Chinese title")
     name_en: Optional[str] = Field(None, description="English title")
+    catalog_id: Optional[str] = None
+    data_source: Optional[str] = None
+    titles: Dict[str, List[str]] = Field(default_factory=dict)
+    type: Optional[str] = None
+    language: Optional[str] = None
+    official_site: Optional[str] = None
+    begin: Optional[str] = None
+    end: Optional[str] = None
+    broadcast: Optional[str] = None
+    comment: Optional[str] = None
+    sites: List[Dict[str, Any]] = Field(default_factory=list)
+    score_status: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+    mapping_sources: Dict[str, str] = Field(default_factory=dict)
+    mapping_contributors: Dict[str, Dict[str, Any]] = Field(default_factory=dict)
+    votes: Dict[str, Optional[int]] = Field(default_factory=dict)
+    platform_ranks: Dict[str, Optional[int]] = Field(default_factory=dict)
+    episodes: Optional[int] = None
 
     ids: AnimeIDs = Field(default_factory=AnimeIDs)
     scores: AnimeScores = Field(default_factory=AnimeScores)
@@ -96,29 +113,28 @@ class SearchSource(str):
     """Search source"""
     PRECISE = "precise"
     BANGUMI = "bangumi"
+    BANGUMI_DATA = "bangumi-data"
 
 
 class AnimeSearchQuery(BaseModel):
     """Anime search parameters"""
     q: str = Field(..., min_length=1, description="Search keyword")
-    source: str = Field("precise", description="Search source: precise, bangumi")
+    source: Literal["bangumi-data", "precise", "bangumi"] = "bangumi-data"
 
-    year: Optional[int] = Field(None, description="Year filter")
-    month: Optional[int] = Field(None, description="Month filter")
+    year: Optional[int] = Field(None, ge=1900, le=2200, description="Year filter")
+    month: Optional[int] = Field(None, ge=1, le=12, description="Month filter")
     studio: Optional[str] = Field(None, description="Studio filter")
     director: Optional[str] = Field(None, description="Director filter")
-    source_type: Optional[str] = Field(None, description="Source type filter", alias="source")
+    source_type: Optional[str] = Field(None, description="Source type filter (legacy precise search)")
+    anime_type: Optional[Literal["tv", "web", "movie", "ova"]] = None
+    include_scores: bool = False
 
-    match_mode: str = Field("normal", description="Match mode: normal, recall, strict")
+    match_mode: Literal["normal", "recall", "strict"] = "normal"
     extra_scores: bool = Field(False, description="Include Anikore/Filmarks scores")
     debug_scores: bool = Field(False, description="Include debug details for extra scores")
 
     limit: int = Field(10, ge=1, le=50, description="Limit")
     offset: int = Field(0, ge=0, description="Offset")
-
-    class Config:
-        populate_by_name = True
-
 
 class AnimeSearchResult(AnimeInfo):
     """Search result with confidence"""

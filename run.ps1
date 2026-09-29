@@ -10,7 +10,10 @@ Write-Host "==========================================" -ForegroundColor Cyan
 Write-Host ""
 
 # 激活虚拟环境
-$venvPath = ".\venv\Scripts\Activate.ps1"
+$venvPath = ".\.venv\Scripts\Activate.ps1"
+if (-not (Test-Path $venvPath)) {
+    $venvPath = ".\venv\Scripts\Activate.ps1"
+}
 if (Test-Path $venvPath) {
     & $venvPath
     Write-Host "Virtual environment activated." -ForegroundColor Green
@@ -27,7 +30,7 @@ Write-Host ""
 Write-Host "API Endpoints:" -ForegroundColor Yellow
 Write-Host "  - Swagger UI: http://localhost:5001/docs"
 Write-Host "  - Health Check: http://localhost:5001/api/v1/health/"
-Write-Host "  - Old API: http://localhost:5001/air"
+Write-Host "  - Catalog: http://localhost:5001/api/v1/catalog/"
 Write-Host "  - New API: http://localhost:5001/api/v1/anime/airing"
 Write-Host ""
 Write-Host "Press Ctrl+C to stop the server." -ForegroundColor Magenta

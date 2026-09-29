@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="zh-CN">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><title>映射管理 · AnimeScore</title><link rel="icon" href="data:,"><link rel="stylesheet" href="/assets/style.css"><link rel="stylesheet" href="/assets/admin.css"><link rel="stylesheet" href="/assets/community.css"><script type="module" src="/assets/admin.js"></script></head>
+<body>
+  <header class="site-header"><div class="header-inner admin-header"><a class="brand" href="/"><span class="brand-symbol"><i data-lucide="layers-3"></i></span><span>AnimeScore<span class="brand-caption">MAPPING WORKSPACE</span></span></a><a class="button secondary" href="/"><i data-lucide="arrow-left"></i>返回评分榜</a></div></header>
+  <main class="page admin-page">
+    <div id="account-bar" class="account-bar" aria-label="用户账号"></div>
+    <div class="page-heading"><div><div class="eyebrow">CATALOG / ID MAPPINGS</div><h1>动画映射管理</h1></div><div class="admin-actions"><span id="auth-mode"></span><button class="button secondary" id="export"><i data-lucide="download"></i>导出映射</button><button class="icon-button" id="logout" title="退出管理" aria-label="退出管理" hidden><i data-lucide="log-out"></i></button></div></div>
+    <form id="login-form" class="login-form" hidden><label for="admin-token">管理员令牌</label><input id="admin-token" type="password" autocomplete="current-password" required><button class="button primary" type="submit"><i data-lucide="key-round"></i>连接后台</button></form>
+    <div id="admin-notice" class="notice" role="status" hidden></div>
+    <section id="workspace" hidden>
+      <section class="auto-mapping"><div class="list-heading"><h2>Filmarks 自动映射</h2><span id="job-state">读取任务状态</span></div>
+        <form id="mapping-batch" class="mapping-toolbar"><select id="batch-scope" aria-label="自动映射范围"><option value="season">所选季度缺失映射</option><option value="missing">全部缺失映射</option></select><input id="batch-year" type="number" min="1900" max="2200" aria-label="映射年份" required><select id="batch-season" aria-label="映射季度"><option value="winter">冬季 · 1月</option><option value="spring">春季 · 4月</option><option value="summer">夏季 · 7月</option><option value="fall">秋季 · 10月</option></select><label class="batch-limit">每批<input id="batch-limit" type="number" min="1" max="250" value="100" aria-label="映射批量上限" required></label><label class="checkbox-label"><input id="batch-apply" type="checkbox" checked>自动保存确定匹配</label><button id="start-mapping" type="submit" class="button primary"><i data-lucide="sparkles"></i>开始匹配</button><button id="stop-mapping" type="button" class="icon-button" aria-label="停止自动映射" title="停止自动映射" disabled><i data-lucide="square"></i></button></form>
+        <div class="job-progress"><progress id="job-progress" max="1" value="0" aria-label="自动映射进度"></progress><span id="job-counts"></span></div><p id="job-current"></p><div id="job-notice" class="notice" role="status" hidden></div><div id="job-recent"></div>
+      </section>
+      <details id="community-management" class="community-admin"><summary>用户与投稿管理</summary>
+        <div class="segmented"><button type="button" class="selected" data-community-tab="members">用户权限</button><button type="button" data-community-tab="reviews">投稿审核</button></div>
+        <div id="community-admin-notice" class="notice" role="status" hidden></div>
+        <section id="members-panel"><form id="member-search" class="community-toolbar"><input id="member-query" type="search" aria-label="搜索 Bangumi 用户" placeholder="Bangumi 用户名或 UID"><button class="button secondary"><i data-lucide="search"></i>搜索用户</button></form><div id="member-list"></div><div class="submission-pagination"><button id="members-prev" class="button secondary">上一页</button><button id="members-next" class="button secondary">下一页</button></div></section>
+        <section id="reviews-panel" hidden><button id="reload-reviews" class="button secondary"><i data-lucide="refresh-cw"></i>刷新投稿</button><div id="review-list"></div><div class="submission-pagination"><button id="reviews-prev" class="button secondary">上一页</button><button id="reviews-next" class="button secondary">下一页</button></div></section>
+      </details>
+      <form id="mapping-search" class="mapping-toolbar">
+        <div class="admin-search"><i data-lucide="search"></i><input id="mapping-query" type="search" aria-label="搜索映射动画" placeholder="动画原名、译名或站点 ID" maxlength="200"><button class="icon-button" type="submit" aria-label="搜索映射" title="搜索"><i data-lucide="arrow-right"></i></button></div>
+        <select id="missing" aria-label="缺失站点筛选"><option value="">全部映射</option></select><label class="checkbox-label"><input type="checkbox" id="edited">仅人工修改</label>
+        <select id="filmarks-filter" aria-label="Filmarks 匹配状态"><option value="">全部匹配状态</option><option value="unchecked">尚未匹配</option><option value="applied">已自动保存</option><option value="matched">确定匹配</option><option value="review">待确认</option><option value="not_found">未找到</option><option value="error">检索失败</option><option value="conflict">ID 冲突</option></select>
+        <button id="reload" class="icon-button" type="button" title="刷新映射" aria-label="刷新映射"><i data-lucide="refresh-cw"></i></button>
+      </form>
+      <div class="list-heading"><h2>番剧目录</h2><span id="mapping-count"></span></div><div id="mapping-table" class="mapping-table-wrap" aria-live="polite"></div>
+      <div class="pagination"><span id="mapping-page-info"></span><div><button id="previous" class="icon-button" aria-label="上一页" title="上一页"><i data-lucide="chevron-left"></i></button><span id="mapping-page"></span><button id="next" class="icon-button" aria-label="下一页" title="下一页"><i data-lucide="chevron-right"></i></button></div></div>
+    </section>
+    <footer><span>番剧目录 · bangumi-data</span><a href="/docs">API 文档</a></footer>
+  </main>
+  <dialog id="mapping-dialog" class="mapping-dialog" aria-labelledby="mapping-title"><div class="dialog-top"><span>ID MAPPING / EDITOR</span><button id="close-mapping" class="icon-button" aria-label="关闭映射编辑" title="关闭"><i data-lucide="x"></i></button></div><div class="mapping-body"><h2 id="mapping-title"></h2><p id="mapping-original"></p><div class="editor-tabs segmented"><button type="button" data-tab="fields" class="selected">站点映射</button><button type="button" data-tab="audit">修改记录</button></div><form id="mapping-form"><div id="mapping-fields"></div><div id="editor-notice" class="notice" role="status" hidden></div><div class="mapping-save-bar"><span id="revision"></span><button id="collect" type="button" class="button secondary"><i data-lucide="refresh-cw"></i>采集已保存映射</button><button id="save-mapping" class="button primary" type="submit"><i data-lucide="save"></i>保存映射</button></div></form><div id="mapping-audit" hidden></div></div></dialog>
+</body></html>

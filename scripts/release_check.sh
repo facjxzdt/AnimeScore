@@ -9,10 +9,10 @@ if [[ ! -x "$PYTHON_BIN" ]]; then
   PYTHON_BIN="python3"
 fi
 
-echo "[1/3] Python syntax check"
-find apis apps data utils web web_api next -name "*.py" -print0 | xargs -0 "$PYTHON_BIN" -m py_compile
+echo "[1/4] Python syntax check"
+"$PYTHON_BIN" -m compileall -q apis apps data utils web web_api next services scripts
 
-echo "[2/3] API import check"
+echo "[2/4] API import check"
 "$PYTHON_BIN" - <<'PY'
 import importlib
 
@@ -27,7 +27,10 @@ for m in mods:
 print("import check: ok")
 PY
 
-echo "[3/3] Quick docs check"
+echo "[3/4] Regression tests"
+"$PYTHON_BIN" -m pytest -q
+
+echo "[4/4] Quick docs check"
 grep -q "/api/v1/search" API_V1.md
 grep -q "python start_api.py" README.md
 echo "docs check: ok"

@@ -1,0 +1,33 @@
+name: animescore
+
+services:
+  animescore:
+    image: ${ANIMESCORE_IMAGE:-ghcr.io/facjxzdt/animescore:latest}
+    build:
+      context: .
+    restart: unless-stopped
+    env_file:
+      - path: .env
+        required: false
+        format: raw
+    environment:
+      API_WORKERS: "1"
+      BANGUMI_DATA_PATH: /app/data/cache/bangumi-data.json
+      SCORE_CACHE_PATH: /app/data/cache/ratings.sqlite3
+    ports:
+      - "${ANIMESCORE_BIND:-127.0.0.1}:${ANIMESCORE_PORT:-5001}:5001"
+    volumes:
+      - data:/app/data/cache
+    stop_grace_period: 90s
+    security_opt:
+      - no-new-privileges:true
+    cap_drop:
+      - ALL
+    logging:
+      driver: json-file
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  data:

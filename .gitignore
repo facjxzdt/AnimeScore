@@ -23,3 +23,15 @@ Thumbs.db
 # Local DB/cache artifacts
 web/instance/*.db
 next/instance/*.db
+
+# Downloaded bangumi-data and rating cache
+data/cache/
+.pytest_cache/
+node_modules/
+frontend/dist/
+frontend/test-results/
+frontend/playwright-report/
+.env
+.env.*
+!.env.example
+backups/

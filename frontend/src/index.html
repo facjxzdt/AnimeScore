@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#174c42">
+  <meta name="description" content="AnimeScore 动画综合评分、季度排行榜与评分趋势。">
+  <title>AnimeScore · 全球动画评分</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="/assets/style.css">
+  <link rel="stylesheet" href="/assets/community.css">
+  <script type="module" src="/assets/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">跳到主要内容</a>
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="brand" href="/" aria-label="AnimeScore 首页"><span class="brand-symbol"><i data-lucide="layers-3"></i></span><span>AnimeScore<span class="brand-caption">ANIME RATINGS, WORLDWIDE</span></span></a>
+      <nav class="navigation" aria-label="主导航">
+        <button class="nav-link active" data-view="ranking"><i data-lucide="chart-no-axes-column-increasing"></i>季度榜单</button>
+        <button class="nav-link" data-view="insights"><i data-lucide="chart-pie"></i>数据观察</button>
+        <button class="nav-link" data-view="favorites"><i data-lucide="bookmark"></i>我的收藏<span id="favorite-count">0</span></button>
+      </nav>
+      <form id="search-form" role="search"><i data-lucide="search"></i><input id="search" type="search" placeholder="搜索动画 / 中文、日文、英文" aria-label="搜索动画" maxlength="200" autocomplete="off"><button class="icon-button" type="submit" title="搜索" aria-label="搜索"><i data-lucide="arrow-right"></i></button></form>
+    </div>
+  </header>
+  <div id="account-bar" class="account-bar" aria-label="用户账号"></div>
+  <main id="main" class="page">
+    <section class="page-heading">
+      <div><div class="eyebrow"><span class="live-dot"></span> GLOBAL ANIME INDEX</div><h1 id="page-title">当季新番 · 全球评分榜</h1><p id="page-subtitle">Bangumi / MyAnimeList / AniList</p></div>
+      <div class="update-info"><span id="update-label">正在读取采集状态</span><button id="refresh" class="button secondary"><i data-lucide="refresh-cw"></i>刷新数据</button></div>
+    </section>
+    <section class="metrics" aria-label="季度数据概览">
+      <div><span>收录动画</span><strong id="metric-total">—</strong><small>部动画</small></div>
+      <div><span>已获得评分</span><strong id="metric-rated">—</strong><small id="metric-coverage">数据采集中</small></div>
+      <div><span>平均综合分</span><strong id="metric-average">—</strong><small>满分 10.00</small></div>
+      <div><span>平台评分人次</span><strong id="metric-votes">—</strong><small>跨平台未去重</small></div>
+    </section>
+    <div id="notice" class="notice" role="status" hidden></div>
+    <div class="content-layout">
+      <section class="primary-content">
+        <div class="filters">
+          <div class="season-filters"><label><span class="sr-only">年份</span><select id="year" aria-label="年份"></select></label><label><span class="sr-only">季度</span><select id="season" aria-label="季度"><option value="winter">冬季 · 1月</option><option value="spring">春季 · 4月</option><option value="summer">夏季 · 7月</option><option value="fall">秋季 · 10月</option></select></label></div>
+          <div class="segmented" id="type-tabs" aria-label="动画类型"><button data-type="" class="selected">全部</button><button data-type="tv">TV</button><button data-type="web">WEB</button><button data-type="movie">剧场版</button><button data-type="ova">OVA</button></div>
+          <select id="min-platforms" aria-label="平台覆盖筛选"><option value="0">全部平台覆盖</option><option value="2">至少 2 个平台</option><option value="3">至少 3 个平台</option><option value="4">至少 4 个平台</option><option value="5">5 个平台齐全</option></select>
+          <select id="min-votes" aria-label="评分人数筛选"><option value="0">不限评分人次</option><option value="100">100 人次以上</option><option value="1000">1,000 人次以上</option><option value="10000">10,000 人次以上</option></select>
+        </div>
+        <div id="ranking-view">
+          <div class="list-heading"><h2 id="list-title">综合排名</h2><span id="result-count"></span></div>
+          <div id="ranking-table" aria-live="polite"></div>
+          <div class="pagination"><span id="page-info"></span><div><button id="prev" class="icon-button" title="上一页" aria-label="上一页"><i data-lucide="chevron-left"></i></button><span id="page-number">1</span><button id="next" class="icon-button" title="下一页" aria-label="下一页"><i data-lucide="chevron-right"></i></button></div></div>
+        </div>
+        <div id="insights-view" hidden>
+          <div class="list-heading"><h2>季度评分分布</h2><span>当前权重</span></div><div id="distribution-main" class="insight-chart" role="img" aria-label="综合评分分布柱状图"></div>
+          <div class="list-heading"><h2>平台数据覆盖</h2><span id="insights-season"></span></div><div id="coverage-chart" class="insight-chart" role="img" aria-label="平台评分覆盖柱状图"></div>
+          <div class="list-heading"><h2>采集状态</h2><span>每小时更新</span></div><div id="source-health" class="source-health"></div>
+        </div>
+      </section>
+      <aside class="sidebar">
+        <section class="weight-panel" aria-labelledby="weight-title">
+          <div class="panel-heading"><h2 id="weight-title"><i data-lucide="sliders-horizontal"></i>我的评分权重</h2><button id="reset-weights" class="icon-button" title="恢复默认权重" aria-label="恢复默认权重"><i data-lucide="rotate-ccw"></i></button></div>
+          <div class="weight-presets"><button data-preset="default" class="selected">默认</button><button data-preset="equal">等权</button><span id="custom-label" hidden>自定义</span></div>
+          <div id="weight-controls"></div>
+          <div id="weight-error" class="form-error" role="alert" hidden>至少保留一个平台的权重。</div>
+          <div class="weight-total"><span>有效平台按比例归一化</span><strong id="weight-formula">5 : 2 : 0</strong></div>
+          <button id="apply-weights" class="button primary"><i data-lucide="check"></i>应用到榜单与趋势</button>
+          <span id="weights-saved" class="saved-note">权重保存在当前浏览器</span>
+        </section>
+        <section class="sidebar-section"><div class="section-label"><h2>评分分布</h2><span>/ 10</span></div><div id="distribution-small" class="small-chart" role="img" aria-label="综合评分分布"></div></section>
+        <section class="sidebar-section"><h2>数据来源</h2><div class="provider-list"><a href="https://filmarks.com" target="_blank" rel="noopener"><span class="provider-dot filmarks"></span>Filmarks<span>日本社区<i data-lucide="arrow-up-right"></i></span></a><a href="https://www.anikore.jp" target="_blank" rel="noopener"><span class="provider-dot anikore"></span>Anikore<span>日本社区<i data-lucide="arrow-up-right"></i></span></a><a href="https://bgm.tv" target="_blank" rel="noopener"><span class="provider-dot bgm"></span>Bangumi<span>中文社区<i data-lucide="arrow-up-right"></i></span></a><a href="https://myanimelist.net" target="_blank" rel="noopener"><span class="provider-dot mal"></span>MyAnimeList<span>国际社区<i data-lucide="arrow-up-right"></i></span></a><a href="https://anilist.co" target="_blank" rel="noopener"><span class="provider-dot anilist"></span>AniList<span>国际社区<i data-lucide="arrow-up-right"></i></span></a></div><div class="collection-note"><i data-lucide="clock-3"></i><span id="next-update">每小时自动采集</span></div></section>
+        <button id="methodology" class="text-button"><i data-lucide="info"></i>评分口径与数据说明<i data-lucide="arrow-up-right"></i></button>
+      </aside>
+    </div>
+    <footer><span>AnimeScore <span class="footer-divider">/</span> 每一份评价，都有它的坐标。</span><span>番剧目录 <a href="https://github.com/bangumi-data/bangumi-data" target="_blank" rel="noopener">bangumi-data · CC BY 4.0</a><a href="/admin">映射管理</a><a href="/docs" target="_blank" rel="noopener">API</a></span></footer>
+  </main>
+  <dialog id="detail-dialog" class="detail-dialog" aria-labelledby="detail-title"><div class="dialog-top"><span>ANIME / SCORE PROFILE</span><button id="close-detail" class="icon-button" aria-label="关闭详情" title="关闭详情"><i data-lucide="x"></i></button></div><div id="detail-content"></div></dialog>
+  <dialog id="method-dialog" class="method-dialog" aria-labelledby="method-title"><div class="panel-heading"><h2 id="method-title">评分口径与数据说明</h2><button id="close-method" class="icon-button" aria-label="关闭说明"><i data-lucide="x"></i></button></div><p>“全球评分”汇总目前接入的五个动画社区，代表这些平台的评价，不代表所有国家或全部观众。</p><p>全部评分换算为十分制。默认权重为 Bangumi 5、MyAnimeList 2、AniList、Filmarks、Anikore 默认关闭；你可以自行调整。某个平台暂无评分时，综合分仅使用其余有效平台的权重。权重为 0 的平台仍显示评分，但不参与综合分。</p><p>平台评分人次为各站投票数之和，无法跨站去重。综合分未做样本量校正，可使用平台覆盖与评分人数筛选判断可靠性。</p><p>Filmarks 与 Anikore 使用作品页的五星均分，换算为十分制；Anikore 的百分制综合热度不参与计算。</p><p>AniList 取 meanScore 和 averageScore 的均值。排名以未四舍五入到两位小数的综合分排序，同分并列；不同权重下的榜单应分别比较。</p><p>历史数据从实际采集时开始记录，不回填、不虚构。7d / 30d 使用每小时最后一次真实记录，90d / 1y 使用每日最后一次真实记录。平台采集失败时，趋势中的缺失数据不会补成旧分数。</p><p>后台在服务运行期间每小时采集当季番剧和查看过详情的作品。数据缓存与历史保存在本机数据库，关闭浏览器不影响采集；停止后端服务期间不会产生记录。</p></dialog>
+  <div id="toast" role="status" hidden></div>
+</body>
+</html>

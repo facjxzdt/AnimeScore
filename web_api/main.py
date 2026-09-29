@@ -6,26 +6,92 @@ AnimeScore API 主入口 (仅保留 v1)
 
 import os
 import sys
+import asyncio
+import logging
+from contextlib import asynccontextmanager, suppress
+
+import httpx
 import uvicorn
 from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.responses import JSONResponse
+from fastapi.responses import JSONResponse, FileResponse
+from fastapi.staticfiles import StaticFiles
+from pathlib import Path
+from dotenv import load_dotenv
 
 PROJECT_ROOT = os.path.abspath(os.path.join(os.path.dirname(__file__), ".."))
 if PROJECT_ROOT not in sys.path:
     sys.path.insert(0, PROJECT_ROOT)
+load_dotenv(Path(PROJECT_ROOT) / ".env", override=False)
 
-from utils.ext_linker import refresh_map_file
+from fastapi.concurrency import run_in_threadpool
+from services.catalog import CatalogUnavailable, get_repository
+from services.ratings import RatingService
+from services.collector import Collector
+from services.filmarks_mapping import FilmarksMapper
+from services.filmarks_jobs import FilmarksJobs
+from services.auth import AuthStore, OAuthLogFilter
+from services.contributions import Contributions
+from web_api.api_v1.deps import get_score_cache
 from web_api.api_v1 import api_router as api_v1_router
 
 # ==================== FastAPI 应用配置 ====================
 
+logger = logging.getLogger(__name__)
+logging.getLogger("uvicorn.access").addFilter(OAuthLogFilter())
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    repository = get_repository()
+    auto_update = os.getenv("BANGUMI_DATA_AUTO_UPDATE", "1").lower() in {"1", "true", "yes", "on"}
+    if auto_update:
+        _, message = await run_in_threadpool(repository.refresh)
+        logger.info(message)
+
+    async def refresh_catalog():
+        while True:
+            await asyncio.sleep(3600)
+            _, message = await run_in_threadpool(repository.refresh)
+            logger.info(message)
+
+    async with httpx.AsyncClient(timeout=10, follow_redirects=True,
+                                 headers={"User-Agent": "facjxzdt/AnimeScore (https://github.com/facjxzdt/AnimeScore)"}) as client:
+        app.state.ratings = RatingService(get_score_cache(), client)
+        app.state.collector = Collector(repository, app.state.ratings)
+        app.state.filmarks_mapper = FilmarksMapper(repository, app.state.ratings)
+        app.state.filmarks_jobs = FilmarksJobs(app.state.filmarks_mapper)
+        app.state.auth = AuthStore(get_score_cache())
+        app.state.contributions = Contributions(repository, app.state.ratings)
+        task = asyncio.create_task(refresh_catalog()) if auto_update else None
+        collection_task = asyncio.create_task(app.state.collector.run())
+        mapping_task = asyncio.create_task(app.state.filmarks_jobs.run())
+        contribution_task = asyncio.create_task(app.state.contributions.run())
+        try:
+            yield
+        finally:
+            contribution_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await contribution_task
+            mapping_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await mapping_task
+            collection_task.cancel()
+            with suppress(asyncio.CancelledError):
+                await collection_task
+            if task:
+                task.cancel()
+                with suppress(asyncio.CancelledError):
+                    await task
+
+
 app = FastAPI(
     title="AnimeScore API",
-    description="动漫评分聚合 API - 支持 Bangumi、MyAnimeList、AniList 等多平台评分",
+    description="基于 bangumi-data 的番剧目录与多平台评分聚合 API。基础数据：bangumi-data，CC BY 4.0。",
     version="1.0.0",
     docs_url="/docs",
     redoc_url="/redoc",
+    lifespan=lifespan,
 )
 
 # CORS 配置
@@ -45,47 +111,30 @@ app.include_router(
     tags=["v1"],
 )
 
+FRONTEND = Path(PROJECT_ROOT) / "frontend/dist"
+app.mount("/assets", StaticFiles(directory=str(FRONTEND), check_dir=False), name="frontend")
 
-def _env_true(name: str, default: str = "1") -> bool:
-    return os.getenv(name, default).strip().lower() in {"1", "true", "yes", "on"}
-
-
-@app.on_event("startup")
-async def startup_refresh_map() -> None:
-    """
-    Refresh external ID mapping on startup.
-    Controlled by env vars:
-      - MAP_AUTO_UPDATE (default: 1)
-      - ANIME_MAP_URL
-      - MAP_UPDATE_FORCE (default: 0)
-      - MAP_UPDATE_MAX_AGE_HOURS (default: 24)
-    """
-    if not _env_true("MAP_AUTO_UPDATE", "1"):
-        print("[map] auto update disabled")
-        return
-
-    max_age = os.getenv("MAP_UPDATE_MAX_AGE_HOURS", "24")
-    try:
-        max_age_hours = int(max_age)
-    except Exception:
-        max_age_hours = 24
-
-    updated, message = refresh_map_file(
-        source_url=os.getenv("ANIME_MAP_URL"),
-        force=_env_true("MAP_UPDATE_FORCE", "0"),
-        max_age_hours=max_age_hours,
-    )
-    state = "updated" if updated else "skipped"
-    print(f"[map] {state}: {message}")
 
 # ==================== 根路由 ====================
 
 @app.get("/")
 async def root():
-    """根路由"""
-    return {"status": 200, "message": "AnimeScore API", "version": "1.0.0", "docs": "/docs"}
+    if not (FRONTEND / "index.html").exists():
+        return JSONResponse(status_code=503, content={"detail": "Build the web app with: cd frontend && npm ci && npm run build"})
+    return FileResponse(FRONTEND / "index.html", headers={"Cache-Control": "no-cache"})
+
+
+@app.get("/admin")
+async def admin_page():
+    if not (FRONTEND / "admin.html").exists():
+        return JSONResponse(status_code=503, content={"detail": "Build the frontend first"})
+    return FileResponse(FRONTEND / "admin.html", headers={"Cache-Control": "no-store"})
 
 # ==================== 错误处理 ====================
+
+@app.exception_handler(CatalogUnavailable)
+async def catalog_unavailable_handler(request: Request, exc: CatalogUnavailable):
+    return JSONResponse(status_code=503, content={"detail": str(exc)})
 
 @app.exception_handler(Exception)
 async def global_exception_handler(request: Request, exc: Exception):

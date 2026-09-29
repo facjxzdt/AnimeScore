@@ -1,76 +1,48 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-导出 API
+"""Export current data instead of serving obsolete checked-in score files."""
 
-提供数据导出功能
-"""
+import csv
+import io
+import json
+from typing import Literal
 
-from fastapi import APIRouter, HTTPException, Query
-from fastapi.responses import FileResponse
+from fastapi import APIRouter
+from fastapi.responses import Response
 
-from data.config import work_dir
+from services.catalog import ATTRIBUTION, get_repository
+from web_api.api_v1.deps import cached_items, get_airing_items, get_subscribed_items
 
 router = APIRouter()
+ExportType = Literal["airing", "subscribed", "all"]
 
 
-@router.get("/csv")
-async def export_csv(
-    type: str = Query("airing", description="导出类型: airing, subscribed"),
-):
-    """
-    导出 CSV 文件
-    
-    - **type**: 导出类型
-      - `airing`: 正在放送的动漫
-      - `subscribed`: 订阅的动漫
-    """
-    if type == "airing":
-        filename = work_dir + "/data/score.csv"
-        download_name = "airing_anime.csv"
-    elif type == "subscribed":
-        filename = work_dir + "/data/sub_score.csv"
-        download_name = "subscribed_anime.csv"
-    else:
-        raise HTTPException(status_code=400, detail=f"Invalid type: {type}")
-    
-    import os
-    if not os.path.exists(filename):
-        raise HTTPException(status_code=404, detail=f"CSV file not found: {type}")
-    
-    return FileResponse(
-        filename,
-        filename=download_name,
-        media_type="text/csv",
-    )
+def export_items(kind: str) -> list[dict]:
+    if kind == "subscribed":
+        return get_subscribed_items()
+    if kind == "all":
+        return cached_items(get_repository().snapshot().entries)
+    return get_airing_items()
 
 
 @router.get("/json")
-async def export_json(
-    type: str = Query("airing", description="导出类型: airing, subscribed"),
-):
-    """
-    导出 JSON 文件
-    
-    - **type**: 导出类型
-      - `airing`: 正在放送的动漫
-      - `subscribed`: 订阅的动漫
-    """
-    import json
-    
-    if type == "airing":
-        filename = work_dir + "/data/jsons/score_sorted.json"
-    elif type == "subscribed":
-        filename = work_dir + "/data/jsons/sub_score_sorted.json"
-    else:
-        raise HTTPException(status_code=400, detail=f"Invalid type: {type}")
-    
-    import os
-    if not os.path.exists(filename):
-        raise HTTPException(status_code=404, detail=f"JSON file not found: {type}")
-    
-    return FileResponse(
-        filename,
-        filename=f"{type}_anime.json",
-        media_type="application/json",
-    )
+def export_json(type: ExportType = "airing"):
+    items = export_items(type)
+    content = json.dumps({"source": ATTRIBUTION, "items": items, "total": len(items)}, ensure_ascii=False)
+    return Response(content, media_type="application/json",
+                    headers={"Content-Disposition": f'attachment; filename="{type}_anime.json"'})
+
+
+@router.get("/csv")
+def export_csv(type: ExportType = "airing"):
+    output = io.StringIO(newline="")
+    fields = ["name", "name_cn", "name_en", "type", "begin", "bgm_id", "mal_id", "anilist_id",
+              "bgm", "mal", "anilist", "total", "data_source"]
+    writer = csv.DictWriter(output, fieldnames=fields, extrasaction="ignore")
+    writer.writeheader()
+    for item in export_items(type):
+        row = {**item, **item.get("ids", {}), **item.get("scores", {})}
+        # Spreadsheet programs can otherwise execute upstream titles as formulas.
+        row = {key: "'" + value if isinstance(value, str) and value.startswith(("=", "+", "-", "@", "\t", "\r")) else value
+               for key, value in row.items()}
+        writer.writerow(row)
+    return Response("\ufeff" + output.getvalue(), media_type="text/csv",
+                    headers={"Content-Disposition": f'attachment; filename="{type}_anime.csv"'})

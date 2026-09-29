@@ -1,155 +1,98 @@
-#!/usr/bin/env python3
-# -*- coding: utf-8 -*-
-"""
-API v1 依赖注入
-"""
+"""Shared data access for catalog, subscriptions and cached ratings."""
 
 import json
-import os
 from functools import lru_cache
-from typing import Generator, Optional
+from pathlib import Path
+
+from fastapi import Request
 
 from data.config import work_dir
-from web_api.wrapper import AnimeScore
+from services.catalog import CatalogUnavailable, get_repository
+from services.ratings import RatingCache, RatingService, aggregate, merge_ratings, numeric_score
+from services.mappings import MappingStore
 
 
-# ==================== 依赖函数 ====================
+@lru_cache(maxsize=1)
+def get_score_cache() -> RatingCache:
+    return RatingCache()
 
-def get_anime_score() -> Generator[AnimeScore, None, None]:
-    """
-    获取 AnimeScore 实例
-    
-    Yields:
-        AnimeScore 实例
-    """
-    ans = AnimeScore()
+
+def get_rating_service(request: Request) -> RatingService:
+    return request.app.state.ratings
+
+
+def get_anime_score():
+    from web_api.wrapper import AnimeScore
+    return AnimeScore()
+
+
+def cached_items(items: list[dict]) -> list[dict]:
+    ratings = get_score_cache().all()
+    items = MappingStore(get_score_cache()).apply(items)
+    return [merge_ratings(item, ratings) for item in items]
+
+
+def get_airing_items() -> list[dict]:
+    return cached_items(get_repository().snapshot().airing())
+
+
+def get_subscribed_items() -> list[dict]:
+    data = get_subscribed_list()
     try:
-        yield ans
-    finally:
-        pass  # 清理操作（如果需要）
+        catalog = get_repository().snapshot()
+    except CatalogUnavailable:
+        catalog = None
+    items = []
+    for name, info in data.items():
+        if not isinstance(info, dict):
+            continue
+        legacy = convert_single_anime(name, info)
+        bgm_id = legacy["ids"].get("bgm_id")
+        entry = catalog.find("bangumi", bgm_id) if catalog and bgm_id else None
+        if entry:
+            # Keep saved enrichment while catalog titles, dates and IDs stay authoritative.
+            scores = legacy["scores"]
+            legacy.update(entry)
+            legacy["scores"] = scores
+        legacy["is_subscribed"] = True
+        items.append(legacy)
+    return cached_items(items)
 
 
-@lru_cache()
-def get_airing_list() -> dict:
-    """
-    获取正在放送列表（带缓存）
-    
-    Returns:
-        正在放送的动漫列表
-    """
-    try:
-        with open(work_dir + "/data/jsons/score_sorted.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
-        return {}
-
-
-@lru_cache()
 def get_subscribed_list() -> dict:
-    """
-    获取订阅列表（带缓存）
-    
-    Returns:
-        订阅的动漫列表
-    """
+    path = Path(work_dir) / "data/jsons/sub_score_sorted.json"
     try:
-        with open(work_dir + "/data/jsons/sub_score_sorted.json", "r", encoding="utf-8") as f:
-            return json.load(f)
-    except (FileNotFoundError, json.JSONDecodeError):
+        data = json.loads(path.read_text(encoding="utf-8"))
+        return data if isinstance(data, dict) else {}
+    except (OSError, ValueError):
         return {}
+
+
+def get_airing_list() -> dict:
+    """Compatibility view for older Python callers, now backed by bangumi-data."""
+    return {item["catalog_id"]: item for item in get_airing_items()}
 
 
 def clear_cache():
-    """清除缓存"""
-    get_airing_list.cache_clear()
-    get_subscribed_list.cache_clear()
-
-
-# ==================== 辅助函数 ====================
-
-def normalize_anime_data(data: dict) -> dict:
-    """
-    将旧版数据格式转换为新版格式
-    
-    Args:
-        data: 旧版动漫数据
-        
-    Returns:
-        新版格式的数据
-    """
-    if not isinstance(data, dict):
-        return {}
-    
-    # 处理列表格式（旧版是 dict，key 是动漫名）
-    if "name" not in data and len(data) > 0:
-        # 取第一个作为示例转换
-        first_key = list(data.keys())[0]
-        if isinstance(data[first_key], dict):
-            return {
-                "items": [
-                    convert_single_anime(name, info)
-                    for name, info in data.items()
-                    if isinstance(info, dict) and name != "total"
-                ],
-                "total": data.get("total", len(data) - 1 if "total" in data else len(data))
-            }
-    
-    return convert_single_anime(data.get("name", ""), data)
+    # Catalog and SQLite changes are observed on the next read.
+    pass
 
 
 def convert_single_anime(name: str, info: dict) -> dict:
-    """
-    转换单个动漫数据格式
-    
-    Args:
-        name: 动漫名称
-        info: 动漫信息
-        
-    Returns:
-        新版格式的数据
-    """
-    if not isinstance(info, dict):
-        return {"name": name}
-    
-    # IDs
-    ids = info.get("ids", {})
-    
-    # Scores
-    scores = {
-        "bgm": info.get("bgm_score"),
-        "mal": info.get("mal_score"),
-        "anilist": info.get("anl_score"),
-        "anikore": info.get("ank_score"),
-        "filmarks": info.get("fm_score"),
-        "total": info.get("score"),
-    }
-    
-    # Time
-    time_info = info.get("time", {})
-    time_obj = None
-    if time_info:
-        time_obj = {
-            "year": time_info.get("year"),
-            "month": time_info.get("month"),
-            "day": time_info.get("day"),
-        }
-    
+    def identifier(value):
+        return str(value) if value not in (None, "", "None", "Error", "N/A", "-") else None
+
+    ids = info.get("ids") or {}
+    scores = {key: numeric_score(info.get(old)) for key, old in {
+        "bgm": "bgm_score", "mal": "mal_score", "anilist": "anl_score",
+        "anikore": "ank_score", "filmarks": "fm_score",
+    }.items()}
+    scores["total"] = aggregate(scores)
     return {
-        "name": info.get("name", name),
-        "name_cn": info.get("name_cn"),
-        "name_en": info.get("name_en"),
-        "ids": {
-            "bgm_id": info.get("bgm_id") or ids.get("bgm_id"),
-            "mal_id": ids.get("mal_id"),
-            "anilist_id": ids.get("anl_id"),
-            "anikore_id": ids.get("ank_id"),
-            "filmarks_id": ids.get("fm_id"),
-        },
-        "scores": {k: v for k, v in scores.items() if v is not None},
-        "time": time_obj,
-        "poster": info.get("poster"),
-        "studio": info.get("studio"),
-        "director": info.get("director"),
-        "source": info.get("source"),
-        "summary": info.get("summary"),
+        "name": info.get("name", name), "name_cn": info.get("name_cn"), "name_en": info.get("name_en"),
+        "ids": {"bgm_id": identifier(info.get("bgm_id") or ids.get("bgm_id")),
+                "mal_id": identifier(ids.get("mal_id")), "anilist_id": identifier(ids.get("anl_id")),
+                "anikore_id": identifier(ids.get("ank_id")), "filmarks_id": identifier(ids.get("fm_id"))},
+        "scores": scores, "time": info.get("time") or None,
+        **{field: info.get(field) for field in ("poster", "studio", "director", "source", "summary")},
     }

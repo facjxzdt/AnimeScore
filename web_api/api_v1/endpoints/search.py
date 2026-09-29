@@ -4,15 +4,15 @@
 Search APIs
 """
 
-from typing import Optional
+from typing import Literal, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, Query
 from fastapi.concurrency import run_in_threadpool
 
-from apis.precise import search_anime_precise_async
+from services.catalog import CatalogUnavailable, get_repository
+from services.ratings import RatingService
 from web_api.api_v1 import schemas
-from web_api.api_v1.deps import get_anime_score
-from web_api.wrapper import AnimeScore
+from web_api.api_v1.deps import cached_items, get_rating_service
 
 router = APIRouter()
 
@@ -20,26 +20,44 @@ router = APIRouter()
 @router.get("/", response_model=schemas.AnimeSearchResponse)
 async def search_anime(
     q: str = Query(..., min_length=1, description="Search keyword"),
-    source: str = Query("precise", description="Search source: precise, bangumi"),
-    year: Optional[int] = Query(None, description="Year filter"),
-    month: Optional[int] = Query(None, description="Month filter"),
+    source: Literal["bangumi-data", "precise", "bangumi"] = "bangumi-data",
+    year: Optional[int] = Query(None, ge=1900, le=2200, description="Year filter"),
+    month: Optional[int] = Query(None, ge=1, le=12, description="Month filter"),
     studio: Optional[str] = Query(None, description="Studio filter"),
     director: Optional[str] = Query(None, description="Director filter"),
     source_type: Optional[str] = Query(None, description="Source type filter"),
-    match_mode: str = Query("normal", description="Match mode: normal, recall, strict"),
+    match_mode: Literal["normal", "recall", "strict"] = "normal",
     extra_scores: bool = Query(False, description="Include Anikore/Filmarks scores"),
     debug_scores: bool = Query(False, description="Include debug details for extra scores"),
     limit: int = Query(10, ge=1, le=50, description="Limit"),
-    ans: AnimeScore = Depends(get_anime_score),
+    offset: int = Query(0, ge=0),
+    anime_type: Optional[Literal["tv", "web", "movie", "ova"]] = None,
+    include_scores: bool = False,
+    ratings: RatingService = Depends(get_rating_service),
 ):
     """
     Search anime by keyword.
     """
     filters_applied = {}
     results = []
+    q = q.strip()
+    if not q:
+        raise HTTPException(status_code=422, detail="Search keyword cannot be blank")
+
+    if source == "bangumi-data":
+        if studio or director or source_type or extra_scores:
+            raise HTTPException(status_code=400, detail="studio/director/source_type/extra_scores require source=precise")
+        filters = {"year": year, "month": month, "anime_type": anime_type}
+        catalog = await run_in_threadpool(get_repository().snapshot)
+        matches = await run_in_threadpool(catalog.search, q, **filters, match_mode=match_mode)
+        selected = matches[offset:offset + limit]
+        items = await ratings.enrich(selected) if include_scores else await run_in_threadpool(cached_items, selected)
+        return schemas.AnimeSearchResponse(query=q, source=source, results=items, total=len(matches),
+                                           filters_applied={k: v for k, v in filters.items() if v is not None} or None)
 
     try:
         if source == "precise":
+            from apis.precise import search_anime_precise_async
             filters = {
                 "year": year,
                 "month": month,
@@ -56,7 +74,7 @@ async def search_anime(
                 include_extra_scores=extra_scores,
                 debug_scores=debug_scores,
                 match_mode=match_mode,
-                top_n=limit,
+                top_n=limit + offset,
             )
 
             for item in precise_results:
@@ -69,6 +87,7 @@ async def search_anime(
                         mal_id=item.get("mal_id"),
                         anilist_id=item.get("anilist_id"),
                         anikore_id=item.get("ank_id"),
+                        filmarks_id=item.get("fm_id"),
                         douban_id=item.get("douban_id"),
                         bili_id=item.get("bili_id"),
                         anidb_id=item.get("anidb_id"),
@@ -105,10 +124,11 @@ async def search_anime(
                 results.append(result)
 
         elif source == "bangumi":
-            bgm_results = await run_in_threadpool(ans.Bangumi().search_anime, q)
+            from apis.bangumi import Bangumi
+            bgm_results = await Bangumi().search_anime_async(q)
 
             if isinstance(bgm_results, dict) and "data" in bgm_results:
-                for item in bgm_results["data"][:limit]:
+                for item in bgm_results["data"]:
                     result = schemas.AnimeSearchResult(
                         name=item.get("name", ""),
                         name_cn=item.get("name_cn"),
@@ -122,20 +142,22 @@ async def search_anime(
         else:
             raise HTTPException(status_code=400, detail=f"Unknown search source: {source}")
 
+    except (HTTPException, CatalogUnavailable):
+        raise
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
 
     return schemas.AnimeSearchResponse(
         query=q,
         source=source,
-        results=results,
+        results=results[offset:offset + limit],
         total=len(results),
         filters_applied=filters_applied if filters_applied else None,
     )
 
 
 @router.post("/", response_model=schemas.AnimeSearchResponse)
-async def search_anime_post(query: schemas.AnimeSearchQuery):
+async def search_anime_post(query: schemas.AnimeSearchQuery, ratings: RatingService = Depends(get_rating_service)):
     """
     Search anime (POST)
     """
@@ -151,4 +173,8 @@ async def search_anime_post(query: schemas.AnimeSearchQuery):
         extra_scores=query.extra_scores,
         debug_scores=query.debug_scores,
         limit=query.limit,
+        offset=query.offset,
+        anime_type=query.anime_type,
+        include_scores=query.include_scores,
+        ratings=ratings,
     )
