@@ -19,7 +19,7 @@ from services.providers import normalize_id, site_url
 from services.ratings import merge_ratings
 from services.scrapers import parse_rating
 
-ALGORITHM_VERSION = 2
+ALGORITHM_VERSION = 3
 
 
 def title_key(value):
@@ -190,10 +190,16 @@ class FilmarksMapper:
             response = await self.ratings.client.get(url, timeout=15, follow_redirects=False)
             if response.status_code in {403, 429}:
                 self.ratings.blocked_until["filmarks"] = retry_deadline(response.headers.get("Retry-After", "300"), minimum=300)
-            response.raise_for_status()
-            if response.status_code != 200:
-                raise ValueError(f"Filmarks HTTP {response.status_code}")
-            data = await asyncio.to_thread(parse_work, response.text, identifier) if identifier else await asyncio.to_thread(parse_listing, response.text)
+            missing_season = (not identifier and response.status_code in {404, 410}
+                              and re.fullmatch(r"/list-anime/release_year/\d{4}/(?:1|4|7|10)", path))
+            if missing_season:
+                # Optional seasonal indexes may not exist; cache the miss and search by title.
+                data = {"items": [], "has_next": False}
+            else:
+                response.raise_for_status()
+                if response.status_code != 200:
+                    raise ValueError(f"Filmarks HTTP {response.status_code}")
+                data = await asyncio.to_thread(parse_work, response.text, identifier) if identifier else await asyncio.to_thread(parse_listing, response.text)
             now = time.time()
             with self.cache.connect() as db:
                 db.execute("INSERT OR REPLACE INTO filmarks_pages VALUES (?, ?, ?)", (cache_key, now, json.dumps(data)))

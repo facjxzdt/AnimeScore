@@ -142,6 +142,71 @@ def test_search_alias_then_related_season_resolves_correct_work(tmp_path, payloa
     asyncio.run(run())
 
 
+@pytest.mark.parametrize('status', [404, 410])
+def test_missing_season_falls_back_to_search_and_caches_absence(tmp_path, payload, status):
+    data = copy.deepcopy(payload)
+    data['items'][0]['begin'] = '1943-04-02T00:00:00Z'
+    calls = []
+    def handler(request):
+        calls.append(request.url.path)
+        if '/release_year/' in request.url.path:
+            return httpx.Response(status)
+        if request.url.path == '/search/animes':
+            return httpx.Response(200, text=listing([('1/2', 'Test Anime', '1943年04月02日')]))
+        return httpx.Response(200, text=work(day='1943-04-02'))
+    mapper, client, item = setup(tmp_path, data, handler)
+    async def run():
+        async with client:
+            result = await mapper.discover(item, apply=True)
+            assert result['status'] == 'applied' and result['applied_id'] == '1/2'
+            assert result['errors'] == [] and '别名检索' in result['methods']
+            assert mapper.cache.read('filmarks', '1/2')['score'] == 8
+            season_path = '/list-anime/release_year/1943/4'
+            assert calls.count(season_path) == 1
+            restarted = FilmarksMapper(mapper.repository, mapper.ratings)
+            assert (await restarted.discover(item, force=True))['status'] == 'matched'
+            assert calls.count(season_path) == 1
+            with mapper.cache.connect() as db:
+                db.execute('UPDATE filmarks_pages SET updated_at=? WHERE key LIKE ?',
+                           (time.time() - 86401, '%' + season_path))
+            await restarted.discover(item, force=True)
+            assert calls.count(season_path) == 2
+    asyncio.run(run())
+
+
+def test_missing_season_and_empty_search_is_not_found(tmp_path, payload):
+    def handler(request):
+        if '/release_year/' in request.url.path:
+            return httpx.Response(404)
+        return httpx.Response(200, text=listing([]))
+    mapper, client, item = setup(tmp_path, payload, handler)
+    async def run():
+        async with client:
+            result = await mapper.discover(item, apply=True)
+            assert result['status'] == 'not_found' and result['errors'] == []
+            assert '别名检索' in result['methods']
+            assert not mapper.store.detail(item)['overrides']
+    asyncio.run(run())
+
+
+@pytest.mark.parametrize('path,status', [('/search/animes', 404), ('/animes/1/2', 404),
+                                       ('/list-anime/release_year/2026/4', 500)])
+def test_missing_search_or_work_and_server_errors_remain_visible(tmp_path, payload, path, status):
+    def handler(request):
+        if request.url.path == path:
+            return httpx.Response(status)
+        entries = [('1/2', 'Test Anime', '2026年04月02日')] if path == '/animes/1/2' else []
+        return httpx.Response(200, text=listing(entries))
+    mapper, client, item = setup(tmp_path, payload, handler)
+    async def run():
+        async with client:
+            result = await mapper.discover(item, apply=True)
+            assert result['status'] in {'error', 'review'} and result['errors']
+            assert not mapper.store.detail(item)['overrides']
+            assert mapper.cache.read('filmarks', '1/2') is None
+    asyncio.run(run())
+
+
 def test_manual_disable_and_concurrent_manual_edits_are_protected(tmp_path, payload):
     mapper, client, item = setup(tmp_path, payload, lambda _: httpx.Response(500))
     mapper.store.save(item, {'filmarks': {'mode': 'disabled'}}, 0, mapper.repository.snapshot().entries)
@@ -154,11 +219,12 @@ def test_manual_disable_and_concurrent_manual_edits_are_protected(tmp_path, payl
     assert mapper.store.detail(item)['item']['mapping_sources']['filmarks'] == 'disabled'
 
 
-def test_access_limit_is_error_and_sets_cooldown(tmp_path, payload):
+@pytest.mark.parametrize('status', [403, 429])
+def test_access_limit_is_error_and_sets_cooldown(tmp_path, payload, status):
     calls = []
     def handler(request):
         calls.append(request)
-        return httpx.Response(429, headers={'Retry-After': '600'})
+        return httpx.Response(status, headers={'Retry-After': '600'})
     mapper, client, item = setup(tmp_path, payload, handler)
     async def run():
         async with client:
